@@ -373,6 +373,347 @@ async def add_finding(investigation_id: str, finding_data: dict, current_user: d
         "data": new_finding
     }
 
+# ===== REPORTS & ANALYTICS ENDPOINTS =====
+
+@app.get("/api/v1/reports/metrics")
+async def get_reports_metrics(current_user: dict = Depends(get_current_user)):
+    """Get key metrics for reports dashboard"""
+    # In a real implementation, this would query the database
+    # For demo, return simulated metrics
+    
+    metrics = {
+        "total_investigations": 147,
+        "total_findings": 892,
+        "success_rate": 87.3,
+        "avg_investigation_time": 14.2,
+        "monthly_growth": {
+            "investigations": 12,
+            "findings": 8,
+            "success_rate": 5,
+            "avg_time": -3
+        }
+    }
+    
+    return {
+        "status": "success",
+        "data": metrics
+    }
+
+@app.get("/api/v1/reports/activity")
+async def get_activity_data(period: str = "30d", current_user: dict = Depends(get_current_user)):
+    """Get investigation activity data for charts"""
+    import random
+    from datetime import datetime, timedelta
+    
+    # Generate sample activity data based on period
+    days = 30 if period == "30d" else 7 if period == "7d" else 90
+    
+    data = []
+    labels = []
+    
+    for i in range(days):
+        date = datetime.now() - timedelta(days=days-1-i)
+        labels.append(date.strftime("%m/%d"))
+        data.append(random.randint(3, 18))
+    
+    return {
+        "status": "success",
+        "data": {
+            "labels": labels,
+            "datasets": [{
+                "label": "Investigations",
+                "data": data,
+                "borderColor": "#4285f4",
+                "backgroundColor": "rgba(66, 133, 244, 0.1)"
+            }]
+        }
+    }
+
+@app.get("/api/v1/reports/investigation-types")
+async def get_investigation_types_data(current_user: dict = Depends(get_current_user)):
+    """Get investigation types distribution"""
+    
+    data = {
+        "email": 45,
+        "domain": 32,
+        "social": 28,
+        "phone": 24,
+        "image": 18
+    }
+    
+    return {
+        "status": "success",
+        "data": {
+            "labels": ["Email", "Domain", "Social Media", "Phone", "Image"],
+            "datasets": [{
+                "data": list(data.values()),
+                "backgroundColor": [
+                    "#4285f4",
+                    "#34a853",
+                    "#fbbc04",
+                    "#ea4335",
+                    "#9aa0a6"
+                ]
+            }]
+        }
+    }
+
+@app.get("/api/v1/reports/success-trends")
+async def get_success_trends(period: str = "monthly", current_user: dict = Depends(get_current_user)):
+    """Get success rate trends over time"""
+    import random
+    from datetime import datetime, timedelta
+    
+    # Generate sample success rate data
+    if period == "weekly":
+        periods = 12
+        labels = []
+        for i in range(periods):
+            date = datetime.now() - timedelta(weeks=periods-1-i)
+            labels.append(f"Week {date.strftime('%U')}")
+    elif period == "quarterly":
+        periods = 8
+        labels = [f"Q{((i % 4) + 1)} {datetime.now().year - (i // 4)}" for i in range(periods-1, -1, -1)]
+    else:  # monthly
+        periods = 12
+        labels = []
+        for i in range(periods):
+            date = datetime.now() - timedelta(days=30*(periods-1-i))
+            labels.append(date.strftime("%b %y"))
+    
+    data = [random.randint(75, 95) for _ in range(periods)]
+    
+    return {
+        "status": "success",
+        "data": {
+            "labels": labels,
+            "datasets": [{
+                "label": "Success Rate (%)",
+                "data": data,
+                "borderColor": "#34a853",
+                "backgroundColor": "rgba(52, 168, 83, 0.1)"
+            }]
+        }
+    }
+
+@app.get("/api/v1/reports/priority-distribution")
+async def get_priority_distribution(current_user: dict = Depends(get_current_user)):
+    """Get investigation priority distribution"""
+    
+    data = {
+        "high": 23,
+        "medium": 78,
+        "low": 46
+    }
+    
+    return {
+        "status": "success",
+        "data": {
+            "labels": ["High", "Medium", "Low"],
+            "datasets": [{
+                "data": list(data.values()),
+                "backgroundColor": [
+                    "#ea4335",
+                    "#fbbc04",
+                    "#34a853"
+                ]
+            }]
+        }
+    }
+
+@app.get("/api/v1/reports/top-investigations")
+async def get_top_investigations(sort_by: str = "findings", current_user: dict = Depends(get_current_user)):
+    """Get top performing investigations"""
+    
+    investigations = [
+        {
+            "name": "Email Compromise Analysis",
+            "type": "email",
+            "findings": 23,
+            "duration": "12.5h",
+            "success_rate": 95,
+            "status": "completed",
+            "created_at": "2024-01-15T10:30:00Z"
+        },
+        {
+            "name": "Social Media Profile Investigation",
+            "type": "social",
+            "findings": 18,
+            "duration": "8.2h",
+            "success_rate": 89,
+            "status": "completed",
+            "created_at": "2024-01-12T14:20:00Z"
+        },
+        {
+            "name": "Domain Infrastructure Mapping",
+            "type": "domain",
+            "findings": 31,
+            "duration": "16.7h",
+            "success_rate": 92,
+            "status": "active",
+            "created_at": "2024-01-18T09:15:00Z"
+        },
+        {
+            "name": "Phone Number Trace",
+            "type": "phone",
+            "findings": 14,
+            "duration": "6.3h",
+            "success_rate": 78,
+            "status": "completed",
+            "created_at": "2024-01-10T16:45:00Z"
+        },
+        {
+            "name": "Image Forensics Analysis",
+            "type": "image",
+            "findings": 9,
+            "duration": "4.1h",
+            "success_rate": 83,
+            "status": "completed",
+            "created_at": "2024-01-08T11:30:00Z"
+        }
+    ]
+    
+    # Sort based on criteria
+    if sort_by == "findings":
+        investigations.sort(key=lambda x: x["findings"], reverse=True)
+    elif sort_by == "time":
+        investigations.sort(key=lambda x: float(x["duration"].replace("h", "")))
+    elif sort_by == "recent":
+        investigations.sort(key=lambda x: x["created_at"], reverse=True)
+    
+    return {
+        "status": "success",
+        "data": investigations
+    }
+
+@app.get("/api/v1/reports/activity-log")
+async def get_activity_log(filter_type: str = "all", current_user: dict = Depends(get_current_user)):
+    """Get recent activity log"""
+    
+    activities = [
+        {
+            "id": "act_001",
+            "timestamp": "2024-01-22T14:30:00Z",
+            "action": "Investigation Completed",
+            "investigation": "Email Compromise Analysis",
+            "user": current_user["email"],
+            "details": "Investigation marked as completed with 23 findings",
+            "type": "completed"
+        },
+        {
+            "id": "act_002",
+            "timestamp": "2024-01-22T14:15:00Z",
+            "action": "New Finding Added",
+            "investigation": "Domain Infrastructure Mapping",
+            "user": current_user["email"],
+            "details": "Added finding: 'Suspicious subdomain identified'",
+            "type": "updated"
+        },
+        {
+            "id": "act_003",
+            "timestamp": "2024-01-22T13:45:00Z",
+            "action": "Investigation Created",
+            "investigation": "Social Media Background Check",
+            "user": current_user["email"],
+            "details": "New investigation created with high priority",
+            "type": "created"
+        },
+        {
+            "id": "act_004",
+            "timestamp": "2024-01-22T12:30:00Z",
+            "action": "Investigation Updated",
+            "investigation": "Phone Number Trace",
+            "user": current_user["email"],
+            "details": "Progress updated to 75%",
+            "type": "updated"
+        },
+        {
+            "id": "act_005",
+            "timestamp": "2024-01-22T11:20:00Z",
+            "action": "Report Exported",
+            "investigation": "Multiple Investigations",
+            "user": current_user["email"],
+            "details": "PDF report exported for date range",
+            "type": "exported"
+        }
+    ]
+    
+    # Filter activities if needed
+    if filter_type != "all":
+        activities = [act for act in activities if act["type"] == filter_type]
+    
+    return {
+        "status": "success",
+        "data": activities
+    }
+
+@app.post("/api/v1/reports/export")
+async def export_report(export_data: dict, current_user: dict = Depends(get_current_user)):
+    """Export report in specified format"""
+    
+    format_type = export_data.get("format", "pdf")
+    date_range = export_data.get("date_range", {})
+    
+    # In a real implementation, this would generate actual files
+    # For demo, simulate the export process
+    
+    export_id = f"export_{int(time.time())}"
+    
+    return {
+        "status": "success",
+        "message": f"Report export initiated in {format_type.upper()} format",
+        "data": {
+            "export_id": export_id,
+            "format": format_type,
+            "estimated_completion": "2-3 minutes",
+            "download_url": f"/api/v1/reports/download/{export_id}"
+        }
+    }
+
+@app.get("/api/v1/reports/download/{export_id}")
+async def download_report(export_id: str, current_user: dict = Depends(get_current_user)):
+    """Download exported report"""
+    
+    # In a real implementation, this would serve the actual file
+    # For demo, return file info
+    
+    return {
+        "status": "success",
+        "message": "Report ready for download",
+        "data": {
+            "export_id": export_id,
+            "filename": f"osint_report_{export_id}.pdf",
+            "size": "2.4 MB",
+            "created_at": datetime.now().isoformat()
+        }
+    }
+
+@app.post("/api/v1/reports/custom")
+async def generate_custom_report(report_config: dict, current_user: dict = Depends(get_current_user)):
+    """Generate custom report based on configuration"""
+    
+    required_fields = ["name", "type"]
+    for field in required_fields:
+        if field not in report_config:
+            raise HTTPException(status_code=400, detail=f"Missing required field: {field}")
+    
+    custom_report = {
+        "id": f"custom_{int(time.time())}",
+        "name": report_config["name"],
+        "type": report_config["type"],
+        "metrics": report_config.get("metrics", []),
+        "filters": report_config.get("filters", {}),
+        "created_at": datetime.now().isoformat(),
+        "created_by": current_user["email"],
+        "status": "generating"
+    }
+    
+    return {
+        "status": "success",
+        "message": "Custom report generation started",
+        "data": custom_report
+    }
+
 @app.get("/docs-info")
 async def api_info():
     return {
@@ -827,6 +1168,7 @@ async def docs_info():
         "endpoints": {
             "authentication": ["/auth/register", "/auth/login"],
             "investigations": ["/api/v1/investigations"],
+            "reports": ["/api/v1/reports/metrics", "/api/v1/reports/activity", "/api/v1/reports/export"],
             "email_intel": ["/api/v1/email/investigate"],
             "search": ["/api/v1/search/engines"],
             "phone_intel": ["/api/v1/phone/investigate"]

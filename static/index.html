@@ -875,6 +875,185 @@
             flex-wrap: wrap;
             gap: 8px;
         }
+        
+        /* Investigations Styles */
+        .investigations-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .investigations-stats .stat-card {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            transition: all 0.2s ease;
+        }
+        
+        .investigations-stats .stat-card:hover {
+            border-color: #4285f4;
+            transform: translateY(-2px);
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: 600;
+            color: #4285f4;
+            margin-bottom: 8px;
+        }
+        
+        .stat-label {
+            color: #9aa0a6;
+            font-size: 14px;
+        }
+        
+        .investigations-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            gap: 16px;
+        }
+        
+        .investigations-actions .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 300px;
+        }
+        
+        .investigations-actions .search-box i {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9aa0a6;
+        }
+        
+        .investigations-actions .search-box input {
+            width: 100%;
+            padding: 12px 12px 12px 40px;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #e8eaed;
+            font-size: 14px;
+        }
+        
+        .investigations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 20px;
+        }
+        
+        .investigation-card {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.2s ease;
+        }
+        
+        .investigation-card:hover {
+            border-color: #4285f4;
+            transform: translateY(-2px);
+        }
+        
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 12px;
+        }
+        
+        .card-header h3 {
+            color: #e8eaed;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0;
+            flex: 1;
+        }
+        
+        .priority {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+            margin-left: 12px;
+        }
+        
+        .priority.high {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.2);
+        }
+        
+        .priority.medium {
+            background: rgba(255, 167, 38, 0.1);
+            color: #ffa726;
+            border: 1px solid rgba(255, 167, 38, 0.2);
+        }
+        
+        .priority.low {
+            background: rgba(76, 175, 80, 0.1);
+            color: #4caf50;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+        }
+        
+        .card-content {
+            margin-bottom: 16px;
+        }
+        
+        .card-content p {
+            color: #9aa0a6;
+            font-size: 14px;
+            line-height: 1.4;
+            margin-bottom: 8px;
+        }
+        
+        .card-content strong {
+            color: #e8eaed;
+        }
+        
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid #333;
+        }
+        
+        .status {
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .status.active {
+            background: rgba(67, 233, 123, 0.1);
+            color: #43e97b;
+            border: 1px solid rgba(67, 233, 123, 0.2);
+        }
+        
+        .status.completed {
+            background: rgba(66, 133, 244, 0.1);
+            color: #4285f4;
+            border: 1px solid rgba(66, 133, 244, 0.2);
+        }
+        
+        .status.paused {
+            background: rgba(255, 167, 38, 0.1);
+            color: #ffa726;
+            border: 1px solid rgba(255, 167, 38, 0.2);
+        }
+        
+        .date {
+            color: #9aa0a6;
+            font-size: 12px;
+        }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -1165,6 +1344,90 @@
                 </div>
             </div>
             
+            <!-- Investigations Section -->
+            <div id="investigationsContent" class="intel-section hidden">
+                <div class="section-header">
+                    <h2><i class="fas fa-folder-open"></i> Investigations Management</h2>
+                    <p>Create, manage, and track your OSINT investigations</p>
+                </div>
+                
+                <div class="investigations-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">5</div>
+                        <div class="stat-label">Total Investigations</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">Active</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">1</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">2</div>
+                        <div class="stat-label">High Priority</div>
+                    </div>
+                </div>
+                
+                <div class="investigations-actions">
+                    <button class="intel-btn primary" onclick="createNewInvestigation()">
+                        <i class="fas fa-plus"></i> New Investigation
+                    </button>
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search investigations...">
+                    </div>
+                </div>
+                
+                <div class="investigations-grid">
+                    <div class="investigation-card">
+                        <div class="card-header">
+                            <h3>Email Compromise Investigation</h3>
+                            <span class="priority high">High</span>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Target:</strong> john.doe@company.com</p>
+                            <p>Investigating potential email account compromise and data breach indicators.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="status active">Active</span>
+                            <span class="date">Started 2 days ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="investigation-card">
+                        <div class="card-header">
+                            <h3>Social Media Profile Analysis</h3>
+                            <span class="priority medium">Medium</span>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Target:</strong> @suspicious_user</p>
+                            <p>Comprehensive analysis of social media presence for background verification.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="status active">Active</span>
+                            <span class="date">Started 1 week ago</span>
+                        </div>
+                    </div>
+                    
+                    <div class="investigation-card">
+                        <div class="card-header">
+                            <h3>Domain Infrastructure Mapping</h3>
+                            <span class="priority high">High</span>
+                        </div>
+                        <div class="card-content">
+                            <p><strong>Target:</strong> suspicious-site.com</p>
+                            <p>Mapping domain infrastructure and identifying potential malicious activities.</p>
+                        </div>
+                        <div class="card-footer">
+                            <span class="status completed">Completed</span>
+                            <span class="date">Completed yesterday</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             </div> <!-- End Content Container -->
         </main>
     </div>
@@ -1224,6 +1487,7 @@
             // Hide all sections
             document.getElementById('dashboardContent').classList.add('hidden');
             document.getElementById('emailIntelContent').classList.add('hidden');
+            document.getElementById('investigationsContent').classList.add('hidden');
             
             // Show appropriate section
             if (section === 'dashboard') {
@@ -1231,6 +1495,8 @@
             } else if (section === 'email-intel') {
                 document.getElementById('emailIntelContent').classList.remove('hidden');
                 setupEmailIntelForm();
+            } else if (section === 'investigations') {
+                document.getElementById('investigationsContent').classList.remove('hidden');
             } else {
                 // For other sections, show coming soon
                 alert(`Sección "${titles[section]}" - Funcionalidad próximamente`);
@@ -1248,6 +1514,10 @@
                     await performEmailInvestigation();
                 });
             }
+        }
+        
+        function createNewInvestigation() {
+            alert('Crear nueva investigación - Funcionalidad próximamente');
         }
         
         async function performEmailInvestigation() {

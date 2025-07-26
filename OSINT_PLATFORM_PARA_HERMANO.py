@@ -163,7 +163,217 @@ async def root():
     """Serve the main web interface"""
     return FileResponse('static/index.html')
 
-@app.get("/api")
+# ===== INVESTIGATIONS MANAGEMENT ENDPOINTS =====
+
+@app.get("/api/v1/investigations")
+async def get_investigations(current_user: dict = Depends(get_current_user)):
+    """Get all investigations for the current user"""
+    # In a real implementation, this would query a database
+    # For now, return simulated data
+    
+    sample_investigations = [
+        {
+            "id": "inv_001",
+            "name": "Email Compromise Investigation",
+            "type": "email",
+            "target": "john.doe@company.com",
+            "description": "Investigating potential email account compromise and data breach indicators.",
+            "priority": "high",
+            "status": "active",
+            "created_at": "2024-01-15T10:30:00Z",
+            "updated_at": "2024-01-20T14:45:00Z",
+            "deadline": "2024-02-01",
+            "tags": ["cybercrime", "data-breach", "email-security"],
+            "progress": 65,
+            "findings": [
+                "Email found in 3 data breaches",
+                "Suspicious login activity detected",
+                "Password reuse across multiple platforms"
+            ],
+            "assigned_to": current_user["email"],
+            "estimated_hours": 20,
+            "actual_hours": 13
+        },
+        {
+            "id": "inv_002",
+            "name": "Social Media Profile Analysis",
+            "type": "social",
+            "target": "@suspicious_user",
+            "description": "Comprehensive analysis of social media presence for background verification.",
+            "priority": "medium",
+            "status": "completed",
+            "created_at": "2024-01-10T09:15:00Z",
+            "updated_at": "2024-01-18T16:20:00Z",
+            "deadline": "2024-01-25",
+            "tags": ["background-check", "social-media", "verification"],
+            "progress": 100,
+            "findings": [
+                "Multiple fake profiles identified",
+                "Inconsistent personal information",
+                "Suspicious network connections"
+            ],
+            "assigned_to": current_user["email"],
+            "estimated_hours": 15,
+            "actual_hours": 18
+        },
+        {
+            "id": "inv_003",
+            "name": "Domain Infrastructure Mapping",
+            "type": "domain",
+            "target": "suspicious-site.com",
+            "description": "Mapping domain infrastructure and identifying potential malicious activities.",
+            "priority": "high",
+            "status": "active",
+            "created_at": "2024-01-20T11:00:00Z",
+            "updated_at": "2024-01-22T13:30:00Z",
+            "deadline": "2024-02-05",
+            "tags": ["malware", "infrastructure", "threat-intel"],
+            "progress": 30,
+            "findings": [
+                "Domain registered with privacy protection",
+                "Multiple subdomains identified",
+                "Hosting provider traced to offshore location"
+            ],
+            "assigned_to": current_user["email"],
+            "estimated_hours": 25,
+            "actual_hours": 8
+        }
+    ]
+    
+    return {
+        "status": "success",
+        "data": {
+            "investigations": sample_investigations,
+            "total": len(sample_investigations),
+            "statistics": {
+                "total": len(sample_investigations),
+                "active": len([inv for inv in sample_investigations if inv["status"] == "active"]),
+                "completed": len([inv for inv in sample_investigations if inv["status"] == "completed"]),
+                "high_priority": len([inv for inv in sample_investigations if inv["priority"] == "high"])
+            }
+        }
+    }
+
+@app.post("/api/v1/investigations")
+async def create_investigation(investigation_data: dict, current_user: dict = Depends(get_current_user)):
+    """Create a new investigation"""
+    # Validate required fields
+    required_fields = ["name", "type"]
+    for field in required_fields:
+        if field not in investigation_data:
+            raise HTTPException(status_code=400, detail=f"Missing required field: {field}")
+    
+    # Create new investigation
+    new_investigation = {
+        "id": f"inv_{int(time.time())}",
+        "name": investigation_data["name"],
+        "type": investigation_data["type"],
+        "target": investigation_data.get("target", ""),
+        "description": investigation_data.get("description", ""),
+        "priority": investigation_data.get("priority", "medium"),
+        "status": "active",
+        "created_at": datetime.now().isoformat(),
+        "updated_at": datetime.now().isoformat(),
+        "deadline": investigation_data.get("deadline"),
+        "tags": investigation_data.get("tags", []),
+        "progress": 0,
+        "findings": [],
+        "assigned_to": current_user["email"],
+        "estimated_hours": investigation_data.get("estimated_hours", 0),
+        "actual_hours": 0
+    }
+    
+    # In a real implementation, save to database
+    # For demo, just return the created investigation
+    
+    return {
+        "status": "success",
+        "message": "Investigation created successfully",
+        "data": new_investigation
+    }
+
+@app.get("/api/v1/investigations/{investigation_id}")
+async def get_investigation(investigation_id: str, current_user: dict = Depends(get_current_user)):
+    """Get a specific investigation by ID"""
+    # In a real implementation, query database by ID
+    # For demo, return sample data
+    
+    sample_investigation = {
+        "id": investigation_id,
+        "name": "Sample Investigation",
+        "type": "email",
+        "target": "sample@example.com",
+        "description": "This is a sample investigation for demonstration purposes.",
+        "priority": "medium",
+        "status": "active",
+        "created_at": "2024-01-15T10:30:00Z",
+        "updated_at": "2024-01-20T14:45:00Z",
+        "deadline": "2024-02-01",
+        "tags": ["sample", "demo"],
+        "progress": 45,
+        "findings": [
+            "Sample finding 1",
+            "Sample finding 2"
+        ],
+        "assigned_to": current_user["email"],
+        "estimated_hours": 10,
+        "actual_hours": 4
+    }
+    
+    return {
+        "status": "success",
+        "data": sample_investigation
+    }
+
+@app.put("/api/v1/investigations/{investigation_id}")
+async def update_investigation(investigation_id: str, update_data: dict, current_user: dict = Depends(get_current_user)):
+    """Update an existing investigation"""
+    # In a real implementation, update database record
+    # For demo, return success message
+    
+    return {
+        "status": "success",
+        "message": "Investigation updated successfully",
+        "data": {
+            "id": investigation_id,
+            "updated_at": datetime.now().isoformat(),
+            **update_data
+        }
+    }
+
+@app.delete("/api/v1/investigations/{investigation_id}")
+async def delete_investigation(investigation_id: str, current_user: dict = Depends(get_current_user)):
+    """Delete an investigation"""
+    # In a real implementation, delete from database
+    # For demo, return success message
+    
+    return {
+        "status": "success",
+        "message": "Investigation deleted successfully"
+    }
+
+@app.post("/api/v1/investigations/{investigation_id}/findings")
+async def add_finding(investigation_id: str, finding_data: dict, current_user: dict = Depends(get_current_user)):
+    """Add a new finding to an investigation"""
+    if "content" not in finding_data:
+        raise HTTPException(status_code=400, detail="Finding content is required")
+    
+    new_finding = {
+        "id": f"finding_{int(time.time())}",
+        "content": finding_data["content"],
+        "type": finding_data.get("type", "general"),
+        "severity": finding_data.get("severity", "medium"),
+        "created_at": datetime.now().isoformat(),
+        "created_by": current_user["email"]
+    }
+    
+    return {
+        "status": "success",
+        "message": "Finding added successfully",
+        "data": new_finding
+    }
+
+@app.get("/docs-info")
 async def api_info():
     return {
         "message": "OSINT Intelligence Platform API",

@@ -384,28 +384,66 @@ class OSINTPlatform {
     createInvestigationsSection() {
         return `
             <div class="section-header mb-2">
-                <h2><i class="fas fa-folder-open"></i> Gestión de Investigaciones</h2>
-                <p>Organiza y gestiona tus investigaciones OSINT</p>
+                <h2><i class="fas fa-folder-open"></i> Investigations Management</h2>
+                <p>Create, manage, and track your OSINT investigations</p>
             </div>
             
-            <div class="investigations-container">
-                <div class="investigations-toolbar">
-                    <button class="action-btn" id="newInvestigationBtn">
-                        <i class="fas fa-plus"></i> Nueva Investigación
-                    </button>
-                    <div class="search-filter">
-                        <input type="text" placeholder="Buscar investigaciones..." id="investigationSearch">
-                        <select id="investigationFilter">
-                            <option value="all">Todas</option>
-                            <option value="email">Email</option>
-                            <option value="phone">Teléfono</option>
-                            <option value="domain">Dominio</option>
-                        </select>
+            <div class="investigations-preview">
+                <div class="investigations-stats">
+                    <div class="stat-card">
+                        <div class="stat-icon">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="totalInvestigations">0</h3>
+                            <p>Total Investigations</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon active">
+                            <i class="fas fa-play"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="activeInvestigations">0</h3>
+                            <p>Active</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon completed">
+                            <i class="fas fa-check"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="completedInvestigations">0</h3>
+                            <p>Completed</p>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon high-priority">
+                            <i class="fas fa-exclamation"></i>
+                        </div>
+                        <div class="stat-content">
+                            <h3 id="highPriorityInvestigations">0</h3>
+                            <p>High Priority</p>
+                        </div>
                     </div>
                 </div>
                 
-                <div class="investigations-grid" id="investigationsGrid">
-                    <!-- Investigations will be loaded here -->
+                <div class="investigations-actions">
+                    <button class="create-investigation-btn" onclick="this.openInvestigationsPage()">
+                        <i class="fas fa-plus"></i>
+                        New Investigation
+                    </button>
+                    <button class="view-all-btn" onclick="this.openInvestigationsPage()">
+                        <i class="fas fa-eye"></i>
+                        View All Investigations
+                    </button>
+                </div>
+                
+                <div class="recent-investigations">
+                    <h3>Recent Investigations</h3>
+                    <div id="recentInvestigationsList">
+                        <!-- Recent investigations will be loaded here -->
+                    </div>
                 </div>
             </div>
         `;
@@ -1728,4 +1766,127 @@ OSINTPlatform.prototype.displayImageResults = function(data) {
     resultsContainer.style.display = 'block';
     
     this.showToast('Image analysis completed', 'success');
+};
+
+// ===== INVESTIGATIONS MANAGEMENT FUNCTIONS =====
+
+OSINTPlatform.prototype.loadInvestigationsData = async function() {
+    try {
+        const response = await fetch(`${this.apiBase}/api/v1/investigations`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            this.updateInvestigationsStats(data.data.statistics);
+            this.displayRecentInvestigations(data.data.investigations.slice(0, 3));
+        } else {
+            throw new Error('Failed to load investigations');
+        }
+    } catch (error) {
+        console.error('Error loading investigations:', error);
+        this.showToast('Error loading investigations data', 'error');
+    }
+};
+
+OSINTPlatform.prototype.updateInvestigationsStats = function(stats) {
+    document.getElementById('totalInvestigations').textContent = stats.total || 0;
+    document.getElementById('activeInvestigations').textContent = stats.active || 0;
+    document.getElementById('completedInvestigations').textContent = stats.completed || 0;
+    document.getElementById('highPriorityInvestigations').textContent = stats.high_priority || 0;
+};
+
+OSINTPlatform.prototype.displayRecentInvestigations = function(investigations) {
+    const container = document.getElementById('recentInvestigationsList');
+    
+    if (!investigations || investigations.length === 0) {
+        container.innerHTML = `
+            <div class="no-investigations">
+                <p>No recent investigations found</p>
+                <button class="create-investigation-btn" onclick="osintPlatform.openInvestigationsPage()">
+                    <i class="fas fa-plus"></i>
+                    Create Your First Investigation
+                </button>
+            </div>
+        `;
+        return;
+    }
+    
+    const investigationsHtml = investigations.map(inv => `
+        <div class="recent-investigation-item" onclick="osintPlatform.openInvestigationsPage()">
+            <div class="investigation-header">
+                <div class="investigation-type">
+                    <i class="${this.getInvestigationIcon(inv.type)}"></i>
+                    <span>${inv.name}</span>
+                </div>
+                <div class="investigation-status status-${inv.status}">
+                    ${inv.status}
+                </div>
+            </div>
+            <div class="investigation-details">
+                <div class="investigation-target">
+                    <i class="fas fa-crosshairs"></i>
+                    ${inv.target || 'No target specified'}
+                </div>
+                <div class="investigation-progress">
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: ${inv.progress}%"></div>
+                    </div>
+                    <span>${inv.progress}%</span>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    container.innerHTML = investigationsHtml;
+};
+
+OSINTPlatform.prototype.getInvestigationIcon = function(type) {
+    const icons = {
+        'email': 'fas fa-envelope',
+        'domain': 'fas fa-globe',
+        'social': 'fab fa-twitter',
+        'phone': 'fas fa-phone',
+        'image': 'fas fa-camera',
+        'general': 'fas fa-search'
+    };
+    return icons[type] || 'fas fa-search';
+};
+
+OSINTPlatform.prototype.openInvestigationsPage = function() {
+    // Open the investigations page in a new tab/window
+    window.open('./investigations.html', '_blank');
+};
+
+// Load investigations data when the investigations section is shown
+OSINTPlatform.prototype.showSection = function(sectionName) {
+    // Hide all sections
+    document.querySelectorAll('.content-section').forEach(section => {
+        section.classList.remove('active');
+        section.style.display = 'none';
+    });
+    
+    // Show selected section
+    const section = document.getElementById(sectionName);
+    if (section) {
+        section.style.display = 'block';
+        section.classList.add('active');
+        
+        // Load data for specific sections
+        if (sectionName === 'investigations' && this.token) {
+            this.loadInvestigationsData();
+        }
+    }
+    
+    // Update sidebar
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.classList.remove('active');
+    });
+    
+    const navItem = document.querySelector(`[data-section="${sectionName}"]`);
+    if (navItem) {
+        navItem.classList.add('active');
+    }
 };

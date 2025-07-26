@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investigations Management - OSINT Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="investigations-container">
+        <!-- Header Section -->
+        <div class="investigations-header">
+            <div class="header-content">
+                <h1>Investigations Management</h1>
+                <p>Create, manage, and track your OSINT investigations</p>
+            </div>
+            <div class="header-actions">
+                <button class="create-investigation-btn" onclick="showCreateModal()">
+                    <i class="fas fa-plus"></i>
+                    New Investigation
+                </button>
+                <div class="view-toggle">
+                    <button class="toggle-btn active" data-view="grid" onclick="switchView('grid')">
+                        <i class="fas fa-th"></i>
+                    </button>
+                    <button class="toggle-btn" data-view="list" onclick="switchView('list')">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters and Search -->
+        <div class="investigations-filters">
+            <div class="search-filter">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="investigationSearch" placeholder="Search investigations...">
+                </div>
+            </div>
+            <div class="filter-options">
+                <select id="statusFilter" onchange="filterInvestigations()">
+                    <option value="">All Status</option>
+                    <option value="active">Active</option>
+                    <option value="completed">Completed</option>
+                    <option value="paused">Paused</option>
+                    <option value="archived">Archived</option>
+                </select>
+                <select id="typeFilter" onchange="filterInvestigations()">
+                    <option value="">All Types</option>
+                    <option value="email">Email Investigation</option>
+                    <option value="domain">Domain Analysis</option>
+                    <option value="social">Social Media</option>
+                    <option value="phone">Phone Investigation</option>
+                    <option value="image">Image Analysis</option>
+                    <option value="general">General OSINT</option>
+                </select>
+                <select id="priorityFilter" onchange="filterInvestigations()">
+                    <option value="">All Priorities</option>
+                    <option value="high">High Priority</option>
+                    <option value="medium">Medium Priority</option>
+                    <option value="low">Low Priority</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="investigations-stats">
+            <div class="stat-card">
+                <div class="stat-icon">
+                    <i class="fas fa-folder-open"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="totalInvestigations">0</h3>
+                    <p>Total Investigations</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon active">
+                    <i class="fas fa-play"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="activeInvestigations">0</h3>
+                    <p>Active</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon completed">
+                    <i class="fas fa-check"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="completedInvestigations">0</h3>
+                    <p>Completed</p>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon high-priority">
+                    <i class="fas fa-exclamation"></i>
+                </div>
+                <div class="stat-content">
+                    <h3 id="highPriorityInvestigations">0</h3>
+                    <p>High Priority</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Investigations Grid/List -->
+        <div class="investigations-content">
+            <div id="investigationsGrid" class="investigations-grid">
+                <!-- Investigations will be populated here -->
+            </div>
+            <div id="investigationsList" class="investigations-list" style="display: none;">
+                <!-- List view will be populated here -->
+            </div>
+        </div>
+
+        <!-- Empty State -->
+        <div id="emptyState" class="empty-state" style="display: none;">
+            <div class="empty-icon">
+                <i class="fas fa-folder-open"></i>
+            </div>
+            <h3>No investigations found</h3>
+            <p>Create your first investigation to get started with OSINT analysis</p>
+            <button class="create-investigation-btn" onclick="showCreateModal()">
+                <i class="fas fa-plus"></i>
+                Create Investigation
+            </button>
+        </div>
+    </div>
+
+    <!-- Create Investigation Modal -->
+    <div id="createModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Create New Investigation</h2>
+                <button class="close-btn" onclick="hideCreateModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="createInvestigationForm">
+                    <div class="form-group">
+                        <label for="investigationName">Investigation Name *</label>
+                        <input type="text" id="investigationName" placeholder="Enter investigation name..." required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="investigationType">Investigation Type *</label>
+                        <select id="investigationType" required>
+                            <option value="">Select type...</option>
+                            <option value="email">Email Investigation</option>
+                            <option value="domain">Domain Analysis</option>
+                            <option value="social">Social Media Investigation</option>
+                            <option value="phone">Phone Investigation</option>
+                            <option value="image">Image Analysis</option>
+                            <option value="general">General OSINT</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="investigationTarget">Primary Target</label>
+                        <input type="text" id="investigationTarget" placeholder="Email, domain, username, phone, etc.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="investigationDescription">Description</label>
+                        <textarea id="investigationDescription" rows="4" placeholder="Describe the investigation objectives and scope..."></textarea>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="investigationPriority">Priority</label>
+                            <select id="investigationPriority">
+                                <option value="low">Low</option>
+                                <option value="medium" selected>Medium</option>
+                                <option value="high">High</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="investigationDeadline">Deadline</label>
+                            <input type="date" id="investigationDeadline">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="investigationTags">Tags</label>
+                        <input type="text" id="investigationTags" placeholder="Enter tags separated by commas...">
+                        <small>e.g., cybercrime, fraud, background-check</small>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="cancel-btn" onclick="hideCreateModal()">Cancel</button>
+                <button type="submit" form="createInvestigationForm" class="create-btn">
+                    <i class="fas fa-plus"></i>
+                    Create Investigation
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Investigation Details Modal -->
+    <div id="detailsModal" class="modal" style="display: none;">
+        <div class="modal-content large">
+            <div class="modal-header">
+                <h2 id="detailsTitle">Investigation Details</h2>
+                <div class="modal-actions">
+                    <button class="action-btn" onclick="editInvestigation()">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button class="action-btn" onclick="duplicateInvestigation()">
+                        <i class="fas fa-copy"></i>
+                    </button>
+                    <button class="action-btn danger" onclick="deleteInvestigation()">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                    <button class="close-btn" onclick="hideDetailsModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div id="investigationDetails">
+                    <!-- Details will be populated here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Context Menu -->
+    <div id="contextMenu" class="context-menu" style="display: none;">
+        <div class="context-item" onclick="viewInvestigation()">
+            <i class="fas fa-eye"></i>
+            View Details
+        </div>
+        <div class="context-item" onclick="editInvestigation()">
+            <i class="fas fa-edit"></i>
+            Edit
+        </div>
+        <div class="context-item" onclick="duplicateInvestigation()">
+            <i class="fas fa-copy"></i>
+            Duplicate
+        </div>
+        <div class="context-item" onclick="archiveInvestigation()">
+            <i class="fas fa-archive"></i>
+            Archive
+        </div>
+        <div class="context-item danger" onclick="deleteInvestigation()">
+            <i class="fas fa-trash"></i>
+            Delete
+        </div>
+    </div>
+
+    <script src="investigations.js"></script>
+</body>
+</html>

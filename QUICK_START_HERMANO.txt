@@ -1,0 +1,59 @@
+🚀 OSINT PLATFORM - QUICK START PARA TU HERMANO
+===============================================
+
+🔥 COMANDOS RÁPIDOS - COPIA Y PEGA:
+
+1️⃣ INICIAR PLATAFORMA:
+cd /home/ciberboot
+nohup python3 working_osint_api.py > osint_platform.log 2>&1 &
+
+2️⃣ VERIFICAR:
+curl http://localhost:8002/health
+
+3️⃣ REGISTRARSE:
+curl -X POST http://localhost:8002/auth/register \
+  -H "Content-Type: application/json" \
+  -d '{"email": "hermano@osint.com", "password": "mipassword", "role": "analyst"}'
+
+4️⃣ LOGIN:
+curl -X POST http://localhost:8002/auth/login \
+  -H "Content-Type: application/json" \
+  -d '{"email": "hermano@osint.com", "password": "mipassword"}'
+
+5️⃣ GUARDAR TOKEN (copiar del login):
+TOKEN="pon_aqui_tu_access_token"
+
+6️⃣ INVESTIGAR EMAIL:
+curl -X POST http://localhost:8002/api/v1/email/investigate \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer $TOKEN" \
+  -d '{"email": "target@victim.com", "check_breaches": true, "check_social": true}' | python3 -m json.tool
+
+7️⃣ INVESTIGAR TELÉFONO:
+curl "http://localhost:8002/api/v1/phone/investigate?phone=%2B1234567890" \
+  -H "Authorization: Bearer $TOKEN" | python3 -m json.tool
+
+8️⃣ BÚSQUEDA OSINT:
+curl "http://localhost:8002/api/v1/search/engines?query=osint%20tools" \
+  -H "Authorization: Bearer $TOKEN" | python3 -m json.tool
+
+🛠️ GESTIÓN:
+- Parar: pkill -f working_osint_api.py
+- Ver logs: tail -f osint_platform.log
+- Estado: ps aux | grep working_osint_api.py
+
+🌐 URLs:
+- API: http://localhost:8002
+- Docs: http://localhost:8002/docs  
+- Health: http://localhost:8002/health
+
+🔑 CREDENCIALES DE EMERGENCIA:
+Email: admin@example.com
+Password: admin123
+
+📁 ARCHIVOS IMPORTANTES:
+- Plataforma: working_osint_api.py
+- Guía completa: OSINT_PLATFORM_GUIA_HERMANO.sh
+- Logs: osint_platform.log
+
+¡A HACKEAR CON ESTILO! 😎🔍

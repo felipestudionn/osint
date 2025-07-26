@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSINT Intelligence Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Google Sans', 'Roboto', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0f0f0f;
+            color: #e8eaed;
+            overflow-x: hidden;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .app-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #1f1f1f;
+            border-right: 1px solid #333;
+            padding: 16px 0;
+            position: fixed;
+            height: 100vh;
+            z-index: 1000;
+        }
+
+        .logo {
+            text-align: left;
+            margin-bottom: 24px;
+            padding: 0 24px;
+        }
+
+        .logo h1 {
+            font-size: 22px;
+            font-weight: 400;
+            background: linear-gradient(90deg, #ffffff 0%, #4285f4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo-subtitle {
+            color: #9aa0a6;
+            font-size: 13px;
+            margin-top: 4px;
+            font-weight: 400;
+        }
+
+        .nav-menu {
+            padding: 0 12px;
+        }
+
+        .nav-item {
+            margin: 2px 0;
+            padding: 12px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #9aa0a6;
+            position: relative;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .nav-item:hover {
+            background: #2d2d2d;
+            color: #e8eaed;
+        }
+
+        .nav-item.active {
+            background: #1a73e8;
+            color: #ffffff;
+        }
+
+        .nav-item.active i {
+            color: #ffffff;
+        }
+
+        .nav-item i {
+            color: #9aa0a6;
+            width: 20px;
+            font-size: 16px;
+        }
+
+        .nav-item:hover i {
+            color: #e8eaed;
+        }
+
+        .main-content {
+            flex: 1;
+            margin-left: 240px;
+            background: #0f0f0f;
+        }
+
+        .top-header {
+            background: #1f1f1f;
+            padding: 16px 24px;
+            border-bottom: 1px solid #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left h1 {
+            font-size: 24px;
+            font-weight: 400;
+            background: linear-gradient(90deg, #ffffff 0%, #4285f4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-box {
+            background: #2d2d2d;
+            border: 1px solid #444;
+            border-radius: 32px;
+            padding: 16px 24px;
+            color: #e8eaed;
+            width: 400px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .search-box:focus {
+            outline: none;
+            border-color: #4285f4;
+            background: #333;
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8892b0;
+        }
+
+        .notifications {
+            position: relative;
+            padding: 0.75rem;
+            border-radius: 12px;
+            background: rgba(42, 42, 74, 0.5);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .notifications:hover {
+            background: rgba(102, 126, 234, 0.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 0.25rem;
+            right: 0.25rem;
+            background: #ff6b6b;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .dashboard-container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 24px;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+
+        .stat-card:hover {
+            background: #2d2d2d;
+            border-color: #444;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .stat-card:nth-child(1) .stat-icon { background: #4285f4; }
+        .stat-card:nth-child(2) .stat-icon { background: #34a853; }
+        .stat-card:nth-child(3) .stat-icon { background: #fbbc04; }
+        .stat-card:nth-child(4) .stat-icon { background: #ea4335; }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 400;
+            color: #e8eaed;
+            margin-bottom: 8px;
+        }
+
+        .stat-label {
+            color: #9aa0a6;
+            font-size: 14px;
+            font-weight: 400;
+        }
+
+        .stat-change {
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            margin-top: 0.5rem;
+        }
+
+        .stat-change.positive {
+            color: #43e97b;
+        }
+
+        .welcome-section {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 48px;
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .welcome-section h2 {
+            background: linear-gradient(90deg, #ffffff 0%, #4285f4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 16px;
+            font-size: 28px;
+            font-weight: 400;
+        }
+
+        .welcome-section p {
+            color: #9aa0a6;
+            margin-bottom: 32px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        .action-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .action-btn {
+            background: #1f1f1f;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            color: #ffffff;
+            padding: 16px 32px;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 500;
+            text-decoration: none;
+            font-size: 14px;
+            position: relative;
+        }
+        
+        .action-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            background: linear-gradient(135deg, #4285f4, #1a73e8, #34a853);
+            border-radius: 24px;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+        }
+
+        .action-btn:hover {
+            background: #2d2d2d;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+        }
+        
+        .action-btn:hover::before {
+            background: linear-gradient(135deg, #4285f4, #1a73e8, #34a853, #fbbc04);
+        }
+
+        .action-btn i {
+            color: #ffffff;
+            font-size: 16px;
+        }
+
+        .login-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #0f0f0f;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(66, 133, 244, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(66, 133, 244, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(66, 133, 244, 0.08) 0%, transparent 50%);
+            padding: 32px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent 30%, rgba(66, 133, 244, 0.02) 50%, transparent 70%);
+            animation: shimmer 8s ease-in-out infinite;
+        }
+        
+        @keyframes shimmer {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+
+        .login-box {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            padding: 48px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            animation: loginSlideIn 0.6s ease-out;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .login-box:hover {
+            border-color: #444;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+            transform: translateY(-5px);
+        }
+        
+        @keyframes loginSlideIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .login-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .login-header i {
+            font-size: 48px;
+            color: #4285f4;
+            margin-bottom: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .login-header i:hover {
+            transform: scale(1.1);
+            filter: drop-shadow(0 0 20px rgba(66, 133, 244, 0.5));
+        }
+
+        .login-header h2 {
+            background: linear-gradient(90deg, #ffffff 0%, #4285f4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 8px;
+            font-weight: 400;
+            font-size: 24px;
+        }
+
+        .login-header p {
+            color: #9aa0a6;
+            font-size: 14px;
+        }
+
+        .login-container .form-group {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .login-container .form-group i {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9aa0a6;
+            z-index: 1;
+            font-size: 16px;
+        }
+
+        .login-container .form-group input {
+            width: 100%;
+            padding: 16px 24px 16px 52px;
+            background: #2d2d2d;
+            border: 1px solid #444;
+            border-radius: 28px;
+            color: #e8eaed;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+
+        .login-container .form-group input:focus {
+            outline: none;
+            border-color: #4285f4;
+            background: #333;
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+        }
+
+        .login-btn {
+            width: 100%;
+            background: #1f1f1f;
+            color: white;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            padding: 16px 32px;
+            border-radius: 24px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+        }
+        
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            background: linear-gradient(135deg, #4285f4, #1a73e8, #34a853);
+            border-radius: 24px;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+        }
+
+        .login-btn:hover {
+            background: #2d2d2d;
+            transform: translateY(-2px);
+            box-shadow: 
+                0 4px 12px rgba(66, 133, 244, 0.4),
+                0 0 20px rgba(66, 133, 244, 0.2),
+                inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        }
+        
+        .login-btn:hover::before {
+            background: linear-gradient(135deg, #4285f4, #1a73e8, #34a853, #fbbc04);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+            box-shadow: 0 2px 8px rgba(66, 133, 244, 0.3);
+        }
+
+        .demo-credentials {
+            background: #2d2d2d;
+            padding: 16px;
+            border-radius: 16px;
+            margin-top: 24px;
+            font-size: 12px;
+            color: #9aa0a6;
+            text-align: center;
+            border: 1px solid #444;
+            transition: all 0.2s ease;
+        }
+        
+        .demo-credentials:hover {
+            background: #333;
+            border-color: #555;
+            transform: translateY(-1px);
+        }
+        
+        .demo-credentials strong {
+            color: #4285f4;
+        }
+
+        .hidden { 
+            display: none !important; 
+        }
+        
+        /* Intel Sections Styles */
+        .intel-section {
+            padding: 32px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-header {
+            margin-bottom: 32px;
+            text-align: center;
+        }
+        
+        .section-header h2 {
+            background: linear-gradient(90deg, #ffffff 0%, #4285f4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 28px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-weight: 400;
+        }
+        
+        .section-header p {
+            color: #9aa0a6;
+            font-size: 16px;
+        }
+        
+        .intel-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 32px;
+        }
+        
+        .intel-form-card {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 16px;
+            padding: 32px;
+            height: fit-content;
+            transition: all 0.2s ease;
+        }
+        
+        .intel-form-card:hover {
+            border-color: #444;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+        }
+        
+        .intel-form-card h3 {
+            background: linear-gradient(90deg, #ffffff 0%, #4285f4 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 400;
+            font-size: 20px;
+        }
+        
+        .intel-form .form-group {
+            margin-bottom: 24px;
+        }
+        
+        .intel-form .form-group label {
+            display: block;
+            color: #e8eaed;
+            font-weight: 400;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .intel-form .form-group input {
+            width: 100%;
+            padding: 16px 24px;
+            background: #2d2d2d;
+            border: 1px solid #444;
+            border-radius: 28px;
+            color: #e8eaed;
+            font-size: 14px;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        
+        .intel-form .form-group input:focus {
+            outline: none;
+            border-color: #4285f4;
+            background: #333;
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+        }
+        
+        .intel-form .form-group input::placeholder {
+            color: #9aa0a6;
+            opacity: 1;
+        }
+        
+        .intel-form .form-group small {
+            color: #9aa0a6;
+            font-size: 12px;
+            margin-top: 4px;
+            display: block;
+        }
+        
+        .form-options h4 {
+            color: #ccd6f6;
+            margin-bottom: 1rem;
+        }
+        
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .checkbox-card {
+            background: rgba(42, 42, 74, 0.3);
+            border: 1px solid #2a2a4a;
+            border-radius: 12px;
+            padding: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: block;
+        }
+        
+        .checkbox-card:hover {
+            background: rgba(102, 126, 234, 0.1);
+            border-color: #667eea;
+        }
+        
+        .checkbox-card input[type="checkbox"] {
+            display: none;
+        }
+        
+        .checkbox-card input[type="checkbox"]:checked + .checkbox-content {
+            color: #667eea;
+        }
+        
+        .checkbox-card input[type="checkbox"]:checked + .checkbox-content i {
+            color: #667eea;
+        }
+        
+        .checkbox-content {
+            color: #ccd6f6;
+            transition: all 0.3s ease;
+        }
+        
+        .checkbox-content i {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            display: block;
+            color: #8892b0;
+        }
+        
+        .checkbox-content span {
+            font-weight: 500;
+            display: block;
+            margin-bottom: 0.25rem;
+        }
+        
+        .checkbox-content small {
+            color: #8892b0;
+            font-size: 0.8rem;
+        }
+        
+        .intel-btn {
+            width: 100%;
+            background: #1f1f1f;
+            color: white;
+            border: 2px solid transparent;
+            background-clip: padding-box;
+            padding: 16px 32px;
+            border-radius: 24px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: 500;
+            font-size: 14px;
+            position: relative;
+        }
+        
+        .intel-btn::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            padding: 2px;
+            background: linear-gradient(135deg, #4285f4, #1a73e8, #34a853);
+            border-radius: 24px;
+            mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            mask-composite: exclude;
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+        }
+        
+        .intel-btn:hover {
+            background: #2d2d2d;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(66, 133, 244, 0.3);
+        }
+        
+        .intel-btn:hover::before {
+            background: linear-gradient(135deg, #4285f4, #1a73e8, #34a853, #fbbc04);
+        }
+        
+        .intel-results {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 32px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .results-header h3 {
+            color: #e8eaed;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 400;
+            font-size: 20px;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+        }
+        
+        .result-card {
+            background: #2d2d2d;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 24px;
+            transition: all 0.2s ease;
+        }
+        
+        .result-card:hover {
+            background: #333;
+            border-color: #555;
+        }
+        
+        .result-header {
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .result-header h4 {
+            color: #e8eaed;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0;
+            font-weight: 400;
+            font-size: 16px;
+        }
+        
+        .result-content p {
+            color: #e8eaed;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        .text-success { color: #43e97b; }
+        .text-error { color: #ff6b6b; }
+        .text-warning { color: #ffa726; }
+        
+        .risk-low { color: #43e97b; font-weight: bold; }
+        .risk-medium { color: #ffa726; font-weight: bold; }
+        .risk-high { color: #ff6b6b; font-weight: bold; }
+        
+        .platform-tag {
+            background: linear-gradient(135deg, #4285f4 0%, #1a73e8 100%);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            margin-right: 8px;
+            margin-bottom: 8px;
+            display: inline-block;
+            font-weight: 500;
+        }
+        
+        .social-platforms {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.2s ease;
+                width: 280px;
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .search-box {
+                width: 200px;
+            }
+            
+            .dashboard-container {
+                padding: 16px;
+            }
+            
+            .action-buttons {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+            
+            .intel-container {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+            
+            .intel-section {
+                padding: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Section -->
+    <div id="loginSection" class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <i class="fas fa-shield-alt"></i>
+                <h2>OSINT Platform</h2>
+                <p>Acceso Seguro al Sistema de Inteligencia</p>
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" id="loginEmail" placeholder="Email" required value="admin@example.com">
+                </div>
+                <div class="form-group">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" id="loginPassword" placeholder="Contraseña" required value="admin123">
+                </div>
+                <button type="submit" class="login-btn">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Iniciar Sesión
+                </button>
+            </form>
+
+            <div class="demo-credentials">
+                <strong>Demo:</strong> admin@example.com / admin123
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <div id="mainApp" class="app-container hidden">
+        <!-- Sidebar -->
+        <nav class="sidebar">
+            <div class="logo">
+                <h1><i class="fas fa-shield-alt"></i> OSINT</h1>
+                <p class="logo-subtitle">Intelligence Platform</p>
+            </div>
+            
+            <div class="nav-menu">
+                <div class="nav-item active" data-section="dashboard">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Dashboard</span>
+                </div>
+                <div class="nav-item" data-section="investigations">
+                    <i class="fas fa-folder-open"></i>
+                    <span>Investigaciones</span>
+                </div>
+                <div class="nav-item" data-section="email-intel">
+                    <i class="fas fa-envelope"></i>
+                    <span>Email Intel</span>
+                </div>
+                <div class="nav-item" data-section="phone-intel">
+                    <i class="fas fa-phone"></i>
+                    <span>Teléfono Intel</span>
+                </div>
+                <div class="nav-item" data-section="search-tools">
+                    <i class="fas fa-search"></i>
+                    <span>Búsquedas</span>
+                </div>
+                <div class="nav-item" data-section="reports">
+                    <i class="fas fa-chart-bar"></i>
+                    <span>Reportes</span>
+                </div>
+                <div class="nav-item" data-section="settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Configuración</span>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <h1 id="pageTitle">Dashboard</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-container">
+                        <i class="fas fa-search search-icon"></i>
+                        <input type="text" class="search-box" placeholder="Búsqueda rápida..." id="quickSearch">
+                    </div>
+                    <div class="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span class="notification-badge">3</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Container -->
+            <div id="contentContainer" class="content-container">
+                
+            <!-- Dashboard Content -->
+            <div id="dashboardContent" class="dashboard-container">
+                <!-- Welcome Section -->
+                <div class="welcome-section">
+                    <h2>🔍 Bienvenido a OSINT Platform</h2>
+                    <p>Tu plataforma profesional de inteligencia de fuentes abiertas. Comienza una investigación o explora las herramientas disponibles.</p>
+                    
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="showSection('investigations')">
+                            <i class="fas fa-plus"></i>
+                            Nueva Investigación
+                        </button>
+                        <button class="action-btn" onclick="showSection('email-intel')">
+                            <i class="fas fa-envelope"></i>
+                            Buscar Email
+                        </button>
+                        <button class="action-btn" onclick="showSection('phone-intel')">
+                            <i class="fas fa-phone"></i>
+                            Lookup Teléfono
+                        </button>
+                        <button class="action-btn" onclick="showSection('search-tools')">
+                            <i class="fas fa-globe"></i>
+                            Herramientas de Búsqueda
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Stats Grid -->
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value" id="totalInvestigations">12</div>
+                                <div class="stat-label">Investigaciones</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +12% este mes
+                                </div>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-folder-open"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value" id="emailsAnalyzed">47</div>
+                                <div class="stat-label">Emails Analizados</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +8% esta semana
+                                </div>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value" id="searchesPerformed">89</div>
+                                <div class="stat-label">Búsquedas</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-up"></i>
+                                    +15% hoy
+                                </div>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-header">
+                            <div>
+                                <div class="stat-value" id="threatsDetected">3</div>
+                                <div class="stat-label">Amenazas</div>
+                                <div class="stat-change positive">
+                                    <i class="fas fa-arrow-down"></i>
+                                    -5% esta semana
+                                </div>
+                            </div>
+                            <div class="stat-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Email Intel Section -->
+            <div id="emailIntelContent" class="intel-section hidden">
+                <div class="section-header">
+                    <h2><i class="fas fa-envelope"></i> Email Intelligence</h2>
+                    <p>Análisis completo de direcciones de correo electrónico</p>
+                </div>
+                
+                <div class="intel-container">
+                    <div class="intel-form-card">
+                        <h3><i class="fas fa-search"></i> Investigar Email</h3>
+                        <form id="emailIntelForm" class="intel-form">
+                            <div class="form-group">
+                                <label for="targetEmail">Dirección de Email</label>
+                                <input type="email" id="targetEmail" placeholder="ejemplo@dominio.com" required>
+                                <small>Introduce la dirección de email que deseas investigar</small>
+                            </div>
+                            
+                            <div class="form-options">
+                                <h4>Opciones de Investigación</h4>
+                                <div class="checkbox-grid">
+                                    <label class="checkbox-card">
+                                        <input type="checkbox" id="checkBreaches" checked>
+                                        <div class="checkbox-content">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            <span>Verificar Breaches</span>
+                                            <small>Buscar en bases de datos de filtraciones</small>
+                                        </div>
+                                    </label>
+                                    
+                                    <label class="checkbox-card">
+                                        <input type="checkbox" id="checkSocial" checked>
+                                        <div class="checkbox-content">
+                                            <i class="fas fa-share-alt"></i>
+                                            <span>Redes Sociales</span>
+                                            <small>Buscar perfiles en redes sociales</small>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="intel-btn primary">
+                                <i class="fas fa-search"></i>
+                                <span>Iniciar Investigación</span>
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="intel-results" id="emailResults" style="display: none;">
+                        <div class="results-header">
+                            <h3><i class="fas fa-chart-line"></i> Resultados</h3>
+                        </div>
+                        <div id="emailResultsContent" class="results-content"></div>
+                    </div>
+                </div>
+            </div>
+            
+            </div> <!-- End Content Container -->
+        </main>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Simple login functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('loginForm');
+            const loginSection = document.getElementById('loginSection');
+            const mainApp = document.getElementById('mainApp');
+            
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('loginEmail').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // Simple demo authentication
+                if (email === 'admin@example.com' && password === 'admin123') {
+                    loginSection.classList.add('hidden');
+                    mainApp.classList.remove('hidden');
+                    
+                    // Animate stats
+                    animateStats();
+                } else {
+                    alert('Credenciales incorrectas. Usa: admin@example.com / admin123');
+                }
+            });
+            
+            // Navigation functionality
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    showSection(this.dataset.section);
+                });
+            });
+        });
+
+        function showSection(section) {
+            // Remove active class from all items
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            // Add active class to clicked item
+            document.querySelector(`[data-section="${section}"]`).classList.add('active');
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard',
+                'investigations': 'Investigaciones',
+                'email-intel': 'Email Intelligence',
+                'phone-intel': 'Teléfono Intelligence',
+                'search-tools': 'Herramientas de Búsqueda',
+                'reports': 'Reportes',
+                'settings': 'Configuración'
+            };
+            document.getElementById('pageTitle').textContent = titles[section] || 'Dashboard';
+            
+            // Hide all sections
+            document.getElementById('dashboardContent').classList.add('hidden');
+            document.getElementById('emailIntelContent').classList.add('hidden');
+            
+            // Show appropriate section
+            if (section === 'dashboard') {
+                document.getElementById('dashboardContent').classList.remove('hidden');
+            } else if (section === 'email-intel') {
+                document.getElementById('emailIntelContent').classList.remove('hidden');
+                setupEmailIntelForm();
+            } else {
+                // For other sections, show coming soon
+                alert(`Sección "${titles[section]}" - Funcionalidad próximamente`);
+                // Reset to dashboard
+                showSection('dashboard');
+            }
+        }
+        
+        function setupEmailIntelForm() {
+            const form = document.getElementById('emailIntelForm');
+            if (form && !form.hasAttribute('data-setup')) {
+                form.setAttribute('data-setup', 'true');
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    await performEmailInvestigation();
+                });
+            }
+        }
+        
+        async function performEmailInvestigation() {
+            const email = document.getElementById('targetEmail').value;
+            const checkBreaches = document.getElementById('checkBreaches').checked;
+            const checkSocial = document.getElementById('checkSocial').checked;
+            
+            if (!email) {
+                alert('Por favor introduce una dirección de email');
+                return;
+            }
+            
+            // Show loading state
+            const submitBtn = document.querySelector('#emailIntelForm .intel-btn');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Investigando...';
+            submitBtn.disabled = true;
+            
+            try {
+                // Call the API
+                const response = await fetch('/api/v1/email/investigate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // 'Authorization': `Bearer demo-token` // No auth needed in demo mode
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        check_breaches: checkBreaches,
+                        check_social: checkSocial
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displayEmailResults(data);
+                } else {
+                    throw new Error(data.detail || 'Error en la investigación');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('Error al realizar la investigación: ' + error.message);
+            } finally {
+                // Reset button
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+            }
+        }
+        
+        function displayEmailResults(data) {
+            const resultsContainer = document.getElementById('emailResults');
+            const resultsContent = document.getElementById('emailResultsContent');
+            
+            resultsContent.innerHTML = `
+                <div class="results-grid">
+                    <div class="result-card">
+                        <div class="result-header">
+                            <h4><i class="fas fa-envelope"></i> Información Básica</h4>
+                        </div>
+                        <div class="result-content">
+                            <p><strong>Email:</strong> ${data.email}</p>
+                            <p><strong>Válido:</strong> <span class="${data.findings.email_validation.valid ? 'text-success' : 'text-error'}">${data.findings.email_validation.valid ? 'Sí' : 'No'}</span></p>
+                            <p><strong>Dominio:</strong> ${data.findings.email_validation.domain}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-header">
+                            <h4><i class="fas fa-exclamation-triangle"></i> Breaches</h4>
+                        </div>
+                        <div class="result-content">
+                            <p><strong>Encontrados:</strong> <span class="${data.findings.breaches.breaches_found > 0 ? 'text-warning' : 'text-success'}">${data.findings.breaches.breaches_found}</span></p>
+                            <p><strong>Último:</strong> ${data.findings.breaches.last_breach || 'N/A'}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-header">
+                            <h4><i class="fas fa-share-alt"></i> Redes Sociales</h4>
+                        </div>
+                        <div class="result-content">
+                            <div class="social-platforms">
+                                ${data.findings.social_media.platforms.map(platform => 
+                                    `<span class="platform-tag">${platform}</span>`
+                                ).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="result-card">
+                        <div class="result-header">
+                            <h4><i class="fas fa-shield-alt"></i> Evaluación de Riesgo</h4>
+                        </div>
+                        <div class="result-content">
+                            <p><strong>Nivel:</strong> <span class="risk-${data.risk_assessment.level}">${data.risk_assessment.level.toUpperCase()}</span></p>
+                            <p><strong>Puntuación:</strong> ${data.risk_assessment.score}/10</p>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            resultsContainer.style.display = 'block';
+        }
+
+        function animateStats() {
+            const stats = [
+                { id: 'totalInvestigations', target: 12 },
+                { id: 'emailsAnalyzed', target: 47 },
+                { id: 'searchesPerformed', target: 89 },
+                { id: 'threatsDetected', target: 3 }
+            ];
+
+            stats.forEach(stat => {
+                const element = document.getElementById(stat.id);
+                let current = 0;
+                const increment = stat.target / 30;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= stat.target) {
+                        current = stat.target;
+                        clearInterval(timer);
+                    }
+                    element.textContent = Math.floor(current);
+                }, 50);
+            });
+        }
+    </script>
+</body>
+</html>

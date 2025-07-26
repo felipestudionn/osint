@@ -1,0 +1,43 @@
+🚀 PLATAFORMA OSINT PROFESIONAL - INSTRUCCIONES
+=============================================
+
+📁 ARCHIVO: OSINT_PLATFORM_PARA_HERMANO.py
+
+🔥 COMO USARLO:
+
+1️⃣ GUARDAR EL ARCHIVO:
+- Guardar como "osint_platform.py" en tu escritorio
+
+2️⃣ INSTALAR DEPENDENCIAS:
+pip install fastapi uvicorn httpx requests pydantic[email]
+
+3️⃣ EJECUTAR:
+python3 osint_platform.py
+
+4️⃣ ABRIR NAVEGADOR:
+http://localhost:8002/docs
+
+5️⃣ LOGIN:
+Email: admin@example.com
+Password: admin123
+
+🎯 QUE HACE LA PLATAFORMA:
+✅ Investigación de emails (breaches, redes sociales)
+✅ Análisis de dominios (WHOIS, DNS, reputación)  
+✅ Inteligencia de números de teléfono
+✅ Búsquedas multi-motor (Google, Bing)
+✅ Gestión de investigaciones
+✅ API REST profesional con documentación
+
+🔍 EJEMPLO DE USO:
+1. Registrar usuario en /auth/register
+2. Hacer login en /auth/login  
+3. Copiar el token que te da
+4. Usar /api/v1/email/investigate para investigar emails
+
+🛠️ GESTIÓN:
+- Parar: Ctrl+C en la terminal
+- Ver logs: Se muestran en la terminal
+- Puerto: 8002
+
+¡OSINT PROFESIONAL MEJOR QUE HERRAMIENTAS DE $649/AÑO! 😎🔍

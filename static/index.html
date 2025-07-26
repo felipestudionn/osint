@@ -1935,6 +1935,462 @@
             border: 1px solid #333;
             border-radius: 12px;
         }
+        
+        /* Image Analysis Styles */
+        .upload-section {
+            margin-bottom: 32px;
+        }
+        
+        .upload-area {
+            background: #1f1f1f;
+            border: 2px dashed #444;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 24px;
+        }
+        
+        .upload-area:hover,
+        .upload-area.drag-over {
+            border-color: #4285f4;
+            background: rgba(66, 133, 244, 0.05);
+        }
+        
+        .upload-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .upload-icon {
+            font-size: 48px;
+            color: #4285f4;
+        }
+        
+        .upload-content h3 {
+            color: #e8eaed;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0;
+        }
+        
+        .upload-content p {
+            color: #9aa0a6;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .url-input-section {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 24px;
+        }
+        
+        .url-input-section h3 {
+            color: #e8eaed;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 0 16px 0;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .url-input {
+            flex: 1;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #e8eaed;
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+        
+        .url-input:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+        
+        .analysis-options {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .analysis-options h3 {
+            color: #e8eaed;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0 0 20px 0;
+        }
+        
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .option-card {
+            cursor: pointer;
+        }
+        
+        .option-card input[type="checkbox"] {
+            display: none;
+        }
+        
+        .option-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            background: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .option-card input:checked + .option-content {
+            border-color: #4285f4;
+            background: rgba(66, 133, 244, 0.1);
+        }
+        
+        .option-content:hover {
+            border-color: #4285f4;
+            transform: translateY(-2px);
+        }
+        
+        .option-content i {
+            font-size: 24px;
+            color: #9aa0a6;
+        }
+        
+        .option-card input:checked + .option-content i {
+            color: #4285f4;
+        }
+        
+        .option-title {
+            color: #e8eaed;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .option-desc {
+            color: #9aa0a6;
+            font-size: 12px;
+        }
+        
+        .analysis-controls {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        
+        .image-preview {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .image-preview h3 {
+            color: #e8eaed;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0 0 16px 0;
+        }
+        
+        .preview-container {
+            display: flex;
+            gap: 24px;
+            align-items: flex-start;
+        }
+        
+        .preview-container img {
+            max-width: 300px;
+            max-height: 300px;
+            border-radius: 8px;
+            border: 1px solid #444;
+        }
+        
+        .image-info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .info-item:last-child {
+            border-bottom: none;
+        }
+        
+        .info-item .label {
+            color: #9aa0a6;
+            font-size: 14px;
+        }
+        
+        .info-item .value {
+            color: #e8eaed;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .analysis-results {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .results-tabs {
+            display: flex;
+            background: #2a2a2a;
+            border-bottom: 1px solid #333;
+        }
+        
+        .result-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            color: #9aa0a6;
+            padding: 16px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        
+        .result-tab:hover {
+            background: rgba(66, 133, 244, 0.1);
+            color: #4285f4;
+        }
+        
+        .result-tab.active {
+            color: #4285f4;
+            border-bottom-color: #4285f4;
+        }
+        
+        .result-content {
+            display: none;
+            padding: 24px;
+        }
+        
+        .result-content.active {
+            display: block;
+        }
+        
+        .result-content h4 {
+            color: #e8eaed;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 0 20px 0;
+        }
+        
+        .similar-images {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .similar-image-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .similar-image-item:hover {
+            border-color: #4285f4;
+        }
+        
+        .image-thumbnail {
+            width: 48px;
+            height: 48px;
+            background: #333;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #9aa0a6;
+        }
+        
+        .image-details {
+            flex: 1;
+        }
+        
+        .image-source {
+            color: #4285f4;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .image-url {
+            color: #9aa0a6;
+            font-size: 12px;
+            margin: 4px 0;
+        }
+        
+        .similarity-score {
+            color: #e8eaed;
+            font-size: 12px;
+        }
+        
+        .view-btn {
+            background: #4285f4;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .view-btn:hover {
+            background: #3367d6;
+        }
+        
+        .metadata-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 12px;
+        }
+        
+        .metadata-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+        
+        .metadata-key {
+            color: #9aa0a6;
+            font-size: 14px;
+        }
+        
+        .metadata-value {
+            color: #e8eaed;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .faces-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        
+        .face-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 16px;
+        }
+        
+        .face-thumbnail {
+            width: 48px;
+            height: 48px;
+            background: #333;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4285f4;
+        }
+        
+        .face-details {
+            flex: 1;
+        }
+        
+        .face-info {
+            color: #e8eaed;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .face-confidence {
+            color: #4285f4;
+            font-size: 12px;
+            margin: 4px 0;
+        }
+        
+        .face-attributes {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .attribute {
+            color: #9aa0a6;
+            font-size: 11px;
+        }
+        
+        .objects-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .object-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+        
+        .object-icon {
+            width: 32px;
+            height: 32px;
+            background: #333;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #4285f4;
+        }
+        
+        .object-name {
+            flex: 1;
+            color: #e8eaed;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .object-confidence {
+            color: #4285f4;
+            font-size: 12px;
+        }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -2872,6 +3328,160 @@
                 </div>
             </div>
             
+            <!-- Image Analysis Section -->
+            <div id="imageAnalysisContent" class="intel-section hidden">
+                <div class="section-header">
+                    <h2><i class="fas fa-image"></i> Image Analysis</h2>
+                    <p>Upload an image to perform reverse image search, metadata extraction, and facial recognition</p>
+                </div>
+                
+                <!-- Image Upload Section -->
+                <div class="upload-section">
+                    <div class="upload-area" id="uploadArea">
+                        <div class="upload-content">
+                            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                            <h3>Drag & Drop Image Here</h3>
+                            <p>or click to browse files</p>
+                            <input type="file" id="imageInput" accept="image/*" hidden>
+                            <button class="intel-btn primary" onclick="document.getElementById('imageInput').click()">
+                                <i class="fas fa-folder-open"></i> Browse Files
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- URL Input Alternative -->
+                    <div class="url-input-section">
+                        <h3>Or analyze image from URL</h3>
+                        <div class="input-group">
+                            <input type="url" id="imageUrl" placeholder="Enter image URL..." class="url-input">
+                            <button onclick="analyzeImageFromUrl()" class="intel-btn primary">
+                                <i class="fas fa-search"></i> Analyze URL
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Analysis Options -->
+                <div class="analysis-options" id="analysisOptions" style="display: none;">
+                    <h3>Analysis Options</h3>
+                    <div class="options-grid">
+                        <label class="option-card">
+                            <input type="checkbox" checked id="reverseSearch">
+                            <div class="option-content">
+                                <i class="fas fa-search"></i>
+                                <span class="option-title">Reverse Image Search</span>
+                                <span class="option-desc">Find similar images across the web</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" checked id="metadataExtraction">
+                            <div class="option-content">
+                                <i class="fas fa-info-circle"></i>
+                                <span class="option-title">Metadata Extraction</span>
+                                <span class="option-desc">Extract EXIF data and technical info</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" id="faceRecognition">
+                            <div class="option-content">
+                                <i class="fas fa-user-friends"></i>
+                                <span class="option-title">Face Recognition</span>
+                                <span class="option-desc">Detect and analyze faces in image</span>
+                            </div>
+                        </label>
+                        <label class="option-card">
+                            <input type="checkbox" id="objectDetection">
+                            <div class="option-content">
+                                <i class="fas fa-eye"></i>
+                                <span class="option-title">Object Detection</span>
+                                <span class="option-desc">Identify objects and landmarks</span>
+                            </div>
+                        </label>
+                    </div>
+                    
+                    <div class="analysis-controls">
+                        <button class="intel-btn primary" onclick="startImageAnalysis()">
+                            <i class="fas fa-play"></i> Start Analysis
+                        </button>
+                        <button class="intel-btn secondary" onclick="clearImageAnalysis()">
+                            <i class="fas fa-trash"></i> Clear
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Image Preview -->
+                <div class="image-preview" id="imagePreview" style="display: none;">
+                    <h3>Image Preview</h3>
+                    <div class="preview-container">
+                        <img id="previewImage" src="" alt="Preview">
+                        <div class="image-info">
+                            <div class="info-item">
+                                <span class="label">File Name:</span>
+                                <span class="value" id="fileName">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">File Size:</span>
+                                <span class="value" id="fileSize">-</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="label">Dimensions:</span>
+                                <span class="value" id="imageDimensions">-</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Analysis Results -->
+                <div class="analysis-results" id="analysisResults" style="display: none;">
+                    <div class="results-tabs">
+                        <button class="result-tab active" onclick="switchResultTab('reverse')">
+                            <i class="fas fa-search"></i> Reverse Search
+                        </button>
+                        <button class="result-tab" onclick="switchResultTab('metadata')">
+                            <i class="fas fa-info-circle"></i> Metadata
+                        </button>
+                        <button class="result-tab" onclick="switchResultTab('faces')">
+                            <i class="fas fa-user-friends"></i> Faces
+                        </button>
+                        <button class="result-tab" onclick="switchResultTab('objects')">
+                            <i class="fas fa-eye"></i> Objects
+                        </button>
+                    </div>
+                    
+                    <!-- Reverse Search Results -->
+                    <div class="result-content active" id="reverse-results">
+                        <h4>Similar Images Found</h4>
+                        <div class="similar-images" id="similarImages">
+                            <!-- Dynamic results will be inserted here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Metadata Results -->
+                    <div class="result-content" id="metadata-results">
+                        <h4>Image Metadata</h4>
+                        <div class="metadata-grid" id="metadataGrid">
+                            <!-- Dynamic metadata will be inserted here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Face Recognition Results -->
+                    <div class="result-content" id="faces-results">
+                        <h4>Detected Faces</h4>
+                        <div class="faces-grid" id="facesGrid">
+                            <!-- Dynamic face results will be inserted here -->
+                        </div>
+                    </div>
+                    
+                    <!-- Object Detection Results -->
+                    <div class="result-content" id="objects-results">
+                        <h4>Detected Objects</h4>
+                        <div class="objects-list" id="objectsList">
+                            <!-- Dynamic object results will be inserted here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             </div> <!-- End Content Container -->
         </main>
     </div>
@@ -2936,6 +3546,7 @@
             document.getElementById('searchToolsContent').classList.add('hidden');
             document.getElementById('domainIntelContent').classList.add('hidden');
             document.getElementById('socialIntelContent').classList.add('hidden');
+            document.getElementById('imageAnalysisContent').classList.add('hidden');
             
             // Show appropriate section
             if (section === 'dashboard') {
@@ -2957,6 +3568,9 @@
             } else if (section === 'social-intel') {
                 document.getElementById('socialIntelContent').classList.remove('hidden');
                 setupSocialIntelForm();
+            } else if (section === 'image-analysis') {
+                document.getElementById('imageAnalysisContent').classList.remove('hidden');
+                setupImageAnalysisForm();
             } else {
                 // For other sections, show coming soon
                 alert(`Sección "${titles[section]}" - Funcionalidad próximamente`);
@@ -3412,6 +4026,314 @@
             if (platformUrls[platform]) {
                 window.open(platformUrls[platform], '_blank');
             }
+        }
+        
+        let currentImageFile = null;
+        let currentImageUrl = null;
+        
+        function setupImageAnalysisForm() {
+            // Initialize image analysis
+            const imageInput = document.getElementById('imageInput');
+            const uploadArea = document.getElementById('uploadArea');
+            
+            // File input change handler
+            imageInput.addEventListener('change', handleFileSelect);
+            
+            // Drag and drop handlers
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('drop', handleDrop);
+            uploadArea.addEventListener('dragleave', handleDragLeave);
+            
+            console.log('Image Analysis initialized');
+        }
+        
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('uploadArea').classList.add('drag-over');
+        }
+        
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('uploadArea').classList.remove('drag-over');
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            document.getElementById('uploadArea').classList.remove('drag-over');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                const file = files[0];
+                if (file.type.startsWith('image/')) {
+                    processImageFile(file);
+                } else {
+                    alert('Please select a valid image file');
+                }
+            }
+        }
+        
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                processImageFile(file);
+            }
+        }
+        
+        function processImageFile(file) {
+            currentImageFile = file;
+            currentImageUrl = null;
+            
+            // Show analysis options
+            document.getElementById('analysisOptions').style.display = 'block';
+            
+            // Show image preview
+            showImagePreview(file);
+        }
+        
+        function analyzeImageFromUrl() {
+            const url = document.getElementById('imageUrl').value;
+            if (!url.trim()) {
+                alert('Please enter an image URL');
+                return;
+            }
+            
+            currentImageUrl = url;
+            currentImageFile = null;
+            
+            // Show analysis options
+            document.getElementById('analysisOptions').style.display = 'block';
+            
+            // Show URL image preview
+            showUrlImagePreview(url);
+        }
+        
+        function showImagePreview(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                const previewImage = document.getElementById('previewImage');
+                previewImage.src = e.target.result;
+                
+                // Update file info
+                document.getElementById('fileName').textContent = file.name;
+                document.getElementById('fileSize').textContent = formatFileSize(file.size);
+                
+                // Get image dimensions
+                previewImage.onload = function() {
+                    document.getElementById('imageDimensions').textContent = `${this.naturalWidth} x ${this.naturalHeight}`;
+                };
+                
+                document.getElementById('imagePreview').style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+        
+        function showUrlImagePreview(url) {
+            const previewImage = document.getElementById('previewImage');
+            previewImage.src = url;
+            
+            // Update file info
+            document.getElementById('fileName').textContent = url.split('/').pop() || 'URL Image';
+            document.getElementById('fileSize').textContent = 'Unknown';
+            
+            // Get image dimensions
+            previewImage.onload = function() {
+                document.getElementById('imageDimensions').textContent = `${this.naturalWidth} x ${this.naturalHeight}`;
+            };
+            
+            previewImage.onerror = function() {
+                alert('Failed to load image from URL');
+                return;
+            };
+            
+            document.getElementById('imagePreview').style.display = 'block';
+        }
+        
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+        
+        function startImageAnalysis() {
+            if (!currentImageFile && !currentImageUrl) {
+                alert('Please select an image first');
+                return;
+            }
+            
+            // Get selected analysis options
+            const reverseSearch = document.getElementById('reverseSearch').checked;
+            const metadataExtraction = document.getElementById('metadataExtraction').checked;
+            const faceRecognition = document.getElementById('faceRecognition').checked;
+            const objectDetection = document.getElementById('objectDetection').checked;
+            
+            if (!reverseSearch && !metadataExtraction && !faceRecognition && !objectDetection) {
+                alert('Please select at least one analysis option');
+                return;
+            }
+            
+            // Show results section
+            document.getElementById('analysisResults').style.display = 'block';
+            
+            // Simulate analysis with delays
+            if (reverseSearch) {
+                setTimeout(() => generateReverseSearchResults(), 1000);
+            }
+            if (metadataExtraction) {
+                setTimeout(() => generateMetadataResults(), 1500);
+            }
+            if (faceRecognition) {
+                setTimeout(() => generateFaceResults(), 2000);
+            }
+            if (objectDetection) {
+                setTimeout(() => generateObjectResults(), 2500);
+            }
+        }
+        
+        function switchResultTab(tab) {
+            // Remove active class from all tabs and content
+            document.querySelectorAll('.result-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.result-content').forEach(c => c.classList.remove('active'));
+            
+            // Add active class to selected tab and content
+            document.querySelector(`[onclick="switchResultTab('${tab}')"]`).classList.add('active');
+            document.getElementById(`${tab}-results`).classList.add('active');
+        }
+        
+        function generateReverseSearchResults() {
+            const similarImages = document.getElementById('similarImages');
+            similarImages.innerHTML = '';
+            
+            const sampleResults = [
+                { url: 'https://example.com/image1.jpg', source: 'Google Images', similarity: '95%' },
+                { url: 'https://example.com/image2.jpg', source: 'Bing Images', similarity: '87%' },
+                { url: 'https://example.com/image3.jpg', source: 'Yandex Images', similarity: '82%' },
+                { url: 'https://example.com/image4.jpg', source: 'TinEye', similarity: '78%' }
+            ];
+            
+            sampleResults.forEach(result => {
+                const resultItem = document.createElement('div');
+                resultItem.className = 'similar-image-item';
+                resultItem.innerHTML = `
+                    <div class="image-thumbnail">
+                        <i class="fas fa-image"></i>
+                    </div>
+                    <div class="image-details">
+                        <div class="image-source">${result.source}</div>
+                        <div class="image-url">${result.url}</div>
+                        <div class="similarity-score">Similarity: ${result.similarity}</div>
+                    </div>
+                    <button class="view-btn" onclick="window.open('${result.url}', '_blank')">
+                        <i class="fas fa-external-link-alt"></i>
+                    </button>
+                `;
+                similarImages.appendChild(resultItem);
+            });
+        }
+        
+        function generateMetadataResults() {
+            const metadataGrid = document.getElementById('metadataGrid');
+            metadataGrid.innerHTML = '';
+            
+            const sampleMetadata = {
+                'Camera Make': 'Canon',
+                'Camera Model': 'EOS R5',
+                'Date Taken': '2024-01-15 14:30:22',
+                'GPS Location': '40.7128° N, 74.0060° W',
+                'ISO Speed': '400',
+                'Aperture': 'f/2.8',
+                'Shutter Speed': '1/125s',
+                'Focal Length': '85mm',
+                'Flash': 'No Flash',
+                'Color Space': 'sRGB'
+            };
+            
+            Object.entries(sampleMetadata).forEach(([key, value]) => {
+                const metadataItem = document.createElement('div');
+                metadataItem.className = 'metadata-item';
+                metadataItem.innerHTML = `
+                    <span class="metadata-key">${key}:</span>
+                    <span class="metadata-value">${value}</span>
+                `;
+                metadataGrid.appendChild(metadataItem);
+            });
+        }
+        
+        function generateFaceResults() {
+            const facesGrid = document.getElementById('facesGrid');
+            facesGrid.innerHTML = '';
+            
+            const numFaces = Math.floor(Math.random() * 3) + 1; // 1-3 faces
+            
+            for (let i = 0; i < numFaces; i++) {
+                const faceItem = document.createElement('div');
+                faceItem.className = 'face-item';
+                faceItem.innerHTML = `
+                    <div class="face-thumbnail">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="face-details">
+                        <div class="face-info">Face ${i + 1}</div>
+                        <div class="face-confidence">Confidence: ${Math.floor(Math.random() * 20) + 80}%</div>
+                        <div class="face-attributes">
+                            <span class="attribute">Age: ${Math.floor(Math.random() * 40) + 20}</span>
+                            <span class="attribute">Gender: ${Math.random() > 0.5 ? 'Male' : 'Female'}</span>
+                        </div>
+                    </div>
+                `;
+                facesGrid.appendChild(faceItem);
+            }
+        }
+        
+        function generateObjectResults() {
+            const objectsList = document.getElementById('objectsList');
+            objectsList.innerHTML = '';
+            
+            const sampleObjects = [
+                { name: 'Person', confidence: '98%' },
+                { name: 'Building', confidence: '92%' },
+                { name: 'Car', confidence: '87%' },
+                { name: 'Tree', confidence: '83%' },
+                { name: 'Sky', confidence: '95%' }
+            ];
+            
+            sampleObjects.forEach(obj => {
+                const objectItem = document.createElement('div');
+                objectItem.className = 'object-item';
+                objectItem.innerHTML = `
+                    <div class="object-icon">
+                        <i class="fas fa-eye"></i>
+                    </div>
+                    <div class="object-name">${obj.name}</div>
+                    <div class="object-confidence">${obj.confidence}</div>
+                `;
+                objectsList.appendChild(objectItem);
+            });
+        }
+        
+        function clearImageAnalysis() {
+            // Reset all states
+            currentImageFile = null;
+            currentImageUrl = null;
+            
+            // Hide sections
+            document.getElementById('analysisOptions').style.display = 'none';
+            document.getElementById('imagePreview').style.display = 'none';
+            document.getElementById('analysisResults').style.display = 'none';
+            
+            // Clear inputs
+            document.getElementById('imageInput').value = '';
+            document.getElementById('imageUrl').value = '';
+            
+            // Reset checkboxes
+            document.getElementById('reverseSearch').checked = true;
+            document.getElementById('metadataExtraction').checked = true;
+            document.getElementById('faceRecognition').checked = false;
+            document.getElementById('objectDetection').checked = false;
         }
         
         async function performEmailInvestigation() {

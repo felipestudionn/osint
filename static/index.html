@@ -123,6 +123,36 @@
             z-index: 100;
         }
 
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            color: #e8eaed;
+            padding: 8px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .mobile-menu-btn:hover {
+            background: rgba(66, 133, 244, 0.1);
+            border-color: #4285f4;
+            color: #4285f4;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
         .header-left h1 {
             font-size: 24px;
             font-weight: 400;
@@ -2408,16 +2438,36 @@
         }
 
         /* Responsive Design */
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+        }
+        
         @media (max-width: 768px) {
             .sidebar {
                 transform: translateX(-100%);
                 transition: transform 0.2s ease;
                 width: 280px;
+                position: fixed;
+                top: 0;
+                left: 0;
+                height: 100vh;
+                z-index: 1000;
             }
             
             .sidebar.open {
                 transform: translateX(0);
             }
+            
+
             
             .main-content {
                 margin-left: 0;
@@ -3119,6 +3169,9 @@
 
     <!-- Main Application -->
     <div id="mainApp" class="app-container hidden">
+        <!-- Sidebar Overlay -->
+        <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+        
         <!-- Sidebar -->
         <nav class="sidebar">
             <div class="logo">
@@ -3162,6 +3215,9 @@
         <main class="main-content">
             <header class="top-header">
                 <div class="header-left">
+                    <button class="mobile-menu-btn" onclick="toggleSidebar()">
+                        <i class="fas fa-bars"></i>
+                    </button>
                     <h1 id="pageTitle">Dashboard</h1>
                 </div>
                 <div class="header-right">
@@ -4627,6 +4683,21 @@
             });
         });
 
+        function toggleSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.querySelector('.sidebar-overlay');
+            
+            sidebar.classList.toggle('open');
+            
+            if (sidebar.classList.contains('open')) {
+                overlay.style.display = 'block';
+                setTimeout(() => overlay.style.opacity = '1', 10);
+            } else {
+                overlay.style.opacity = '0';
+                setTimeout(() => overlay.style.display = 'none', 200);
+            }
+        }
+        
         function showSection(section) {
             // Remove active class from all items
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
@@ -4691,6 +4762,14 @@
                 alert(`Sección "${titles[section]}" - Funcionalidad próximamente`);
                 // Reset to dashboard
                 showSection('dashboard');
+            }
+            
+            // Auto-close sidebar on mobile after navigation
+            if (window.innerWidth <= 768) {
+                const sidebar = document.querySelector('.sidebar');
+                if (sidebar.classList.contains('open')) {
+                    toggleSidebar();
+                }
             }
         }
         

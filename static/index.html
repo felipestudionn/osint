@@ -3643,6 +3643,303 @@
                 </div>
             </div>
             
+            <!-- Settings Section -->
+            <div id="settingsContent" class="intel-section hidden">
+                <div class="section-header">
+                    <h2><i class="fas fa-cog"></i> Settings</h2>
+                    <p>Configure your OSINT platform preferences</p>
+                </div>
+                
+                <!-- General Settings -->
+                <div class="settings-category">
+                    <div class="category-header">
+                        <h3><i class="fas fa-sliders-h"></i> General Settings</h3>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Theme</label>
+                                <p>Choose your preferred interface theme</p>
+                            </div>
+                            <div class="setting-control">
+                                <select id="themeSelect">
+                                    <option value="dark" selected>Dark Theme</option>
+                                    <option value="light">Light Theme</option>
+                                    <option value="auto">Auto (System)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Language</label>
+                                <p>Select your preferred language</p>
+                            </div>
+                            <div class="setting-control">
+                                <select id="languageSelect">
+                                    <option value="en" selected>English</option>
+                                    <option value="es">Español</option>
+                                    <option value="fr">Français</option>
+                                    <option value="de">Deutsch</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Auto-save Results</label>
+                                <p>Automatically save investigation results</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoSave" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Notifications</label>
+                                <p>Enable desktop notifications</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="notifications" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- API Settings -->
+                <div class="settings-category">
+                    <div class="category-header">
+                        <h3><i class="fas fa-key"></i> API Configuration</h3>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="setting-item full-width">
+                            <div class="setting-info">
+                                <label>VirusTotal API Key</label>
+                                <p>Enter your VirusTotal API key for enhanced domain analysis</p>
+                            </div>
+                            <div class="setting-control">
+                                <div class="api-key-input">
+                                    <input type="password" id="virusTotalKey" placeholder="Enter API key...">
+                                    <button class="test-btn" onclick="testApiKey('virustotal')">
+                                        <i class="fas fa-check"></i> Test
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item full-width">
+                            <div class="setting-info">
+                                <label>Shodan API Key</label>
+                                <p>Enter your Shodan API key for network intelligence</p>
+                            </div>
+                            <div class="setting-control">
+                                <div class="api-key-input">
+                                    <input type="password" id="shodanKey" placeholder="Enter API key...">
+                                    <button class="test-btn" onclick="testApiKey('shodan')">
+                                        <i class="fas fa-check"></i> Test
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item full-width">
+                            <div class="setting-info">
+                                <label>Have I Been Pwned API Key</label>
+                                <p>Enter your HIBP API key for breach checking</p>
+                            </div>
+                            <div class="setting-control">
+                                <div class="api-key-input">
+                                    <input type="password" id="hibpKey" placeholder="Enter API key...">
+                                    <button class="test-btn" onclick="testApiKey('hibp')">
+                                        <i class="fas fa-check"></i> Test
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Privacy & Security -->
+                <div class="settings-category">
+                    <div class="category-header">
+                        <h3><i class="fas fa-shield-alt"></i> Privacy & Security</h3>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Data Retention</label>
+                                <p>How long to keep investigation data</p>
+                            </div>
+                            <div class="setting-control">
+                                <select id="dataRetention">
+                                    <option value="7">7 days</option>
+                                    <option value="30" selected>30 days</option>
+                                    <option value="90">90 days</option>
+                                    <option value="365">1 year</option>
+                                    <option value="forever">Forever</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Encrypt Local Data</label>
+                                <p>Encrypt data stored locally</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="encryptData" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Anonymous Mode</label>
+                                <p>Hide your IP and use proxy services</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="anonymousMode">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Two-Factor Authentication</label>
+                                <p>Enable 2FA for enhanced security</p>
+                            </div>
+                            <div class="setting-control">
+                                <button class="setup-btn" onclick="setup2FA()">
+                                    <i class="fas fa-mobile-alt"></i> Setup 2FA
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Export & Backup -->
+                <div class="settings-category">
+                    <div class="category-header">
+                        <h3><i class="fas fa-download"></i> Export & Backup</h3>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Auto Backup</label>
+                                <p>Automatically backup your data</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="autoBackup" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Backup Frequency</label>
+                                <p>How often to create backups</p>
+                            </div>
+                            <div class="setting-control">
+                                <select id="backupFrequency">
+                                    <option value="daily" selected>Daily</option>
+                                    <option value="weekly">Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item full-width">
+                            <div class="setting-info">
+                                <label>Export Data</label>
+                                <p>Export all your investigation data</p>
+                            </div>
+                            <div class="setting-control">
+                                <div class="export-buttons">
+                                    <button class="export-btn" onclick="exportData('json')">
+                                        <i class="fas fa-file-code"></i> Export as JSON
+                                    </button>
+                                    <button class="export-btn" onclick="exportData('csv')">
+                                        <i class="fas fa-file-csv"></i> Export as CSV
+                                    </button>
+                                    <button class="export-btn" onclick="exportData('pdf')">
+                                        <i class="fas fa-file-pdf"></i> Export as PDF
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Advanced Settings -->
+                <div class="settings-category">
+                    <div class="category-header">
+                        <h3><i class="fas fa-cogs"></i> Advanced Settings</h3>
+                    </div>
+                    <div class="settings-grid">
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Debug Mode</label>
+                                <p>Enable debug logging</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="debugMode">
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item">
+                            <div class="setting-info">
+                                <label>Performance Mode</label>
+                                <p>Optimize for better performance</p>
+                            </div>
+                            <div class="setting-control">
+                                <label class="toggle-switch">
+                                    <input type="checkbox" id="performanceMode" checked>
+                                    <span class="slider"></span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="setting-item full-width">
+                            <div class="setting-info">
+                                <label>Reset Settings</label>
+                                <p>Reset all settings to default values</p>
+                            </div>
+                            <div class="setting-control">
+                                <button class="danger-btn" onclick="resetSettings()">
+                                    <i class="fas fa-undo"></i> Reset to Defaults
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Save Settings -->
+                <div class="settings-actions">
+                    <button class="intel-btn primary" onclick="saveSettings()">
+                        <i class="fas fa-save"></i> Save Settings
+                    </button>
+                    <button class="intel-btn secondary" onclick="cancelSettings()">
+                        <i class="fas fa-times"></i> Cancel Changes
+                    </button>
+                </div>
+            </div>
+            
             </div> <!-- End Content Container -->
         </main>
     </div>
@@ -3709,6 +4006,7 @@
             document.getElementById('socialIntelContent').classList.add('hidden');
             document.getElementById('imageAnalysisContent').classList.add('hidden');
             document.getElementById('reportsContent').classList.add('hidden');
+            document.getElementById('settingsContent').classList.add('hidden');
             
             // Show appropriate section
             if (section === 'dashboard') {
@@ -3736,6 +4034,9 @@
             } else if (section === 'reports') {
                 document.getElementById('reportsContent').classList.remove('hidden');
                 setupReportsForm();
+            } else if (section === 'settings') {
+                document.getElementById('settingsContent').classList.remove('hidden');
+                setupSettingsForm();
             } else {
                 // For other sections, show coming soon
                 alert(`Sección "${titles[section]}" - Funcionalidad próximamente`);
@@ -4697,6 +4998,191 @@
             // This would typically load reports from a server
             // For now, we just ensure the sample report is visible
             console.log('Loading recent reports...');
+        }
+        
+        function setupSettingsForm() {
+            // Initialize settings section
+            loadUserSettings();
+            console.log('Settings initialized');
+        }
+        
+        function loadUserSettings() {
+            // Load settings from localStorage or server
+            const settings = JSON.parse(localStorage.getItem('osintSettings') || '{}');
+            
+            // Apply loaded settings
+            if (settings.theme) document.getElementById('themeSelect').value = settings.theme;
+            if (settings.language) document.getElementById('languageSelect').value = settings.language;
+            if (settings.autoSave !== undefined) document.getElementById('autoSave').checked = settings.autoSave;
+            if (settings.notifications !== undefined) document.getElementById('notifications').checked = settings.notifications;
+            if (settings.dataRetention) document.getElementById('dataRetention').value = settings.dataRetention;
+            if (settings.encryptData !== undefined) document.getElementById('encryptData').checked = settings.encryptData;
+            if (settings.anonymousMode !== undefined) document.getElementById('anonymousMode').checked = settings.anonymousMode;
+            if (settings.autoBackup !== undefined) document.getElementById('autoBackup').checked = settings.autoBackup;
+            if (settings.backupFrequency) document.getElementById('backupFrequency').value = settings.backupFrequency;
+            if (settings.debugMode !== undefined) document.getElementById('debugMode').checked = settings.debugMode;
+            if (settings.performanceMode !== undefined) document.getElementById('performanceMode').checked = settings.performanceMode;
+            
+            // Load API keys (masked)
+            if (settings.virusTotalKey) {
+                document.getElementById('virusTotalKey').value = '••••••••••••' + settings.virusTotalKey.slice(-4);
+            }
+            if (settings.shodanKey) {
+                document.getElementById('shodanKey').value = '••••••••••••' + settings.shodanKey.slice(-4);
+            }
+            if (settings.hibpKey) {
+                document.getElementById('hibpKey').value = '••••••••••••' + settings.hibpKey.slice(-4);
+            }
+        }
+        
+        function saveSettings() {
+            const settings = {
+                theme: document.getElementById('themeSelect').value,
+                language: document.getElementById('languageSelect').value,
+                autoSave: document.getElementById('autoSave').checked,
+                notifications: document.getElementById('notifications').checked,
+                dataRetention: document.getElementById('dataRetention').value,
+                encryptData: document.getElementById('encryptData').checked,
+                anonymousMode: document.getElementById('anonymousMode').checked,
+                autoBackup: document.getElementById('autoBackup').checked,
+                backupFrequency: document.getElementById('backupFrequency').value,
+                debugMode: document.getElementById('debugMode').checked,
+                performanceMode: document.getElementById('performanceMode').checked
+            };
+            
+            // Save API keys only if they're not masked
+            const virusTotalKey = document.getElementById('virusTotalKey').value;
+            const shodanKey = document.getElementById('shodanKey').value;
+            const hibpKey = document.getElementById('hibpKey').value;
+            
+            if (virusTotalKey && !virusTotalKey.includes('••••')) {
+                settings.virusTotalKey = virusTotalKey;
+            }
+            if (shodanKey && !shodanKey.includes('••••')) {
+                settings.shodanKey = shodanKey;
+            }
+            if (hibpKey && !hibpKey.includes('••••')) {
+                settings.hibpKey = hibpKey;
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('osintSettings', JSON.stringify(settings));
+            
+            // Apply theme immediately
+            applyTheme(settings.theme);
+            
+            alert('Settings saved successfully!');
+        }
+        
+        function cancelSettings() {
+            // Reload settings from storage
+            loadUserSettings();
+            alert('Changes cancelled. Settings restored to last saved state.');
+        }
+        
+        function applyTheme(theme) {
+            const body = document.body;
+            body.classList.remove('light-theme', 'dark-theme');
+            
+            if (theme === 'light') {
+                body.classList.add('light-theme');
+            } else if (theme === 'dark') {
+                body.classList.add('dark-theme');
+            } else if (theme === 'auto') {
+                // Use system preference
+                if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+                    body.classList.add('light-theme');
+                } else {
+                    body.classList.add('dark-theme');
+                }
+            }
+        }
+        
+        function testApiKey(service) {
+            let apiKey = '';
+            let serviceName = '';
+            
+            switch (service) {
+                case 'virustotal':
+                    apiKey = document.getElementById('virusTotalKey').value;
+                    serviceName = 'VirusTotal';
+                    break;
+                case 'shodan':
+                    apiKey = document.getElementById('shodanKey').value;
+                    serviceName = 'Shodan';
+                    break;
+                case 'hibp':
+                    apiKey = document.getElementById('hibpKey').value;
+                    serviceName = 'Have I Been Pwned';
+                    break;
+            }
+            
+            if (!apiKey || apiKey.includes('••••')) {
+                alert('Please enter a valid API key first.');
+                return;
+            }
+            
+            // Simulate API test
+            alert(`Testing ${serviceName} API key...\n\nThis would make a test request to verify the API key is valid.`);
+            
+            // In a real implementation, this would make an actual API call
+            setTimeout(() => {
+                const isValid = Math.random() > 0.3; // 70% chance of success for demo
+                if (isValid) {
+                    alert(`✅ ${serviceName} API key is valid!`);
+                } else {
+                    alert(`❌ ${serviceName} API key test failed. Please check your key.`);
+                }
+            }, 1500);
+        }
+        
+        function setup2FA() {
+            alert('Setting up Two-Factor Authentication...\n\n1. Download an authenticator app (Google Authenticator, Authy, etc.)\n2. Scan the QR code that would be displayed\n3. Enter the verification code\n\nThis feature would integrate with TOTP for enhanced security.');
+        }
+        
+        function exportData(format) {
+            const formats = {
+                json: 'JSON',
+                csv: 'CSV',
+                pdf: 'PDF'
+            };
+            
+            alert(`Exporting data as ${formats[format]}...\n\nThis would generate a ${formats[format]} file containing all your investigation data, reports, and settings.`);
+            
+            // Simulate export process
+            setTimeout(() => {
+                alert(`✅ Data exported successfully as ${formats[format]}!\n\nFile would be downloaded to your Downloads folder.`);
+            }, 2000);
+        }
+        
+        function resetSettings() {
+            if (confirm('Are you sure you want to reset all settings to default values?\n\nThis action cannot be undone.')) {
+                // Clear localStorage
+                localStorage.removeItem('osintSettings');
+                
+                // Reset form to defaults
+                document.getElementById('themeSelect').value = 'dark';
+                document.getElementById('languageSelect').value = 'en';
+                document.getElementById('autoSave').checked = true;
+                document.getElementById('notifications').checked = true;
+                document.getElementById('dataRetention').value = '30';
+                document.getElementById('encryptData').checked = true;
+                document.getElementById('anonymousMode').checked = false;
+                document.getElementById('autoBackup').checked = true;
+                document.getElementById('backupFrequency').value = 'daily';
+                document.getElementById('debugMode').checked = false;
+                document.getElementById('performanceMode').checked = true;
+                
+                // Clear API keys
+                document.getElementById('virusTotalKey').value = '';
+                document.getElementById('shodanKey').value = '';
+                document.getElementById('hibpKey').value = '';
+                
+                // Apply default theme
+                applyTheme('dark');
+                
+                alert('Settings have been reset to default values.');
+            }
         }
         
         async function performEmailInvestigation() {

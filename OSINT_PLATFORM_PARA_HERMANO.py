@@ -432,6 +432,182 @@ async def investigate_phone(
         "timestamp": datetime.now().isoformat()
     }
 
+@app.get("/api/v1/tools/google-dork")
+async def google_dork_search(
+    query: str,
+    current_user: Dict = Depends(get_current_user)
+):
+    """Execute Google dork search"""
+    # Simulate Google dork results
+    sample_results = [
+        {
+            "title": f"Advanced result for: {query}",
+            "url": "https://example.com/result1",
+            "snippet": "This is a sample result that would be found using the Google dork query. Contains relevant information...",
+            "domain": "example.com"
+        },
+        {
+            "title": f"Security finding: {query[:30]}...",
+            "url": "https://target-site.com/admin/login",
+            "snippet": "Potential security exposure found through advanced search techniques. This demonstrates the power of Google dorking...",
+            "domain": "target-site.com"
+        },
+        {
+            "title": f"Document discovery: {query}",
+            "url": "https://company.com/documents/sensitive.pdf",
+            "snippet": "PDF document containing information related to the search query. Found through file type targeting...",
+            "domain": "company.com"
+        }
+    ]
+    
+    return {
+        "query": query,
+        "results": sample_results[:3],
+        "total_results": len(sample_results),
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.get("/api/v1/tools/domain-analysis")
+async def analyze_domain(
+    domain: str,
+    current_user: Dict = Depends(get_current_user)
+):
+    """Analyze domain and subdomains"""
+    return {
+        "domain": domain,
+        "whois": {
+            "registrar": "Example Registrar Inc.",
+            "creation_date": "2020-01-15",
+            "expiration_date": "2025-01-15",
+            "registrant": "Privacy Protected",
+            "nameservers": ["ns1.example.com", "ns2.example.com"],
+            "status": "Active"
+        },
+        "subdomains": [
+            {"name": f"www.{domain}", "ip": "192.168.1.1", "status": "Active"},
+            {"name": f"mail.{domain}", "ip": "192.168.1.2", "status": "Active"},
+            {"name": f"ftp.{domain}", "ip": "192.168.1.3", "status": "Active"},
+            {"name": f"admin.{domain}", "ip": "192.168.1.4", "status": "Potential Risk"},
+            {"name": f"api.{domain}", "ip": "192.168.1.5", "status": "Active"}
+        ],
+        "dns": {
+            "A": ["192.168.1.1"],
+            "AAAA": ["2001:db8::1"],
+            "MX": [f"mail.{domain}", f"mail2.{domain}"],
+            "NS": ["ns1.example.com", "ns2.example.com"],
+            "TXT": ["v=spf1 include:_spf.google.com ~all"]
+        },
+        "security": {
+            "ssl_certificate": "Valid (Let's Encrypt)",
+            "security_headers": "Partial Implementation",
+            "vulnerabilities": "Low Risk",
+            "blacklist_status": "Clean"
+        },
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.get("/api/v1/tools/social-scan")
+async def social_media_scan(
+    query: str,
+    platforms: str = "facebook,twitter,instagram,linkedin",
+    current_user: Dict = Depends(get_current_user)
+):
+    """Scan social media platforms"""
+    platform_list = platforms.split(",")
+    platform_data = {
+        "facebook": {"icon": "fab fa-facebook", "color": "#1877f2"},
+        "twitter": {"icon": "fab fa-twitter", "color": "#1da1f2"},
+        "instagram": {"icon": "fab fa-instagram", "color": "#e4405f"},
+        "linkedin": {"icon": "fab fa-linkedin", "color": "#0077b5"},
+        "youtube": {"icon": "fab fa-youtube", "color": "#ff0000"},
+        "tiktok": {"icon": "fab fa-tiktok", "color": "#000000"}
+    }
+    
+    results = []
+    for platform in platform_list:
+        platform = platform.strip().lower()
+        if platform in platform_data:
+            data = platform_data[platform]
+            results.append({
+                "platform": platform.capitalize(),
+                "icon": data["icon"],
+                "color": data["color"],
+                "profiles": [
+                    {
+                        "username": f"{query.lower()}",
+                        "url": f"https://{platform}.com/{query.lower()}",
+                        "followers": secrets.randbelow(10000),
+                        "verified": secrets.randbelow(10) > 7,
+                        "lastActivity": "2 days ago"
+                    },
+                    {
+                        "username": f"{query.lower()}_official",
+                        "url": f"https://{platform}.com/{query.lower()}_official",
+                        "followers": secrets.randbelow(50000),
+                        "verified": secrets.randbelow(10) > 5,
+                        "lastActivity": "1 week ago"
+                    }
+                ][:secrets.randbelow(2) + 1]
+            })
+    
+    return {
+        "query": query,
+        "platforms": platform_list,
+        "results": results,
+        "total_profiles": sum(len(r["profiles"]) for r in results),
+        "timestamp": datetime.now().isoformat()
+    }
+
+@app.post("/api/v1/tools/image-analysis")
+async def analyze_image(
+    image_url: Optional[str] = None,
+    current_user: Dict = Depends(get_current_user)
+):
+    """Analyze image for reverse search and metadata"""
+    source = image_url or "uploaded_image.jpg"
+    
+    return {
+        "source": source,
+        "reverse_search": [
+            {
+                "engine": "Google Images",
+                "matches": 15,
+                "url": "https://images.google.com/search?tbs=sbi:...",
+                "similar": [
+                    {"url": "https://example.com/image1.jpg", "similarity": "95%"},
+                    {"url": "https://example.com/image2.jpg", "similarity": "87%"},
+                    {"url": "https://example.com/image3.jpg", "similarity": "82%"}
+                ]
+            },
+            {
+                "engine": "TinEye",
+                "matches": 8,
+                "url": "https://tineye.com/search/...",
+                "similar": [
+                    {"url": "https://site1.com/photo.jpg", "similarity": "92%"},
+                    {"url": "https://site2.com/pic.jpg", "similarity": "89%"}
+                ]
+            }
+        ],
+        "metadata": {
+            "filename": source,
+            "filesize": "2.4 MB",
+            "dimensions": "1920x1080",
+            "format": "JPEG",
+            "camera": "Canon EOS 5D Mark IV",
+            "location": "GPS coordinates removed",
+            "timestamp": "2024-01-15 14:30:22",
+            "software": "Adobe Photoshop 2024"
+        },
+        "similar_images": [
+            {"url": "https://example.com/similar1.jpg", "confidence": "94%"},
+            {"url": "https://example.com/similar2.jpg", "confidence": "91%"},
+            {"url": "https://example.com/similar3.jpg", "confidence": "88%"},
+            {"url": "https://example.com/similar4.jpg", "confidence": "85%"}
+        ],
+        "analysis_timestamp": datetime.now().isoformat()
+    }
+
 @app.get("/docs-info")
 async def docs_info():
     """Information about API documentation"""

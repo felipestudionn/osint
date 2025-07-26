@@ -243,11 +243,110 @@ class OSINTPlatform {
     createSearchToolsSection() {
         return `
             <div class="section-header mb-2">
-                <h2><i class="fas fa-search"></i> Herramientas de Búsqueda</h2>
-                <p>Búsquedas avanzadas en múltiples motores</p>
+                <h2><i class="fas fa-search"></i> Advanced Search Tools</h2>
+                <p>Specialized OSINT tools for comprehensive investigations</p>
             </div>
             
-            <div class="search-tools-container">
+            <div class="search-tools-grid">
+                <!-- Google Dorking Tool -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fab fa-google"></i>
+                        </div>
+                        <div class="tool-info">
+                            <h3>Google Dorking</h3>
+                            <p>Advanced Google search techniques</p>
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="quick-dorks">
+                            <button class="dork-btn" onclick="platform.executeGoogleDork('site:linkedin.com')">LinkedIn Profiles</button>
+                            <button class="dork-btn" onclick="platform.executeGoogleDork('filetype:pdf')">PDF Documents</button>
+                            <button class="dork-btn" onclick="platform.executeGoogleDork('inurl:admin')">Admin Panels</button>
+                        </div>
+                        <div class="custom-dork-input">
+                            <input type="text" id="customDorkQuery" placeholder="Enter custom Google dork...">
+                            <button onclick="platform.executeCustomDork()" class="execute-btn">
+                                <i class="fas fa-search"></i> Execute
+                            </button>
+                        </div>
+                        <div id="dorkResults" class="results-container" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- Domain Analysis Tool -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="tool-info">
+                            <h3>Domain Analysis</h3>
+                            <p>Comprehensive domain investigation</p>
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="domain-input-group">
+                            <input type="text" id="domainInput" placeholder="Enter domain (e.g., example.com)">
+                            <button onclick="platform.analyzeDomain()" class="analyze-btn">
+                                <i class="fas fa-search"></i> Analyze
+                            </button>
+                        </div>
+                        <div id="domainResults" class="results-container" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- Social Media Scanner -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fab fa-twitter"></i>
+                        </div>
+                        <div class="tool-info">
+                            <h3>Social Media Scanner</h3>
+                            <p>Search across multiple platforms</p>
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="social-input-group">
+                            <input type="text" id="socialQuery" placeholder="Enter username or name to search">
+                            <div class="platform-selection">
+                                <label><input type="checkbox" value="facebook" checked> Facebook</label>
+                                <label><input type="checkbox" value="twitter" checked> Twitter</label>
+                                <label><input type="checkbox" value="instagram" checked> Instagram</label>
+                                <label><input type="checkbox" value="linkedin" checked> LinkedIn</label>
+                            </div>
+                            <button onclick="platform.scanSocialMedia()" class="scan-btn">
+                                <i class="fas fa-search"></i> Scan Platforms
+                            </button>
+                        </div>
+                        <div id="socialResults" class="results-container" style="display: none;"></div>
+                    </div>
+                </div>
+
+                <!-- Image Analysis Tool -->
+                <div class="tool-card">
+                    <div class="tool-header">
+                        <div class="tool-icon">
+                            <i class="fas fa-camera"></i>
+                        </div>
+                        <div class="tool-info">
+                            <h3>Image Analysis</h3>
+                            <p>Reverse search and metadata extraction</p>
+                        </div>
+                    </div>
+                    <div class="tool-content">
+                        <div class="image-input-group">
+                            <input type="url" id="imageUrl" placeholder="Enter image URL...">
+                            <button onclick="platform.analyzeImage()" class="analyze-btn">
+                                <i class="fas fa-search"></i> Analyze
+                            </button>
+                        </div>
+                        <div id="imageResults" class="results-container" style="display: none;"></div>
+                    </div>
+                </div>
+            </div>
                 <div class="intel-form-card">
                     <h3>Búsqueda Multi-Motor</h3>
                     <form id="searchToolsForm">
@@ -828,9 +927,805 @@ const additionalCSS = `
 .risk-low { color: #27ae60; font-weight: bold; }
 .risk-medium { color: #f39c12; font-weight: bold; }
 .risk-high { color: #e74c3c; font-weight: bold; }
+
+/* Search Tools Styles */
+.search-tools-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 24px;
+    margin-bottom: 2rem;
+}
+
+.tool-card {
+    background: #1f1f1f;
+    border: 1px solid #333;
+    border-radius: 16px;
+    overflow: hidden;
+}
+
+.tool-header {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    background: #2a2a2a;
+    border-bottom: 1px solid #333;
+}
+
+.tool-icon {
+    width: 48px;
+    height: 48px;
+    background: linear-gradient(135deg, #4285f4 0%, #1a73e8 100%);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+}
+
+.tool-icon i {
+    font-size: 20px;
+    color: white;
+}
+
+.tool-info h3 {
+    color: #e8eaed;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 4px;
+}
+
+.tool-info p {
+    color: #9aa0a6;
+    font-size: 14px;
+    margin: 0;
+}
+
+.tool-content {
+    padding: 20px;
+}
+
+.quick-dorks {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.dork-btn {
+    background: #333;
+    border: 1px solid #555;
+    color: #e8eaed;
+    padding: 6px 12px;
+    border-radius: 16px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.dork-btn:hover {
+    background: #4285f4;
+    border-color: #4285f4;
+}
+
+.custom-dork-input, .domain-input-group, .social-input-group, .image-input-group {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.custom-dork-input input, .domain-input-group input, .social-input-group input, .image-input-group input {
+    flex: 1;
+    background: #2a2a2a;
+    border: 1px solid #444;
+    color: #e8eaed;
+    padding: 10px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+}
+
+.custom-dork-input input:focus, .domain-input-group input:focus, .social-input-group input:focus, .image-input-group input:focus {
+    outline: none;
+    border-color: #4285f4;
+    box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+}
+
+.execute-btn, .analyze-btn, .scan-btn {
+    background: linear-gradient(135deg, #4285f4 0%, #1a73e8 100%);
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    white-space: nowrap;
+}
+
+.execute-btn:hover, .analyze-btn:hover, .scan-btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 6px 20px rgba(66, 133, 244, 0.3);
+}
+
+.platform-selection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 16px;
+}
+
+.platform-selection label {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #e8eaed;
+    font-size: 13px;
+    cursor: pointer;
+}
+
+.platform-selection input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+}
+
+.results-container {
+    margin-top: 16px;
+    padding: 16px;
+    background: #2a2a2a;
+    border-radius: 12px;
+    border: 1px solid #444;
+}
+
+.results-container h3 {
+    color: #e8eaed;
+    font-size: 16px;
+    margin-bottom: 16px;
+}
+
+.search-result {
+    background: #333;
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+.result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 6px;
+}
+
+.result-header h4 {
+    color: #4285f4;
+    font-size: 14px;
+    margin: 0;
+}
+
+.result-header a {
+    color: #4285f4;
+    text-decoration: none;
+}
+
+.result-header a:hover {
+    text-decoration: underline;
+}
+
+.result-domain {
+    color: #34a853;
+    font-size: 11px;
+    background: rgba(52, 168, 83, 0.1);
+    padding: 2px 6px;
+    border-radius: 8px;
+}
+
+.result-snippet {
+    color: #9aa0a6;
+    font-size: 13px;
+    line-height: 1.3;
+    margin-bottom: 8px;
+}
+
+.result-actions {
+    display: flex;
+    gap: 6px;
+}
+
+.action-btn {
+    background: #444;
+    border: 1px solid #666;
+    color: #e8eaed;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.action-btn:hover {
+    background: #4285f4;
+    border-color: #4285f4;
+}
+
+.domain-info {
+    display: grid;
+    gap: 16px;
+}
+
+.info-section h4 {
+    color: #e8eaed;
+    font-size: 14px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 4px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+}
+
+.info-grid > div {
+    background: #333;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.info-grid strong {
+    color: #9aa0a6;
+}
+
+.subdomains-list {
+    display: grid;
+    gap: 4px;
+}
+
+.subdomain-item {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 12px;
+    padding: 8px 12px;
+    background: #333;
+    border-radius: 6px;
+    align-items: center;
+    font-size: 12px;
+}
+
+.subdomain-name {
+    color: #4285f4;
+    font-family: monospace;
+}
+
+.subdomain-ip {
+    color: #9aa0a6;
+    font-family: monospace;
+}
+
+.subdomain-status {
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 8px;
+    text-align: center;
+}
+
+.status-active {
+    color: #34a853;
+    background: rgba(52, 168, 83, 0.1);
+}
+
+.status-risk {
+    color: #ea4335;
+    background: rgba(234, 67, 53, 0.1);
+}
+
+.security-info {
+    display: grid;
+    gap: 6px;
+}
+
+.security-info > div {
+    background: #333;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 12px;
+}
+
+.social-platform {
+    background: #333;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    overflow: hidden;
+}
+
+.platform-header {
+    display: flex;
+    align-items: center;
+    padding: 12px 16px;
+    background: #444;
+    border-bottom: 1px solid #555;
+}
+
+.platform-header i {
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.platform-header h4 {
+    flex: 1;
+    color: #e8eaed;
+    font-size: 14px;
+    margin: 0;
+}
+
+.profile-count {
+    color: #9aa0a6;
+    font-size: 11px;
+    background: rgba(154, 160, 166, 0.1);
+    padding: 2px 6px;
+    border-radius: 8px;
+}
+
+.platform-profiles {
+    padding: 12px 16px;
+}
+
+.social-profile {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 8px 0;
+    border-bottom: 1px solid #444;
+}
+
+.social-profile:last-child {
+    border-bottom: none;
+}
+
+.profile-info h5 {
+    color: #4285f4;
+    font-size: 14px;
+    margin: 0 0 2px 0;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.profile-info a {
+    color: #4285f4;
+    text-decoration: none;
+}
+
+.profile-info a:hover {
+    text-decoration: underline;
+}
+
+.verified {
+    color: #4285f4;
+    font-size: 12px;
+}
+
+.profile-info p {
+    color: #9aa0a6;
+    font-size: 11px;
+    margin: 0;
+}
+
+.analysis-section {
+    margin-bottom: 16px;
+}
+
+.analysis-section h4 {
+    color: #e8eaed;
+    font-size: 14px;
+    margin-bottom: 8px;
+    border-bottom: 1px solid #444;
+    padding-bottom: 4px;
+}
+
+.reverse-engine {
+    background: #333;
+    border-radius: 8px;
+    padding: 12px;
+    margin-bottom: 8px;
+}
+
+.reverse-engine h5 {
+    color: #e8eaed;
+    font-size: 13px;
+    margin-bottom: 6px;
+}
+
+.reverse-engine a {
+    color: #4285f4;
+    text-decoration: none;
+    font-size: 12px;
+}
+
+.similar-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.similar-image {
+    text-align: center;
+}
+
+.image-placeholder {
+    width: 100%;
+    height: 60px;
+    background: #4285f4;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 10px;
+    margin-bottom: 4px;
+}
+
+.similar-image p {
+    color: #9aa0a6;
+    font-size: 10px;
+    margin: 2px 0;
+}
+
+.similar-image a {
+    color: #4285f4;
+    text-decoration: none;
+    font-size: 9px;
+}
+
+.metadata-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 8px;
+}
+
+.metadata-item {
+    background: #333;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    border-left: 3px solid #4285f4;
+}
+
+.metadata-item strong {
+    color: #9aa0a6;
+    display: block;
+    margin-bottom: 2px;
+}
+
+@media (max-width: 768px) {
+    .search-tools-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .custom-dork-input, .domain-input-group, .social-input-group, .image-input-group {
+        flex-direction: column;
+    }
+    
+    .platform-selection {
+        flex-direction: column;
+        gap: 8px;
+    }
+    
+    .subdomain-item {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 4px;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .metadata-grid {
+        grid-template-columns: 1fr;
+    }
+}
 `;
 
 // Inject additional CSS
 const style = document.createElement('style');
 style.textContent = additionalCSS;
 document.head.appendChild(style);
+
+// Add Search Tools functionality to OSINTPlatform prototype
+OSINTPlatform.prototype.executeGoogleDork = async function(query) {
+    this.showToast('Executing Google dork...', 'info');
+    
+    try {
+        const response = await fetch(`${this.apiBase}/api/v1/tools/google-dork?query=${encodeURIComponent(query)}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            this.displayDorkResults(data);
+        } else {
+            throw new Error('Failed to execute Google dork');
+        }
+    } catch (error) {
+        this.showToast('Error executing Google dork', 'error');
+        console.error(error);
+    }
+};
+
+OSINTPlatform.prototype.executeCustomDork = async function() {
+    const query = document.getElementById('customDorkQuery').value.trim();
+    if (!query) {
+        this.showToast('Please enter a search query', 'warning');
+        return;
+    }
+    
+    await this.executeGoogleDork(query);
+};
+
+OSINTPlatform.prototype.displayDorkResults = function(data) {
+    const resultsContainer = document.getElementById('dorkResults');
+    
+    const resultsHtml = data.results.map(result => `
+        <div class="search-result">
+            <div class="result-header">
+                <h4><a href="${result.url}" target="_blank">${result.title}</a></h4>
+                <span class="result-domain">${result.domain}</span>
+            </div>
+            <p class="result-snippet">${result.snippet}</p>
+            <div class="result-actions">
+                <button onclick="navigator.clipboard.writeText('${result.url}')" class="action-btn">
+                    <i class="fas fa-copy"></i> Copy URL
+                </button>
+            </div>
+        </div>
+    `).join('');
+    
+    resultsContainer.innerHTML = `
+        <h3>Search Results (${data.total_results} found)</h3>
+        ${resultsHtml}
+    `;
+    resultsContainer.style.display = 'block';
+    
+    this.showToast(`Found ${data.total_results} results`, 'success');
+};
+
+OSINTPlatform.prototype.analyzeDomain = async function() {
+    const domain = document.getElementById('domainInput').value.trim();
+    if (!domain) {
+        this.showToast('Please enter a domain name', 'warning');
+        return;
+    }
+    
+    this.showToast('Analyzing domain...', 'info');
+    
+    try {
+        const response = await fetch(`${this.apiBase}/api/v1/tools/domain-analysis?domain=${encodeURIComponent(domain)}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            this.displayDomainResults(data);
+        } else {
+            throw new Error('Failed to analyze domain');
+        }
+    } catch (error) {
+        this.showToast('Error analyzing domain', 'error');
+        console.error(error);
+    }
+};
+
+OSINTPlatform.prototype.displayDomainResults = function(data) {
+    const resultsContainer = document.getElementById('domainResults');
+    
+    const subdomainsHtml = data.subdomains.map(sub => `
+        <div class="subdomain-item">
+            <span class="subdomain-name">${sub.name}</span>
+            <span class="subdomain-ip">${sub.ip}</span>
+            <span class="subdomain-status ${sub.status.includes('Risk') ? 'status-risk' : 'status-active'}">${sub.status}</span>
+        </div>
+    `).join('');
+    
+    resultsContainer.innerHTML = `
+        <h3>Domain Analysis: ${data.domain}</h3>
+        <div class="domain-info">
+            <div class="info-section">
+                <h4>WHOIS Information</h4>
+                <div class="info-grid">
+                    <div><strong>Registrar:</strong> ${data.whois.registrar}</div>
+                    <div><strong>Created:</strong> ${data.whois.creation_date}</div>
+                    <div><strong>Expires:</strong> ${data.whois.expiration_date}</div>
+                    <div><strong>Status:</strong> <span class="status-active">${data.whois.status}</span></div>
+                </div>
+            </div>
+            <div class="info-section">
+                <h4>Subdomains Found</h4>
+                <div class="subdomains-list">
+                    ${subdomainsHtml}
+                </div>
+            </div>
+            <div class="info-section">
+                <h4>Security Status</h4>
+                <div class="security-info">
+                    <div><strong>SSL:</strong> <span class="status-active">${data.security.ssl_certificate}</span></div>
+                    <div><strong>Vulnerabilities:</strong> <span class="status-active">${data.security.vulnerabilities}</span></div>
+                    <div><strong>Blacklist:</strong> <span class="status-active">${data.security.blacklist_status}</span></div>
+                </div>
+            </div>
+        </div>
+    `;
+    resultsContainer.style.display = 'block';
+    
+    this.showToast('Domain analysis completed', 'success');
+};
+
+OSINTPlatform.prototype.scanSocialMedia = async function() {
+    const query = document.getElementById('socialQuery').value.trim();
+    if (!query) {
+        this.showToast('Please enter a search term', 'warning');
+        return;
+    }
+    
+    const selectedPlatforms = Array.from(document.querySelectorAll('.platform-selection input:checked'))
+        .map(cb => cb.value);
+    
+    if (selectedPlatforms.length === 0) {
+        this.showToast('Please select at least one platform', 'warning');
+        return;
+    }
+    
+    this.showToast('Scanning social media platforms...', 'info');
+    
+    try {
+        const platforms = selectedPlatforms.join(',');
+        const response = await fetch(`${this.apiBase}/api/v1/tools/social-scan?query=${encodeURIComponent(query)}&platforms=${platforms}`, {
+            headers: {
+                'Authorization': `Bearer ${this.token}`
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            this.displaySocialResults(data);
+        } else {
+            throw new Error('Failed to scan social media');
+        }
+    } catch (error) {
+        this.showToast('Error scanning social media', 'error');
+        console.error(error);
+    }
+};
+
+OSINTPlatform.prototype.displaySocialResults = function(data) {
+    const resultsContainer = document.getElementById('socialResults');
+    
+    const platformsHtml = data.results.map(platform => {
+        const profilesHtml = platform.profiles.map(profile => `
+            <div class="social-profile">
+                <div class="profile-info">
+                    <h5>
+                        <a href="${profile.url}" target="_blank">@${profile.username}</a>
+                        ${profile.verified ? '<i class="fas fa-check-circle verified"></i>' : ''}
+                    </h5>
+                    <p>${profile.followers.toLocaleString()} followers • ${profile.lastActivity}</p>
+                </div>
+                <button onclick="window.open('${profile.url}', '_blank')" class="action-btn">
+                    <i class="fas fa-external-link-alt"></i>
+                </button>
+            </div>
+        `).join('');
+        
+        return `
+            <div class="social-platform">
+                <div class="platform-header">
+                    <i class="${platform.icon}" style="color: ${platform.color}"></i>
+                    <h4>${platform.platform}</h4>
+                    <span class="profile-count">${platform.profiles.length} profile(s)</span>
+                </div>
+                <div class="platform-profiles">
+                    ${profilesHtml}
+                </div>
+            </div>
+        `;
+    }).join('');
+    
+    resultsContainer.innerHTML = `
+        <h3>Social Media Results for "${data.query}"</h3>
+        <div class="social-results">
+            ${platformsHtml}
+        </div>
+    `;
+    resultsContainer.style.display = 'block';
+    
+    this.showToast(`Found ${data.total_profiles} profiles across ${data.results.length} platforms`, 'success');
+};
+
+OSINTPlatform.prototype.analyzeImage = async function() {
+    const imageUrl = document.getElementById('imageUrl').value.trim();
+    if (!imageUrl) {
+        this.showToast('Please enter an image URL', 'warning');
+        return;
+    }
+    
+    this.showToast('Analyzing image...', 'info');
+    
+    try {
+        const response = await fetch(`${this.apiBase}/api/v1/tools/image-analysis`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${this.token}`
+            },
+            body: JSON.stringify({ image_url: imageUrl })
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            this.displayImageResults(data);
+        } else {
+            throw new Error('Failed to analyze image');
+        }
+    } catch (error) {
+        this.showToast('Error analyzing image', 'error');
+        console.error(error);
+    }
+};
+
+OSINTPlatform.prototype.displayImageResults = function(data) {
+    const resultsContainer = document.getElementById('imageResults');
+    
+    const reverseSearchHtml = data.reverse_search.map(engine => `
+        <div class="reverse-engine">
+            <h5>${engine.engine} - ${engine.matches} matches</h5>
+            <a href="${engine.url}" target="_blank">View full results</a>
+            <div class="similar-images">
+                ${engine.similar.map(img => `
+                    <div class="similar-image">
+                        <div class="image-placeholder">IMG</div>
+                        <p>Similarity: ${img.similarity}</p>
+                        <a href="${img.url}" target="_blank">Source</a>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `).join('');
+    
+    const metadataHtml = Object.entries(data.metadata).map(([key, value]) => `
+        <div class="metadata-item">
+            <strong>${key.charAt(0).toUpperCase() + key.slice(1)}:</strong> ${value}
+        </div>
+    `).join('');
+    
+    resultsContainer.innerHTML = `
+        <h3>Image Analysis Results</h3>
+        <div class="image-analysis">
+            <div class="analysis-section">
+                <h4>Reverse Search Results</h4>
+                ${reverseSearchHtml}
+            </div>
+            <div class="analysis-section">
+                <h4>Image Metadata</h4>
+                <div class="metadata-grid">
+                    ${metadataHtml}
+                </div>
+            </div>
+        </div>
+    `;
+    resultsContainer.style.display = 'block';
+    
+    this.showToast('Image analysis completed', 'success');
+};

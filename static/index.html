@@ -2488,6 +2488,66 @@
             }
         }
         
+        .report-form .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .report-form .form-group label {
+            color: #e8eaed;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 4px;
+        }
+        
+        .report-form .form-group input,
+        .report-form .form-group select,
+        .report-form .form-group textarea {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: #e8eaed;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            outline: none;
+        }
+        
+        .report-form .form-group input:focus,
+        .report-form .form-group select:focus,
+        .report-form .form-group textarea:focus {
+            border-color: #4285f4;
+            background: rgba(66, 133, 244, 0.1);
+            box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.2);
+        }
+        
+        .report-form .form-group input::placeholder,
+        .report-form .form-group textarea::placeholder {
+            color: #9aa0a6;
+        }
+        
+        .report-form .form-group select {
+            cursor: pointer;
+        }
+        
+        .report-form .form-group select option {
+            background: #1f1f1f;
+            color: #e8eaed;
+        }
+        
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: flex-start;
+            margin-top: 24px;
+        }
+        
+        .form-actions .intel-btn {
+            min-width: 140px;
+            justify-content: center;
+        }
+        
         .reports-list {
             margin-bottom: 32px;
         }

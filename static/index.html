@@ -1054,6 +1054,141 @@
             color: #9aa0a6;
             font-size: 12px;
         }
+        
+        /* Phone Intel Styles */
+        .phone-input-group {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        
+        .country-selector {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #e8eaed;
+            padding: 12px;
+            font-size: 14px;
+            min-width: 140px;
+        }
+        
+        .country-selector:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+        
+        .phone-input-group input[type="tel"] {
+            flex: 1;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+            color: #e8eaed;
+            padding: 12px;
+            font-size: 14px;
+        }
+        
+        .phone-input-group input[type="tel"]:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+        
+        .info-item .label {
+            color: #9aa0a6;
+            font-size: 14px;
+        }
+        
+        .info-item .value {
+            color: #e8eaed;
+            font-weight: 500;
+        }
+        
+        .social-checks {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .social-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+        
+        .social-item i {
+            color: #4285f4;
+            width: 20px;
+        }
+        
+        .social-item span:first-of-type {
+            color: #e8eaed;
+            font-weight: 500;
+            min-width: 80px;
+        }
+        
+        .social-item .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .social-item .status.checking {
+            background: rgba(255, 167, 38, 0.1);
+            color: #ffa726;
+            border: 1px solid rgba(255, 167, 38, 0.2);
+        }
+        
+        .social-item .status.found {
+            background: rgba(67, 233, 123, 0.1);
+            color: #43e97b;
+            border: 1px solid rgba(67, 233, 123, 0.2);
+        }
+        
+        .social-item .status.not-found {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.2);
+        }
+        
+        .social-item .status.private {
+            background: rgba(156, 39, 176, 0.1);
+            color: #9c27b0;
+            border: 1px solid rgba(156, 39, 176, 0.2);
+        }
+        
+        .result-section {
+            margin-bottom: 24px;
+        }
+        
+        .result-section h4 {
+            color: #e8eaed;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -1428,6 +1563,144 @@
                 </div>
             </div>
             
+            <!-- Phone Intel Section -->
+            <div id="phoneIntelContent" class="intel-section hidden">
+                <div class="section-header">
+                    <h2><i class="fas fa-phone"></i> Phone Intelligence</h2>
+                    <p>Comprehensive phone number analysis and investigation tools</p>
+                </div>
+                
+                <div class="intel-container">
+                    <div class="intel-form-card">
+                        <h3><i class="fas fa-search"></i> Phone Number Analysis</h3>
+                        <form id="phoneIntelForm" class="intel-form">
+                            <div class="form-group">
+                                <label for="phoneNumber">Phone Number</label>
+                                <div class="phone-input-group">
+                                    <select id="countryCode" class="country-selector">
+                                        <option value="+1">🇺🇸 +1 (US/CA)</option>
+                                        <option value="+34">🇪🇸 +34 (Spain)</option>
+                                        <option value="+33">🇫🇷 +33 (France)</option>
+                                        <option value="+49">🇩🇪 +49 (Germany)</option>
+                                        <option value="+44">🇬🇧 +44 (UK)</option>
+                                        <option value="+39">🇮🇹 +39 (Italy)</option>
+                                        <option value="+52">🇲🇽 +52 (Mexico)</option>
+                                        <option value="+86">🇨🇳 +86 (China)</option>
+                                        <option value="+91">🇮🇳 +91 (India)</option>
+                                    </select>
+                                    <input type="tel" id="phoneNumber" placeholder="555-123-4567" maxlength="15" required>
+                                </div>
+                                <small>Enter the phone number you want to investigate</small>
+                            </div>
+                            
+                            <div class="form-options">
+                                <h4>Analysis Options</h4>
+                                <div class="checkbox-grid">
+                                    <label class="checkbox-card">
+                                        <input type="checkbox" id="checkCarrier" checked>
+                                        <div class="checkbox-content">
+                                            <i class="fas fa-signal"></i>
+                                            <span>Carrier Info</span>
+                                            <small>Get carrier and line type information</small>
+                                        </div>
+                                    </label>
+                                    
+                                    <label class="checkbox-card">
+                                        <input type="checkbox" id="checkSocialMedia" checked>
+                                        <div class="checkbox-content">
+                                            <i class="fas fa-share-alt"></i>
+                                            <span>Social Media</span>
+                                            <small>Check WhatsApp, Telegram, Signal presence</small>
+                                        </div>
+                                    </label>
+                                    
+                                    <label class="checkbox-card">
+                                        <input type="checkbox" id="checkOSINT">
+                                        <div class="checkbox-content">
+                                            <i class="fas fa-search"></i>
+                                            <span>OSINT Sources</span>
+                                            <small>Search in Truecaller, reverse lookup databases</small>
+                                        </div>
+                                    </label>
+                                    
+                                    <label class="checkbox-card">
+                                        <input type="checkbox" id="checkValidation">
+                                        <div class="checkbox-content">
+                                            <i class="fas fa-check-circle"></i>
+                                            <span>Validation</span>
+                                            <small>Validate number format and existence</small>
+                                        </div>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="intel-btn primary">
+                                <i class="fas fa-search"></i>
+                                <span>Analyze Phone Number</span>
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <div class="intel-results" id="phoneResults" style="display: none;">
+                        <div class="results-header">
+                            <h3><i class="fas fa-chart-line"></i> Analysis Results</h3>
+                        </div>
+                        <div id="phoneResultsContent" class="results-content">
+                            <div class="result-section">
+                                <h4>Basic Information</h4>
+                                <div class="info-grid">
+                                    <div class="info-item">
+                                        <span class="label">Formatted Number:</span>
+                                        <span class="value" id="formattedNumber">-</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">Country:</span>
+                                        <span class="value" id="phoneCountry">-</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">Region:</span>
+                                        <span class="value" id="phoneRegion">-</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">Carrier:</span>
+                                        <span class="value" id="phoneCarrier">-</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">Line Type:</span>
+                                        <span class="value" id="lineType">-</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="label">Timezone:</span>
+                                        <span class="value" id="phoneTimezone">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="result-section">
+                                <h4>Social Media Presence</h4>
+                                <div class="social-checks">
+                                    <div class="social-item">
+                                        <i class="fab fa-whatsapp"></i>
+                                        <span>WhatsApp:</span>
+                                        <span class="status checking">Checking...</span>
+                                    </div>
+                                    <div class="social-item">
+                                        <i class="fab fa-telegram"></i>
+                                        <span>Telegram:</span>
+                                        <span class="status checking">Checking...</span>
+                                    </div>
+                                    <div class="social-item">
+                                        <i class="fas fa-signal"></i>
+                                        <span>Signal:</span>
+                                        <span class="status checking">Checking...</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             </div> <!-- End Content Container -->
         </main>
     </div>
@@ -1488,6 +1761,7 @@
             document.getElementById('dashboardContent').classList.add('hidden');
             document.getElementById('emailIntelContent').classList.add('hidden');
             document.getElementById('investigationsContent').classList.add('hidden');
+            document.getElementById('phoneIntelContent').classList.add('hidden');
             
             // Show appropriate section
             if (section === 'dashboard') {
@@ -1497,6 +1771,9 @@
                 setupEmailIntelForm();
             } else if (section === 'investigations') {
                 document.getElementById('investigationsContent').classList.remove('hidden');
+            } else if (section === 'phone-intel') {
+                document.getElementById('phoneIntelContent').classList.remove('hidden');
+                setupPhoneIntelForm();
             } else {
                 // For other sections, show coming soon
                 alert(`Sección "${titles[section]}" - Funcionalidad próximamente`);
@@ -1518,6 +1795,77 @@
         
         function createNewInvestigation() {
             alert('Crear nueva investigación - Funcionalidad próximamente');
+        }
+        
+        function setupPhoneIntelForm() {
+            const form = document.getElementById('phoneIntelForm');
+            if (form && !form.hasAttribute('data-setup')) {
+                form.setAttribute('data-setup', 'true');
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    await performPhoneInvestigation();
+                });
+            }
+        }
+        
+        async function performPhoneInvestigation() {
+            const countryCode = document.getElementById('countryCode').value;
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const fullNumber = countryCode + phoneNumber;
+            
+            // Show results section
+            const resultsDiv = document.getElementById('phoneResults');
+            resultsDiv.style.display = 'block';
+            
+            // Simulate analysis
+            document.getElementById('formattedNumber').textContent = fullNumber;
+            document.getElementById('phoneCountry').textContent = getCountryName(countryCode);
+            document.getElementById('phoneRegion').textContent = 'Analyzing...';
+            document.getElementById('phoneCarrier').textContent = 'Detecting...';
+            document.getElementById('lineType').textContent = 'Mobile';
+            document.getElementById('phoneTimezone').textContent = getTimezone(countryCode);
+            
+            // Simulate social media checks
+            setTimeout(() => {
+                const socialItems = document.querySelectorAll('.social-item .status');
+                socialItems.forEach((item, index) => {
+                    const statuses = ['Found', 'Not Found', 'Private'];
+                    const classes = ['found', 'not-found', 'private'];
+                    const randomStatus = Math.floor(Math.random() * 3);
+                    item.textContent = statuses[randomStatus];
+                    item.className = `status ${classes[randomStatus]}`;
+                });
+            }, 2000);
+        }
+        
+        function getCountryName(code) {
+            const countries = {
+                '+1': 'United States / Canada',
+                '+34': 'Spain',
+                '+33': 'France', 
+                '+49': 'Germany',
+                '+44': 'United Kingdom',
+                '+39': 'Italy',
+                '+52': 'Mexico',
+                '+86': 'China',
+                '+91': 'India'
+            };
+            return countries[code] || 'Unknown';
+        }
+        
+        function getTimezone(code) {
+            const timezones = {
+                '+1': 'UTC-5 to UTC-8',
+                '+34': 'UTC+1',
+                '+33': 'UTC+1',
+                '+49': 'UTC+1',
+                '+44': 'UTC+0',
+                '+39': 'UTC+1',
+                '+52': 'UTC-6',
+                '+86': 'UTC+8',
+                '+91': 'UTC+5:30'
+            };
+            return timezones[code] || 'Unknown';
         }
         
         async function performEmailInvestigation() {

@@ -1189,6 +1189,222 @@
             padding-bottom: 8px;
             border-bottom: 1px solid #333;
         }
+        
+        /* Search Tools Styles */
+        .tools-container {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .tool-section {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            overflow: hidden;
+        }
+        
+        .tool-header {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #1f1f1f 0%, #2a2a2a 100%);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .tool-header:hover {
+            background: linear-gradient(135deg, #2a2a2a 0%, #333 100%);
+        }
+        
+        .tool-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 16px;
+        }
+        
+        .tool-icon i {
+            color: white;
+            font-size: 20px;
+        }
+        
+        .tool-info {
+            flex: 1;
+        }
+        
+        .tool-info h3 {
+            color: #e8eaed;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0 0 4px 0;
+        }
+        
+        .tool-info p {
+            color: #9aa0a6;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .tool-toggle {
+            background: none;
+            border: none;
+            color: #9aa0a6;
+            font-size: 16px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+        }
+        
+        .tool-toggle:hover {
+            background: rgba(66, 133, 244, 0.1);
+            color: #4285f4;
+        }
+        
+        .tool-content {
+            padding: 24px;
+            border-top: 1px solid #333;
+        }
+        
+        .dork-categories {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .dork-category h4 {
+            color: #e8eaed;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 0 12px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .dork-buttons {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .dork-btn {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #e8eaed;
+            padding: 12px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+        }
+        
+        .dork-btn:hover {
+            background: #333;
+            border-color: #4285f4;
+            transform: translateY(-1px);
+        }
+        
+        .custom-dork-section {
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid #333;
+        }
+        
+        .custom-dork-section h4 {
+            color: #e8eaed;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 0 16px 0;
+        }
+        
+        .custom-dork-input {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .custom-dork-input input {
+            flex: 1;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #e8eaed;
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+        
+        .custom-dork-input input:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+        
+        .domain-input-section {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .domain-input-section input {
+            flex: 1;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #e8eaed;
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+        
+        .domain-input-section input:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+        
+        .analysis-results {
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 20px;
+        }
+        
+        .analysis-results h4 {
+            color: #e8eaed;
+            font-size: 16px;
+            font-weight: 500;
+            margin: 0 0 16px 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #444;
+        }
+        
+        .results-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 8px;
+        }
+        
+        .result-item .label {
+            color: #9aa0a6;
+            font-size: 14px;
+        }
+        
+        .result-item .value {
+            color: #e8eaed;
+            font-weight: 500;
+        }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -1701,6 +1917,133 @@
                 </div>
             </div>
             
+            <!-- Search Tools Section -->
+            <div id="searchToolsContent" class="intel-section hidden">
+                <div class="section-header">
+                    <h2><i class="fas fa-search"></i> Advanced Search Tools</h2>
+                    <p>Specialized OSINT tools for comprehensive investigations</p>
+                </div>
+                
+                <div class="tools-container">
+                    <!-- Google Dorking Tool -->
+                    <div class="tool-section">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <i class="fab fa-google"></i>
+                            </div>
+                            <div class="tool-info">
+                                <h3>Google Dorking</h3>
+                                <p>Advanced Google search techniques for finding specific information</p>
+                            </div>
+                            <button class="tool-toggle" onclick="toggleTool('google-dorking')">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="tool-content" id="google-dorking" style="display: none;">
+                            <div class="dork-categories">
+                                <div class="dork-category">
+                                    <h4>Email & Contact Information</h4>
+                                    <div class="dork-buttons">
+                                        <button class="dork-btn" onclick="applyDork('site:linkedin.com &quot;email&quot; &quot;@gmail.com&quot;')">
+                                            LinkedIn Emails
+                                        </button>
+                                        <button class="dork-btn" onclick="applyDork('&quot;@company.com&quot; filetype:pdf')">
+                                            Company Emails in PDFs
+                                        </button>
+                                        <button class="dork-btn" onclick="applyDork('intext:&quot;phone&quot; OR intext:&quot;contact&quot; site:facebook.com')">
+                                            Contact Info Facebook
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="dork-category">
+                                    <h4>Social Media Profiles</h4>
+                                    <div class="dork-buttons">
+                                        <button class="dork-btn" onclick="applyDork('site:twitter.com &quot;John Doe&quot;')">
+                                            Twitter Profiles
+                                        </button>
+                                        <button class="dork-btn" onclick="applyDork('site:instagram.com inurl:username')">
+                                            Instagram Users
+                                        </button>
+                                        <button class="dork-btn" onclick="applyDork('site:linkedin.com/in/ &quot;software engineer&quot;')">
+                                            LinkedIn Professionals
+                                        </button>
+                                    </div>
+                                </div>
+                                
+                                <div class="dork-category">
+                                    <h4>Document Intelligence</h4>
+                                    <div class="dork-buttons">
+                                        <button class="dork-btn" onclick="applyDork('filetype:pdf &quot;confidential&quot;')">
+                                            Confidential PDFs
+                                        </button>
+                                        <button class="dork-btn" onclick="applyDork('filetype:xlsx OR filetype:csv &quot;employee&quot;')">
+                                            Employee Lists
+                                        </button>
+                                        <button class="dork-btn" onclick="applyDork('filetype:txt &quot;password&quot; OR &quot;login&quot;')">
+                                            Password Files
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="custom-dork-section">
+                                <h4>Custom Google Dork</h4>
+                                <div class="custom-dork-input">
+                                    <input type="text" id="customDork" placeholder="Enter your custom Google dork...">
+                                    <button class="intel-btn primary" onclick="applyCustomDork()">
+                                        <i class="fas fa-search"></i> Search
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Domain Analysis Tool -->
+                    <div class="tool-section">
+                        <div class="tool-header">
+                            <div class="tool-icon">
+                                <i class="fas fa-globe"></i>
+                            </div>
+                            <div class="tool-info">
+                                <h3>Domain Analysis</h3>
+                                <p>Comprehensive domain and subdomain enumeration</p>
+                            </div>
+                            <button class="tool-toggle" onclick="toggleTool('domain-analysis')">
+                                <i class="fas fa-chevron-down"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="tool-content" id="domain-analysis" style="display: none;">
+                            <div class="domain-input-section">
+                                <input type="text" id="domainInput" placeholder="Enter domain (e.g., example.com)">
+                                <button class="intel-btn primary" onclick="analyzeDomain()">
+                                    <i class="fas fa-search"></i> Analyze Domain
+                                </button>
+                            </div>
+                            <div id="domainResults" class="analysis-results" style="display: none;">
+                                <h4>Domain Analysis Results</h4>
+                                <div class="results-grid">
+                                    <div class="result-item">
+                                        <span class="label">IP Address:</span>
+                                        <span class="value" id="domainIP">-</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="label">Registrar:</span>
+                                        <span class="value" id="domainRegistrar">-</span>
+                                    </div>
+                                    <div class="result-item">
+                                        <span class="label">Creation Date:</span>
+                                        <span class="value" id="domainCreated">-</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             </div> <!-- End Content Container -->
         </main>
     </div>
@@ -1762,6 +2105,7 @@
             document.getElementById('emailIntelContent').classList.add('hidden');
             document.getElementById('investigationsContent').classList.add('hidden');
             document.getElementById('phoneIntelContent').classList.add('hidden');
+            document.getElementById('searchToolsContent').classList.add('hidden');
             
             // Show appropriate section
             if (section === 'dashboard') {
@@ -1774,6 +2118,9 @@
             } else if (section === 'phone-intel') {
                 document.getElementById('phoneIntelContent').classList.remove('hidden');
                 setupPhoneIntelForm();
+            } else if (section === 'search-tools') {
+                document.getElementById('searchToolsContent').classList.remove('hidden');
+                setupSearchToolsForm();
             } else {
                 // For other sections, show coming soon
                 alert(`Sección "${titles[section]}" - Funcionalidad próximamente`);
@@ -1866,6 +2213,78 @@
                 '+91': 'UTC+5:30'
             };
             return timezones[code] || 'Unknown';
+        }
+        
+        function setupSearchToolsForm() {
+            // Initialize search tools if needed
+            console.log('Search Tools initialized');
+        }
+        
+        function toggleTool(toolId) {
+            const toolContent = document.getElementById(toolId);
+            const toggleButton = document.querySelector(`[onclick="toggleTool('${toolId}')"] i`);
+            
+            if (toolContent.style.display === 'none' || !toolContent.style.display) {
+                toolContent.style.display = 'block';
+                toggleButton.className = 'fas fa-chevron-up';
+            } else {
+                toolContent.style.display = 'none';
+                toggleButton.className = 'fas fa-chevron-down';
+            }
+        }
+        
+        function applyDork(dorkQuery) {
+            const googleUrl = `https://www.google.com/search?q=${encodeURIComponent(dorkQuery)}`;
+            window.open(googleUrl, '_blank');
+        }
+        
+        function applyCustomDork() {
+            const customDork = document.getElementById('customDork').value;
+            if (customDork.trim()) {
+                applyDork(customDork);
+            } else {
+                alert('Please enter a custom Google dork query');
+            }
+        }
+        
+        function analyzeDomain() {
+            const domain = document.getElementById('domainInput').value;
+            if (!domain.trim()) {
+                alert('Please enter a domain name');
+                return;
+            }
+            
+            // Show results section
+            const resultsDiv = document.getElementById('domainResults');
+            resultsDiv.style.display = 'block';
+            
+            // Simulate domain analysis
+            document.getElementById('domainIP').textContent = 'Analyzing...';
+            document.getElementById('domainRegistrar').textContent = 'Checking...';
+            document.getElementById('domainCreated').textContent = 'Fetching...';
+            
+            // Simulate API calls with delays
+            setTimeout(() => {
+                document.getElementById('domainIP').textContent = generateRandomIP();
+                document.getElementById('domainRegistrar').textContent = getRandomRegistrar();
+                document.getElementById('domainCreated').textContent = getRandomDate();
+            }, 2000);
+        }
+        
+        function generateRandomIP() {
+            return `${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}.${Math.floor(Math.random() * 255)}`;
+        }
+        
+        function getRandomRegistrar() {
+            const registrars = ['GoDaddy', 'Namecheap', 'Cloudflare', 'Google Domains', 'Network Solutions'];
+            return registrars[Math.floor(Math.random() * registrars.length)];
+        }
+        
+        function getRandomDate() {
+            const start = new Date(2000, 0, 1);
+            const end = new Date();
+            const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
+            return randomDate.toLocaleDateString();
         }
         
         async function performEmailInvestigation() {

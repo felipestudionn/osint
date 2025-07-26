@@ -1405,6 +1405,235 @@
             color: #e8eaed;
             font-weight: 500;
         }
+        
+        /* Domain Intel Styles */
+        .input-card {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+        
+        .input-card h3 {
+            color: #e8eaed;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0 0 16px 0;
+        }
+        
+        .domain-input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .domain-input-group input {
+            flex: 1;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #e8eaed;
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+        
+        .domain-input-group input:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+        
+        .input-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        
+        .option-checkbox {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #e8eaed;
+            font-size: 14px;
+            cursor: pointer;
+        }
+        
+        .option-checkbox input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            accent-color: #4285f4;
+        }
+        
+        .domain-results {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+        
+        .info-card {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .info-card:hover {
+            border-color: #4285f4;
+            transform: translateY(-2px);
+        }
+        
+        .info-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #4285f4 0%, #34a853 100%);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .info-icon i {
+            color: white;
+            font-size: 16px;
+        }
+        
+        .info-content {
+            flex: 1;
+        }
+        
+        .info-content h5 {
+            color: #e8eaed;
+            font-size: 14px;
+            font-weight: 500;
+            margin: 0 0 4px 0;
+        }
+        
+        .info-content p {
+            color: #9aa0a6;
+            font-size: 14px;
+            margin: 0;
+        }
+        
+        .subdomains-list {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .subdomain-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+        
+        .subdomain-name {
+            color: #e8eaed;
+            font-weight: 500;
+            flex: 1;
+        }
+        
+        .subdomain-ip {
+            color: #9aa0a6;
+            font-family: monospace;
+            margin: 0 16px;
+        }
+        
+        .subdomain-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .subdomain-status.active {
+            background: rgba(67, 233, 123, 0.1);
+            color: #43e97b;
+            border: 1px solid rgba(67, 233, 123, 0.2);
+        }
+        
+        .subdomain-status.inactive {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.2);
+        }
+        
+        .security-checks {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .security-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            padding: 12px 16px;
+        }
+        
+        .security-item i {
+            color: #4285f4;
+            width: 20px;
+        }
+        
+        .security-item span:first-of-type {
+            color: #e8eaed;
+            font-weight: 500;
+            flex: 1;
+        }
+        
+        .security-item .status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .security-item .status.valid {
+            background: rgba(67, 233, 123, 0.1);
+            color: #43e97b;
+            border: 1px solid rgba(67, 233, 123, 0.2);
+        }
+        
+        .security-item .status.invalid {
+            background: rgba(244, 67, 54, 0.1);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.2);
+        }
+        
+        .security-item .status.protected {
+            background: rgba(66, 133, 244, 0.1);
+            color: #4285f4;
+            border: 1px solid rgba(66, 133, 244, 0.2);
+        }
+        
+        .security-item .status.exposed {
+            background: rgba(255, 167, 38, 0.1);
+            color: #ffa726;
+            border: 1px solid rgba(255, 167, 38, 0.2);
+        }
+        
+        .security-item .status.clean {
+            background: rgba(67, 233, 123, 0.1);
+            color: #43e97b;
+            border: 1px solid rgba(67, 233, 123, 0.2);
+        }
+        
+        .security-item .status.warning {
+            background: rgba(255, 167, 38, 0.1);
+            color: #ffa726;
+            border: 1px solid rgba(255, 167, 38, 0.2);
+        }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -2044,6 +2273,139 @@
                 </div>
             </div>
             
+            <!-- Domain Intel Section -->
+            <div id="domainIntelContent" class="intel-section hidden">
+                <div class="section-header">
+                    <h2><i class="fas fa-globe"></i> Domain Intelligence</h2>
+                    <p>Comprehensive domain analysis and investigation tools</p>
+                </div>
+                
+                <!-- Domain Input Section -->
+                <div class="domain-input-section">
+                    <div class="input-card">
+                        <h3>Domain Analysis</h3>
+                        <div class="domain-input-group">
+                            <input type="text" id="domainIntelInput" placeholder="Enter domain (e.g., example.com)" maxlength="255">
+                            <button class="intel-btn primary" onclick="analyzeDomainIntel()">
+                                <i class="fas fa-search"></i> Analyze Domain
+                            </button>
+                        </div>
+                        <div class="input-options">
+                            <label class="option-checkbox">
+                                <input type="checkbox" checked id="includeSubdomains"> Include subdomain enumeration
+                            </label>
+                            <label class="option-checkbox">
+                                <input type="checkbox" checked id="includeWhois"> Include WHOIS data
+                            </label>
+                            <label class="option-checkbox">
+                                <input type="checkbox" id="includeDNS"> Deep DNS analysis
+                            </label>
+                            <label class="option-checkbox">
+                                <input type="checkbox" id="includeSecurity"> Security assessment
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Analysis Results -->
+                <div class="domain-results" id="domainIntelResults" style="display: none;">
+                    <!-- Basic Domain Information -->
+                    <div class="result-section">
+                        <h4><i class="fas fa-info-circle"></i> Basic Information</h4>
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="fas fa-globe"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h5>Domain Name</h5>
+                                    <p id="domainIntelName">-</p>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h5>IP Address</h5>
+                                    <p id="domainIntelIP">-</p>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h5>SSL Status</h5>
+                                    <p id="sslStatus">-</p>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="fas fa-calendar"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h5>Registration Date</h5>
+                                    <p id="registrationDate">-</p>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h5>Expiration Date</h5>
+                                    <p id="expirationDate">-</p>
+                                </div>
+                            </div>
+                            <div class="info-card">
+                                <div class="info-icon">
+                                    <i class="fas fa-building"></i>
+                                </div>
+                                <div class="info-content">
+                                    <h5>Registrar</h5>
+                                    <p id="domainRegistrar">-</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Subdomain Results -->
+                    <div class="result-section">
+                        <h4><i class="fas fa-sitemap"></i> Subdomains Found</h4>
+                        <div id="subdomainsList" class="subdomains-list">
+                            <div class="subdomain-item">
+                                <span class="subdomain-name">www.example.com</span>
+                                <span class="subdomain-ip">192.168.1.1</span>
+                                <span class="subdomain-status active">Active</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Assessment -->
+                    <div class="result-section">
+                        <h4><i class="fas fa-shield-alt"></i> Security Assessment</h4>
+                        <div class="security-checks">
+                            <div class="security-item">
+                                <i class="fas fa-lock"></i>
+                                <span>SSL Certificate</span>
+                                <span class="status valid" id="sslCheck">Valid</span>
+                            </div>
+                            <div class="security-item">
+                                <i class="fas fa-eye-slash"></i>
+                                <span>WHOIS Privacy</span>
+                                <span class="status protected" id="whoisPrivacy">Protected</span>
+                            </div>
+                            <div class="security-item">
+                                <i class="fas fa-bug"></i>
+                                <span>Known Vulnerabilities</span>
+                                <span class="status clean" id="vulnerabilities">None Found</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             </div> <!-- End Content Container -->
         </main>
     </div>
@@ -2106,6 +2468,7 @@
             document.getElementById('investigationsContent').classList.add('hidden');
             document.getElementById('phoneIntelContent').classList.add('hidden');
             document.getElementById('searchToolsContent').classList.add('hidden');
+            document.getElementById('domainIntelContent').classList.add('hidden');
             
             // Show appropriate section
             if (section === 'dashboard') {
@@ -2121,6 +2484,9 @@
             } else if (section === 'search-tools') {
                 document.getElementById('searchToolsContent').classList.remove('hidden');
                 setupSearchToolsForm();
+            } else if (section === 'domain-intel') {
+                document.getElementById('domainIntelContent').classList.remove('hidden');
+                setupDomainIntelForm();
             } else {
                 // For other sections, show coming soon
                 alert(`Sección "${titles[section]}" - Funcionalidad próximamente`);
@@ -2285,6 +2651,117 @@
             const end = new Date();
             const randomDate = new Date(start.getTime() + Math.random() * (end.getTime() - start.getTime()));
             return randomDate.toLocaleDateString();
+        }
+        
+        function setupDomainIntelForm() {
+            // Initialize domain intel if needed
+            console.log('Domain Intel initialized');
+        }
+        
+        function analyzeDomainIntel() {
+            const domain = document.getElementById('domainIntelInput').value;
+            if (!domain.trim()) {
+                alert('Please enter a domain name');
+                return;
+            }
+            
+            const includeSubdomains = document.getElementById('includeSubdomains').checked;
+            const includeWhois = document.getElementById('includeWhois').checked;
+            const includeDNS = document.getElementById('includeDNS').checked;
+            const includeSecurity = document.getElementById('includeSecurity').checked;
+            
+            // Show results section
+            const resultsDiv = document.getElementById('domainIntelResults');
+            resultsDiv.style.display = 'block';
+            
+            // Populate basic information
+            document.getElementById('domainIntelName').textContent = domain;
+            document.getElementById('domainIntelIP').textContent = 'Analyzing...';
+            document.getElementById('sslStatus').textContent = 'Checking...';
+            document.getElementById('registrationDate').textContent = 'Fetching...';
+            document.getElementById('expirationDate').textContent = 'Fetching...';
+            document.getElementById('domainRegistrar').textContent = 'Checking...';
+            
+            // Simulate API calls with progressive updates
+            setTimeout(() => {
+                document.getElementById('domainIntelIP').textContent = generateRandomIP();
+                document.getElementById('sslStatus').textContent = Math.random() > 0.3 ? 'Valid SSL' : 'No SSL';
+                document.getElementById('registrationDate').textContent = getRandomDate();
+                
+                const futureDate = new Date();
+                futureDate.setFullYear(futureDate.getFullYear() + Math.floor(Math.random() * 5) + 1);
+                document.getElementById('expirationDate').textContent = futureDate.toLocaleDateString();
+                
+                document.getElementById('domainRegistrar').textContent = getRandomRegistrar();
+                
+                // Update security checks
+                if (includeSecurity) {
+                    updateSecurityChecks();
+                }
+                
+                // Generate subdomains if requested
+                if (includeSubdomains) {
+                    generateSubdomains(domain);
+                }
+            }, 2000);
+        }
+        
+        function updateSecurityChecks() {
+            const sslCheck = document.getElementById('sslCheck');
+            const whoisPrivacy = document.getElementById('whoisPrivacy');
+            const vulnerabilities = document.getElementById('vulnerabilities');
+            
+            // Random SSL status
+            if (Math.random() > 0.2) {
+                sslCheck.textContent = 'Valid';
+                sslCheck.className = 'status valid';
+            } else {
+                sslCheck.textContent = 'Invalid';
+                sslCheck.className = 'status invalid';
+            }
+            
+            // Random WHOIS privacy
+            if (Math.random() > 0.5) {
+                whoisPrivacy.textContent = 'Protected';
+                whoisPrivacy.className = 'status protected';
+            } else {
+                whoisPrivacy.textContent = 'Exposed';
+                whoisPrivacy.className = 'status exposed';
+            }
+            
+            // Random vulnerabilities
+            if (Math.random() > 0.8) {
+                vulnerabilities.textContent = 'Issues Found';
+                vulnerabilities.className = 'status warning';
+            } else {
+                vulnerabilities.textContent = 'None Found';
+                vulnerabilities.className = 'status clean';
+            }
+        }
+        
+        function generateSubdomains(domain) {
+            const subdomainsList = document.getElementById('subdomainsList');
+            const commonSubdomains = ['www', 'mail', 'ftp', 'blog', 'shop', 'api', 'cdn', 'admin', 'test', 'dev'];
+            
+            subdomainsList.innerHTML = '';
+            
+            const numSubdomains = Math.floor(Math.random() * 6) + 2; // 2-7 subdomains
+            for (let i = 0; i < numSubdomains; i++) {
+                const subdomain = commonSubdomains[Math.floor(Math.random() * commonSubdomains.length)];
+                const fullSubdomain = `${subdomain}.${domain}`;
+                const ip = generateRandomIP();
+                const status = Math.random() > 0.2 ? 'active' : 'inactive';
+                
+                const subdomainItem = document.createElement('div');
+                subdomainItem.className = 'subdomain-item';
+                subdomainItem.innerHTML = `
+                    <span class="subdomain-name">${fullSubdomain}</span>
+                    <span class="subdomain-ip">${ip}</span>
+                    <span class="subdomain-status ${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span>
+                `;
+                
+                subdomainsList.appendChild(subdomainItem);
+            }
         }
         
         async function performEmailInvestigation() {

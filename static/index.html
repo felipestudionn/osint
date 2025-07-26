@@ -1634,6 +1634,307 @@
             color: #ffa726;
             border: 1px solid rgba(255, 167, 38, 0.2);
         }
+        
+        /* Social Intel Styles */
+        .search-methods {
+            margin-bottom: 32px;
+        }
+        
+        .method-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .method-tab {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: none;
+            border: none;
+            color: #9aa0a6;
+            padding: 12px 16px;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px 8px 0 0;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .method-tab:hover {
+            background: rgba(66, 133, 244, 0.1);
+            color: #4285f4;
+        }
+        
+        .method-tab.active {
+            background: #1f1f1f;
+            color: #4285f4;
+            border-bottom: 2px solid #4285f4;
+        }
+        
+        .method-tab i {
+            font-size: 16px;
+        }
+        
+        .search-method {
+            display: none;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 24px;
+        }
+        
+        .search-method.active {
+            display: block;
+        }
+        
+        .search-input-group {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+        
+        .search-input-group input {
+            flex: 1;
+            background: #2a2a2a;
+            border: 1px solid #444;
+            border-radius: 8px;
+            color: #e8eaed;
+            padding: 12px 16px;
+            font-size: 14px;
+        }
+        
+        .search-input-group input:focus {
+            outline: none;
+            border-color: #4285f4;
+        }
+        
+        .platform-selection {
+            margin-bottom: 32px;
+        }
+        
+        .platform-selection h3 {
+            color: #e8eaed;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0 0 16px 0;
+        }
+        
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 12px;
+        }
+        
+        .platform-item {
+            cursor: pointer;
+        }
+        
+        .platform-item input[type="checkbox"] {
+            display: none;
+        }
+        
+        .platform-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            background: #2a2a2a;
+            border: 2px solid #444;
+            border-radius: 12px;
+            padding: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .platform-item input:checked + .platform-card {
+            border-color: #4285f4;
+            background: rgba(66, 133, 244, 0.1);
+        }
+        
+        .platform-card:hover {
+            border-color: #4285f4;
+            transform: translateY(-2px);
+        }
+        
+        .platform-card i {
+            font-size: 24px;
+            color: #9aa0a6;
+        }
+        
+        .platform-item input:checked + .platform-card i {
+            color: #4285f4;
+        }
+        
+        .platform-card span {
+            color: #e8eaed;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .social-results {
+            margin-top: 32px;
+        }
+        
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            padding-bottom: 16px;
+            border-bottom: 1px solid #333;
+        }
+        
+        .results-header h3 {
+            color: #e8eaed;
+            font-size: 18px;
+            font-weight: 500;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .results-stats {
+            display: flex;
+            gap: 24px;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .stat-number {
+            color: #4285f4;
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .stat-label {
+            color: #9aa0a6;
+            font-size: 12px;
+        }
+        
+        .profiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 16px;
+        }
+        
+        .profile-card {
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-card:hover {
+            border-color: #4285f4;
+            transform: translateY(-2px);
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 16px;
+        }
+        
+        .platform-icon {
+            font-size: 24px;
+        }
+        
+        .platform-name {
+            color: #e8eaed;
+            font-weight: 500;
+            flex: 1;
+            margin-left: 12px;
+        }
+        
+        .profile-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        
+        .profile-status.found {
+            background: rgba(67, 233, 123, 0.1);
+            color: #43e97b;
+            border: 1px solid rgba(67, 233, 123, 0.2);
+        }
+        
+        .profile-info {
+            margin-bottom: 16px;
+        }
+        
+        .profile-username {
+            color: #4285f4;
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .profile-details {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            color: #9aa0a6;
+            font-size: 12px;
+        }
+        
+        .detail-item i {
+            color: #4285f4;
+        }
+        
+        .profile-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .profile-btn {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            background: #4285f4;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            padding: 8px 12px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .profile-btn:hover {
+            background: #3367d6;
+            transform: translateY(-1px);
+        }
+        
+        .loading-message {
+            text-align: center;
+            color: #9aa0a6;
+            padding: 40px;
+            font-style: italic;
+        }
+        
+        .no-results {
+            text-align: center;
+            color: #9aa0a6;
+            padding: 40px;
+            background: #1f1f1f;
+            border: 1px solid #333;
+            border-radius: 12px;
+        }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -2406,6 +2707,171 @@
                 </div>
             </div>
             
+            <!-- Social Intel Section -->
+            <div id="socialIntelContent" class="intel-section hidden">
+                <div class="section-header">
+                    <h2><i class="fas fa-users"></i> Social Intelligence</h2>
+                    <p>Comprehensive social media investigation and analysis tools</p>
+                </div>
+                
+                <!-- Search Methods -->
+                <div class="search-methods">
+                    <div class="method-tabs">
+                        <button class="method-tab active" onclick="switchSocialMethod('username')">
+                            <i class="fas fa-user"></i>
+                            Username Search
+                        </button>
+                        <button class="method-tab" onclick="switchSocialMethod('email')">
+                            <i class="fas fa-envelope"></i>
+                            Email Search
+                        </button>
+                        <button class="method-tab" onclick="switchSocialMethod('phone')">
+                            <i class="fas fa-phone"></i>
+                            Phone Search
+                        </button>
+                        <button class="method-tab" onclick="switchSocialMethod('name')">
+                            <i class="fas fa-id-card"></i>
+                            Name Search
+                        </button>
+                    </div>
+                    
+                    <!-- Username Search -->
+                    <div class="search-method active" id="username-method">
+                        <div class="search-input-group">
+                            <input type="text" id="socialUsernameInput" placeholder="Enter username (e.g., john_doe123)">
+                            <button class="intel-btn primary" onclick="searchByUsername()">
+                                <i class="fas fa-search"></i> Search Username
+                            </button>
+                        </div>
+                        <div class="search-options">
+                            <label class="option-checkbox">
+                                <input type="checkbox" checked id="exactMatch"> Exact match only
+                            </label>
+                            <label class="option-checkbox">
+                                <input type="checkbox" checked id="includeVariations"> Include variations
+                            </label>
+                            <label class="option-checkbox">
+                                <input type="checkbox" id="caseSensitive"> Case sensitive
+                            </label>
+                        </div>
+                    </div>
+                    
+                    <!-- Email Search -->
+                    <div class="search-method" id="email-method">
+                        <div class="search-input-group">
+                            <input type="email" id="socialEmailInput" placeholder="Enter email address">
+                            <button class="intel-btn primary" onclick="searchByEmail()">
+                                <i class="fas fa-search"></i> Search Email
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Phone Search -->
+                    <div class="search-method" id="phone-method">
+                        <div class="search-input-group">
+                            <input type="tel" id="socialPhoneInput" placeholder="Enter phone number">
+                            <button class="intel-btn primary" onclick="searchByPhone()">
+                                <i class="fas fa-search"></i> Search Phone
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Name Search -->
+                    <div class="search-method" id="name-method">
+                        <div class="search-input-group">
+                            <input type="text" id="socialNameInput" placeholder="Enter full name">
+                            <button class="intel-btn primary" onclick="searchByName()">
+                                <i class="fas fa-search"></i> Search Name
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Platform Selection -->
+                <div class="platform-selection">
+                    <h3>Select Platforms to Search</h3>
+                    <div class="platform-grid">
+                        <label class="platform-item">
+                            <input type="checkbox" checked data-platform="facebook">
+                            <div class="platform-card">
+                                <i class="fab fa-facebook"></i>
+                                <span>Facebook</span>
+                            </div>
+                        </label>
+                        <label class="platform-item">
+                            <input type="checkbox" checked data-platform="twitter">
+                            <div class="platform-card">
+                                <i class="fab fa-twitter"></i>
+                                <span>Twitter</span>
+                            </div>
+                        </label>
+                        <label class="platform-item">
+                            <input type="checkbox" checked data-platform="instagram">
+                            <div class="platform-card">
+                                <i class="fab fa-instagram"></i>
+                                <span>Instagram</span>
+                            </div>
+                        </label>
+                        <label class="platform-item">
+                            <input type="checkbox" checked data-platform="linkedin">
+                            <div class="platform-card">
+                                <i class="fab fa-linkedin"></i>
+                                <span>LinkedIn</span>
+                            </div>
+                        </label>
+                        <label class="platform-item">
+                            <input type="checkbox" checked data-platform="youtube">
+                            <div class="platform-card">
+                                <i class="fab fa-youtube"></i>
+                                <span>YouTube</span>
+                            </div>
+                        </label>
+                        <label class="platform-item">
+                            <input type="checkbox" checked data-platform="tiktok">
+                            <div class="platform-card">
+                                <i class="fab fa-tiktok"></i>
+                                <span>TikTok</span>
+                            </div>
+                        </label>
+                        <label class="platform-item">
+                            <input type="checkbox" data-platform="reddit">
+                            <div class="platform-card">
+                                <i class="fab fa-reddit"></i>
+                                <span>Reddit</span>
+                            </div>
+                        </label>
+                        <label class="platform-item">
+                            <input type="checkbox" data-platform="github">
+                            <div class="platform-card">
+                                <i class="fab fa-github"></i>
+                                <span>GitHub</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Search Results -->
+                <div class="social-results" id="socialResults" style="display: none;">
+                    <div class="results-header">
+                        <h3><i class="fas fa-search"></i> Search Results</h3>
+                        <div class="results-stats">
+                            <span class="stat-item">
+                                <span class="stat-number" id="totalFound">0</span>
+                                <span class="stat-label">Profiles Found</span>
+                            </span>
+                            <span class="stat-item">
+                                <span class="stat-number" id="platformsSearched">0</span>
+                                <span class="stat-label">Platforms Searched</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="profiles-grid" id="profilesGrid">
+                        <!-- Dynamic profile results will be inserted here -->
+                    </div>
+                </div>
+            </div>
+            
             </div> <!-- End Content Container -->
         </main>
     </div>
@@ -2469,6 +2935,7 @@
             document.getElementById('phoneIntelContent').classList.add('hidden');
             document.getElementById('searchToolsContent').classList.add('hidden');
             document.getElementById('domainIntelContent').classList.add('hidden');
+            document.getElementById('socialIntelContent').classList.add('hidden');
             
             // Show appropriate section
             if (section === 'dashboard') {
@@ -2487,6 +2954,9 @@
             } else if (section === 'domain-intel') {
                 document.getElementById('domainIntelContent').classList.remove('hidden');
                 setupDomainIntelForm();
+            } else if (section === 'social-intel') {
+                document.getElementById('socialIntelContent').classList.remove('hidden');
+                setupSocialIntelForm();
             } else {
                 // For other sections, show coming soon
                 alert(`Sección "${titles[section]}" - Funcionalidad próximamente`);
@@ -2761,6 +3231,186 @@
                 `;
                 
                 subdomainsList.appendChild(subdomainItem);
+            }
+        }
+        
+        function setupSocialIntelForm() {
+            // Initialize social intel if needed
+            console.log('Social Intel initialized');
+        }
+        
+        function switchSocialMethod(method) {
+            // Remove active class from all tabs and methods
+            document.querySelectorAll('.method-tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.search-method').forEach(method => method.classList.remove('active'));
+            
+            // Add active class to selected tab and method
+            document.querySelector(`[onclick="switchSocialMethod('${method}')"]`).classList.add('active');
+            document.getElementById(`${method}-method`).classList.add('active');
+        }
+        
+        function searchByUsername() {
+            const username = document.getElementById('socialUsernameInput').value;
+            if (!username.trim()) {
+                alert('Please enter a username');
+                return;
+            }
+            performSocialSearch('username', username);
+        }
+        
+        function searchByEmail() {
+            const email = document.getElementById('socialEmailInput').value;
+            if (!email.trim()) {
+                alert('Please enter an email address');
+                return;
+            }
+            performSocialSearch('email', email);
+        }
+        
+        function searchByPhone() {
+            const phone = document.getElementById('socialPhoneInput').value;
+            if (!phone.trim()) {
+                alert('Please enter a phone number');
+                return;
+            }
+            performSocialSearch('phone', phone);
+        }
+        
+        function searchByName() {
+            const name = document.getElementById('socialNameInput').value;
+            if (!name.trim()) {
+                alert('Please enter a name');
+                return;
+            }
+            performSocialSearch('name', name);
+        }
+        
+        function performSocialSearch(searchType, searchValue) {
+            // Get selected platforms
+            const selectedPlatforms = [];
+            document.querySelectorAll('.platform-item input:checked').forEach(checkbox => {
+                selectedPlatforms.push(checkbox.getAttribute('data-platform'));
+            });
+            
+            if (selectedPlatforms.length === 0) {
+                alert('Please select at least one platform to search');
+                return;
+            }
+            
+            // Show results section
+            const resultsDiv = document.getElementById('socialResults');
+            resultsDiv.style.display = 'block';
+            
+            // Update stats
+            document.getElementById('platformsSearched').textContent = selectedPlatforms.length;
+            document.getElementById('totalFound').textContent = 'Searching...';
+            
+            // Clear previous results
+            const profilesGrid = document.getElementById('profilesGrid');
+            profilesGrid.innerHTML = '<div class="loading-message">Searching across platforms...</div>';
+            
+            // Simulate search with delay
+            setTimeout(() => {
+                generateSocialResults(searchType, searchValue, selectedPlatforms);
+            }, 2000);
+        }
+        
+        function generateSocialResults(searchType, searchValue, platforms) {
+            const profilesGrid = document.getElementById('profilesGrid');
+            profilesGrid.innerHTML = '';
+            
+            const platformIcons = {
+                facebook: 'fab fa-facebook',
+                twitter: 'fab fa-twitter',
+                instagram: 'fab fa-instagram',
+                linkedin: 'fab fa-linkedin',
+                youtube: 'fab fa-youtube',
+                tiktok: 'fab fa-tiktok',
+                reddit: 'fab fa-reddit',
+                github: 'fab fa-github'
+            };
+            
+            const platformColors = {
+                facebook: '#1877f2',
+                twitter: '#1da1f2',
+                instagram: '#e4405f',
+                linkedin: '#0077b5',
+                youtube: '#ff0000',
+                tiktok: '#000000',
+                reddit: '#ff4500',
+                github: '#333333'
+            };
+            
+            let totalFound = 0;
+            
+            platforms.forEach(platform => {
+                // Simulate random results (some platforms may not have matches)
+                if (Math.random() > 0.3) {
+                    totalFound++;
+                    
+                    const profileCard = document.createElement('div');
+                    profileCard.className = 'profile-card';
+                    profileCard.innerHTML = `
+                        <div class="profile-header">
+                            <div class="platform-icon" style="color: ${platformColors[platform]}">
+                                <i class="${platformIcons[platform]}"></i>
+                            </div>
+                            <div class="platform-name">${platform.charAt(0).toUpperCase() + platform.slice(1)}</div>
+                            <div class="profile-status found">Found</div>
+                        </div>
+                        <div class="profile-info">
+                            <div class="profile-username">@${searchValue.toLowerCase().replace(/\s+/g, '_')}</div>
+                            <div class="profile-details">
+                                <span class="detail-item">
+                                    <i class="fas fa-users"></i>
+                                    ${Math.floor(Math.random() * 10000)} followers
+                                </span>
+                                <span class="detail-item">
+                                    <i class="fas fa-calendar"></i>
+                                    Joined ${getRandomYear()}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="profile-actions">
+                            <button class="profile-btn" onclick="viewProfile('${platform}', '${searchValue}')">
+                                <i class="fas fa-external-link-alt"></i> View Profile
+                            </button>
+                        </div>
+                    `;
+                    
+                    profilesGrid.appendChild(profileCard);
+                }
+            });
+            
+            // Update total found
+            document.getElementById('totalFound').textContent = totalFound;
+            
+            // Add "no results" message if no profiles found
+            if (totalFound === 0) {
+                profilesGrid.innerHTML = '<div class="no-results">No profiles found on selected platforms.</div>';
+            }
+        }
+        
+        function getRandomYear() {
+            const currentYear = new Date().getFullYear();
+            return Math.floor(Math.random() * (currentYear - 2005)) + 2005;
+        }
+        
+        function viewProfile(platform, username) {
+            // Simulate opening profile in new tab
+            const platformUrls = {
+                facebook: `https://facebook.com/${username}`,
+                twitter: `https://twitter.com/${username}`,
+                instagram: `https://instagram.com/${username}`,
+                linkedin: `https://linkedin.com/in/${username}`,
+                youtube: `https://youtube.com/@${username}`,
+                tiktok: `https://tiktok.com/@${username}`,
+                reddit: `https://reddit.com/user/${username}`,
+                github: `https://github.com/${username}`
+            };
+            
+            if (platformUrls[platform]) {
+                window.open(platformUrls[platform], '_blank');
             }
         }
         

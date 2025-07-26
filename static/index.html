@@ -3482,6 +3482,167 @@
                 </div>
             </div>
             
+            <!-- Reports Section -->
+            <div id="reportsContent" class="intel-section hidden">
+                <div class="section-header">
+                    <h2><i class="fas fa-file-alt"></i> Reports</h2>
+                    <p>Generate and manage investigation reports</p>
+                </div>
+                
+                <!-- Report Generation -->
+                <div class="report-generation">
+                    <div class="generation-card">
+                        <h3>Generate New Report</h3>
+                        <div class="report-form">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Report Title</label>
+                                    <input type="text" id="reportTitle" placeholder="Enter report title...">
+                                </div>
+                                <div class="form-group">
+                                    <label>Report Type</label>
+                                    <select id="reportType">
+                                        <option value="investigation">Investigation Report</option>
+                                        <option value="domain">Domain Analysis Report</option>
+                                        <option value="social">Social Media Report</option>
+                                        <option value="image">Image Analysis Report</option>
+                                        <option value="comprehensive">Comprehensive Report</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label>Target/Subject</label>
+                                    <input type="text" id="reportTarget" placeholder="Enter target or subject...">
+                                </div>
+                                <div class="form-group">
+                                    <label>Priority Level</label>
+                                    <select id="reportPriority">
+                                        <option value="low">Low</option>
+                                        <option value="medium" selected>Medium</option>
+                                        <option value="high">High</option>
+                                        <option value="critical">Critical</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Description</label>
+                                <textarea id="reportDescription" placeholder="Enter report description..."></textarea>
+                            </div>
+                            <div class="form-actions">
+                                <button class="intel-btn primary" onclick="generateReport()">
+                                    <i class="fas fa-plus"></i> Generate Report
+                                </button>
+                                <button class="intel-btn secondary" onclick="clearReportForm()">
+                                    <i class="fas fa-eraser"></i> Clear Form
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Reports List -->
+                <div class="reports-list">
+                    <div class="list-header">
+                        <h3>Recent Reports</h3>
+                        <div class="list-controls">
+                            <button class="control-btn" onclick="refreshReports()">
+                                <i class="fas fa-sync-alt"></i> Refresh
+                            </button>
+                            <button class="control-btn" onclick="exportAllReports()">
+                                <i class="fas fa-download"></i> Export All
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="reports-grid" id="reportsGrid">
+                        <!-- Sample reports will be generated here -->
+                        <div class="report-card">
+                            <div class="report-header">
+                                <div class="report-info">
+                                    <h4>Sample Investigation Report</h4>
+                                    <span class="report-type investigation">Investigation</span>
+                                </div>
+                                <div class="report-priority high">
+                                    <i class="fas fa-exclamation-triangle"></i> High
+                                </div>
+                            </div>
+                            <div class="report-details">
+                                <div class="detail-item">
+                                    <i class="fas fa-user"></i>
+                                    <span>Target: john.doe@example.com</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-calendar"></i>
+                                    <span>Created: 2024-01-15</span>
+                                </div>
+                                <div class="detail-item">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>Status: Completed</span>
+                                </div>
+                            </div>
+                            <div class="report-actions">
+                                <button class="action-btn view" onclick="viewReport('sample-1')">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="action-btn download" onclick="downloadReport('sample-1')">
+                                    <i class="fas fa-download"></i> Download
+                                </button>
+                                <button class="action-btn share" onclick="shareReport('sample-1')">
+                                    <i class="fas fa-share"></i> Share
+                                </button>
+                                <button class="action-btn delete" onclick="deleteReport('sample-1')">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Report Templates -->
+                <div class="report-templates">
+                    <h3>Report Templates</h3>
+                    <div class="templates-grid">
+                        <div class="template-card" onclick="useTemplate('basic')">
+                            <div class="template-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="template-info">
+                                <h4>Basic Investigation</h4>
+                                <p>Standard investigation template</p>
+                            </div>
+                        </div>
+                        <div class="template-card" onclick="useTemplate('detailed')">
+                            <div class="template-icon">
+                                <i class="fas fa-file-medical"></i>
+                            </div>
+                            <div class="template-info">
+                                <h4>Detailed Analysis</h4>
+                                <p>Comprehensive analysis template</p>
+                            </div>
+                        </div>
+                        <div class="template-card" onclick="useTemplate('forensic')">
+                            <div class="template-icon">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <div class="template-info">
+                                <h4>Forensic Report</h4>
+                                <p>Digital forensics template</p>
+                            </div>
+                        </div>
+                        <div class="template-card" onclick="useTemplate('threat')">
+                            <div class="template-icon">
+                                <i class="fas fa-shield-alt"></i>
+                            </div>
+                            <div class="template-info">
+                                <h4>Threat Assessment</h4>
+                                <p>Security threat analysis template</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
             </div> <!-- End Content Container -->
         </main>
     </div>
@@ -3547,6 +3708,7 @@
             document.getElementById('domainIntelContent').classList.add('hidden');
             document.getElementById('socialIntelContent').classList.add('hidden');
             document.getElementById('imageAnalysisContent').classList.add('hidden');
+            document.getElementById('reportsContent').classList.add('hidden');
             
             // Show appropriate section
             if (section === 'dashboard') {
@@ -3571,6 +3733,9 @@
             } else if (section === 'image-analysis') {
                 document.getElementById('imageAnalysisContent').classList.remove('hidden');
                 setupImageAnalysisForm();
+            } else if (section === 'reports') {
+                document.getElementById('reportsContent').classList.remove('hidden');
+                setupReportsForm();
             } else {
                 // For other sections, show coming soon
                 alert(`Sección "${titles[section]}" - Funcionalidad próximamente`);
@@ -4334,6 +4499,204 @@
             document.getElementById('metadataExtraction').checked = true;
             document.getElementById('faceRecognition').checked = false;
             document.getElementById('objectDetection').checked = false;
+        }
+        
+        function setupReportsForm() {
+            // Initialize reports section
+            loadRecentReports();
+            console.log('Reports initialized');
+        }
+        
+        function generateReport() {
+            const title = document.getElementById('reportTitle').value;
+            const type = document.getElementById('reportType').value;
+            const target = document.getElementById('reportTarget').value;
+            const priority = document.getElementById('reportPriority').value;
+            const description = document.getElementById('reportDescription').value;
+            
+            if (!title.trim()) {
+                alert('Please enter a report title');
+                return;
+            }
+            
+            if (!target.trim()) {
+                alert('Please enter a target or subject');
+                return;
+            }
+            
+            // Create new report object
+            const report = {
+                id: 'report-' + Date.now(),
+                title: title,
+                type: type,
+                target: target,
+                priority: priority,
+                description: description,
+                created: new Date().toLocaleDateString(),
+                status: 'Generated'
+            };
+            
+            // Add to reports grid
+            addReportToGrid(report);
+            
+            // Clear form
+            clearReportForm();
+            
+            alert('Report generated successfully!');
+        }
+        
+        function clearReportForm() {
+            document.getElementById('reportTitle').value = '';
+            document.getElementById('reportType').value = 'investigation';
+            document.getElementById('reportTarget').value = '';
+            document.getElementById('reportPriority').value = 'medium';
+            document.getElementById('reportDescription').value = '';
+        }
+        
+        function addReportToGrid(report) {
+            const reportsGrid = document.getElementById('reportsGrid');
+            
+            const reportCard = document.createElement('div');
+            reportCard.className = 'report-card';
+            reportCard.innerHTML = `
+                <div class="report-header">
+                    <div class="report-info">
+                        <h4>${report.title}</h4>
+                        <span class="report-type ${report.type}">${getReportTypeLabel(report.type)}</span>
+                    </div>
+                    <div class="report-priority ${report.priority}">
+                        <i class="fas ${getPriorityIcon(report.priority)}"></i> ${report.priority.charAt(0).toUpperCase() + report.priority.slice(1)}
+                    </div>
+                </div>
+                <div class="report-details">
+                    <div class="detail-item">
+                        <i class="fas fa-user"></i>
+                        <span>Target: ${report.target}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-calendar"></i>
+                        <span>Created: ${report.created}</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-file-alt"></i>
+                        <span>Status: ${report.status}</span>
+                    </div>
+                </div>
+                <div class="report-actions">
+                    <button class="action-btn view" onclick="viewReport('${report.id}')">
+                        <i class="fas fa-eye"></i> View
+                    </button>
+                    <button class="action-btn download" onclick="downloadReport('${report.id}')">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="action-btn share" onclick="shareReport('${report.id}')">
+                        <i class="fas fa-share"></i> Share
+                    </button>
+                    <button class="action-btn delete" onclick="deleteReport('${report.id}')">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            `;
+            
+            // Insert at the beginning (after sample report)
+            const firstChild = reportsGrid.firstElementChild;
+            if (firstChild) {
+                reportsGrid.insertBefore(reportCard, firstChild.nextSibling);
+            } else {
+                reportsGrid.appendChild(reportCard);
+            }
+        }
+        
+        function getReportTypeLabel(type) {
+            const labels = {
+                investigation: 'Investigation',
+                domain: 'Domain Analysis',
+                social: 'Social Media',
+                image: 'Image Analysis',
+                comprehensive: 'Comprehensive'
+            };
+            return labels[type] || type;
+        }
+        
+        function getPriorityIcon(priority) {
+            const icons = {
+                low: 'fa-info-circle',
+                medium: 'fa-exclamation-circle',
+                high: 'fa-exclamation-triangle',
+                critical: 'fa-fire'
+            };
+            return icons[priority] || 'fa-info-circle';
+        }
+        
+        function viewReport(reportId) {
+            alert(`Viewing report: ${reportId}\n\nThis would open the full report in a new window or modal.`);
+        }
+        
+        function downloadReport(reportId) {
+            alert(`Downloading report: ${reportId}\n\nThis would generate and download a PDF report.`);
+        }
+        
+        function shareReport(reportId) {
+            alert(`Sharing report: ${reportId}\n\nThis would generate a shareable link or send via email.`);
+        }
+        
+        function deleteReport(reportId) {
+            if (confirm('Are you sure you want to delete this report?')) {
+                const reportCard = document.querySelector(`[onclick*="${reportId}"]`).closest('.report-card');
+                if (reportCard) {
+                    reportCard.remove();
+                    alert('Report deleted successfully.');
+                }
+            }
+        }
+        
+        function refreshReports() {
+            alert('Reports refreshed!\n\nThis would reload the reports list from the server.');
+        }
+        
+        function exportAllReports() {
+            alert('Exporting all reports...\n\nThis would generate a ZIP file with all reports.');
+        }
+        
+        function useTemplate(templateType) {
+            const templates = {
+                basic: {
+                    title: 'Basic Investigation Report',
+                    type: 'investigation',
+                    description: 'Standard investigation template with basic findings and analysis.'
+                },
+                detailed: {
+                    title: 'Detailed Analysis Report',
+                    type: 'comprehensive',
+                    description: 'Comprehensive analysis template with detailed findings, evidence, and recommendations.'
+                },
+                forensic: {
+                    title: 'Digital Forensic Report',
+                    type: 'investigation',
+                    description: 'Digital forensics template with technical analysis and evidence chain.'
+                },
+                threat: {
+                    title: 'Threat Assessment Report',
+                    type: 'comprehensive',
+                    description: 'Security threat analysis template with risk assessment and mitigation strategies.'
+                }
+            };
+            
+            const template = templates[templateType];
+            if (template) {
+                document.getElementById('reportTitle').value = template.title;
+                document.getElementById('reportType').value = template.type;
+                document.getElementById('reportDescription').value = template.description;
+                
+                // Scroll to form
+                document.querySelector('.report-generation').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        function loadRecentReports() {
+            // This would typically load reports from a server
+            // For now, we just ensure the sample report is visible
+            console.log('Loading recent reports...');
         }
         
         async function performEmailInvestigation() {

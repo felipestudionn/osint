@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Phone Intelligence - OSINT Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="phone-intel-container">
+        <div class="intel-header">
+            <h1><i class="fas fa-phone"></i> Phone Intelligence</h1>
+            <p>Comprehensive phone number analysis and investigation tools</p>
+        </div>
+
+        <!-- Phone Number Input Section -->
+        <div class="phone-input-section">
+            <div class="input-card">
+                <h2>Phone Number Analysis</h2>
+                <div class="phone-input-group">
+                    <div class="country-selector">
+                        <select id="countryCode">
+                            <option value="+1">🇺🇸 +1 (US/CA)</option>
+                            <option value="+34">🇪🇸 +34 (Spain)</option>
+                            <option value="+33">🇫🇷 +33 (France)</option>
+                            <option value="+49">🇩🇪 +49 (Germany)</option>
+                            <option value="+44">🇬🇧 +44 (UK)</option>
+                            <option value="+39">🇮🇹 +39 (Italy)</option>
+                            <option value="+52">🇲🇽 +52 (Mexico)</option>
+                            <option value="+54">🇦🇷 +54 (Argentina)</option>
+                            <option value="+55">🇧🇷 +55 (Brazil)</option>
+                            <option value="+86">🇨🇳 +86 (China)</option>
+                            <option value="+81">🇯🇵 +81 (Japan)</option>
+                            <option value="+91">🇮🇳 +91 (India)</option>
+                        </select>
+                    </div>
+                    <input type="tel" id="phoneNumber" placeholder="Enter phone number (e.g., 555-123-4567)" maxlength="15">
+                    <button class="analyze-phone-btn" onclick="analyzePhone()">
+                        <i class="fas fa-search"></i>
+                        Analyze Phone
+                    </button>
+                </div>
+                <div class="format-examples">
+                    <small>
+                        <strong>Supported formats:</strong> 
+                        555-123-4567, (555) 123-4567, 555.123.4567, 5551234567
+                    </small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Results Section -->
+        <div class="phone-results" id="phoneResults" style="display: none;">
+            <!-- Basic Information -->
+            <div class="result-section">
+                <h3><i class="fas fa-info-circle"></i> Basic Information</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Formatted Number</h4>
+                            <p id="formattedNumber">-</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Country</h4>
+                            <p id="phoneCountry">-</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-map-marker-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Region</h4>
+                            <p id="phoneRegion">-</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Carrier</h4>
+                            <p id="phoneCarrier">-</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Line Type</h4>
+                            <p id="phoneType">-</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Timezone</h4>
+                            <p id="phoneTimezone">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Validation Status -->
+            <div class="result-section">
+                <h3><i class="fas fa-shield-alt"></i> Validation Status</h3>
+                <div class="validation-grid">
+                    <div class="validation-item">
+                        <div class="validation-status" id="validStatus">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Checking...</span>
+                        </div>
+                        <label>Number Validity</label>
+                    </div>
+                    <div class="validation-item">
+                        <div class="validation-status" id="activeStatus">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Checking...</span>
+                        </div>
+                        <label>Active Status</label>
+                    </div>
+                    <div class="validation-item">
+                        <div class="validation-status" id="riskStatus">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Checking...</span>
+                        </div>
+                        <label>Risk Assessment</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Media Presence -->
+            <div class="result-section">
+                <h3><i class="fas fa-users"></i> Social Media Presence</h3>
+                <div class="social-presence" id="socialPresence">
+                    <div class="social-platform">
+                        <div class="platform-icon">
+                            <i class="fab fa-whatsapp"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h4>WhatsApp</h4>
+                            <p id="whatsappStatus">Checking...</p>
+                        </div>
+                        <div class="platform-status" id="whatsappIndicator">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                    <div class="social-platform">
+                        <div class="platform-icon">
+                            <i class="fab fa-telegram"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h4>Telegram</h4>
+                            <p id="telegramStatus">Checking...</p>
+                        </div>
+                        <div class="platform-status" id="telegramIndicator">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                    <div class="social-platform">
+                        <div class="platform-icon">
+                            <i class="fab fa-viber"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h4>Viber</h4>
+                            <p id="viberStatus">Checking...</p>
+                        </div>
+                        <div class="platform-status" id="viberIndicator">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                    <div class="social-platform">
+                        <div class="platform-icon">
+                            <i class="fab fa-signal-messenger"></i>
+                        </div>
+                        <div class="platform-info">
+                            <h4>Signal</h4>
+                            <p id="signalStatus">Checking...</p>
+                        </div>
+                        <div class="platform-status" id="signalIndicator">
+                            <i class="fas fa-spinner fa-spin"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OSINT Sources -->
+            <div class="result-section">
+                <h3><i class="fas fa-database"></i> OSINT Sources</h3>
+                <div class="osint-sources">
+                    <div class="source-category">
+                        <h4>Search Engines</h4>
+                        <div class="source-links">
+                            <a href="#" class="source-link" id="googleSearch" target="_blank">
+                                <i class="fab fa-google"></i>
+                                Google Search
+                            </a>
+                            <a href="#" class="source-link" id="bingSearch" target="_blank">
+                                <i class="fab fa-microsoft"></i>
+                                Bing Search
+                            </a>
+                            <a href="#" class="source-link" id="duckduckgoSearch" target="_blank">
+                                <i class="fas fa-search"></i>
+                                DuckDuckGo
+                            </a>
+                        </div>
+                    </div>
+                    <div class="source-category">
+                        <h4>Specialized Databases</h4>
+                        <div class="source-links">
+                            <a href="#" class="source-link" id="truecallerSearch" target="_blank">
+                                <i class="fas fa-phone-alt"></i>
+                                Truecaller
+                            </a>
+                            <a href="#" class="source-link" id="whocalldSearch" target="_blank">
+                                <i class="fas fa-question-circle"></i>
+                                WhoCalld
+                            </a>
+                            <a href="#" class="source-link" id="reversePhoneSearch" target="_blank">
+                                <i class="fas fa-undo"></i>
+                                Reverse Phone Lookup
+                            </a>
+                        </div>
+                    </div>
+                    <div class="source-category">
+                        <h4>Social Networks</h4>
+                        <div class="source-links">
+                            <a href="#" class="source-link" id="facebookSearch" target="_blank">
+                                <i class="fab fa-facebook"></i>
+                                Facebook Search
+                            </a>
+                            <a href="#" class="source-link" id="linkedinSearch" target="_blank">
+                                <i class="fab fa-linkedin"></i>
+                                LinkedIn Search
+                            </a>
+                            <a href="#" class="source-link" id="twitterSearch" target="_blank">
+                                <i class="fab fa-twitter"></i>
+                                Twitter Search
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Historical Data -->
+            <div class="result-section">
+                <h3><i class="fas fa-history"></i> Historical Data</h3>
+                <div class="history-timeline" id="historyTimeline">
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024-01-15</div>
+                        <div class="timeline-content">
+                            <h4>First Seen</h4>
+                            <p>Number first appeared in public databases</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024-01-20</div>
+                        <div class="timeline-content">
+                            <h4>Carrier Change</h4>
+                            <p>Number ported to current carrier</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-date">2024-01-25</div>
+                        <div class="timeline-content">
+                            <h4>Social Media Link</h4>
+                            <p>Associated with social media account</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Numbers -->
+            <div class="result-section">
+                <h3><i class="fas fa-link"></i> Related Numbers</h3>
+                <div class="related-numbers" id="relatedNumbers">
+                    <div class="related-number">
+                        <div class="number-info">
+                            <span class="number">+1 (555) 123-4568</span>
+                            <span class="relation">Sequential</span>
+                        </div>
+                        <button class="analyze-related-btn" onclick="analyzeRelatedNumber('+15551234568')">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="related-number">
+                        <div class="number-info">
+                            <span class="number">+1 (555) 123-4566</span>
+                            <span class="relation">Sequential</span>
+                        </div>
+                        <button class="analyze-related-btn" onclick="analyzeRelatedNumber('+15551234566')">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                    <div class="related-number">
+                        <div class="number-info">
+                            <span class="number">+1 (555) 987-6543</span>
+                            <span class="relation">Same Carrier</span>
+                        </div>
+                        <button class="analyze-related-btn" onclick="analyzeRelatedNumber('+15559876543')">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export Options -->
+            <div class="result-section">
+                <h3><i class="fas fa-download"></i> Export Results</h3>
+                <div class="export-options">
+                    <button class="export-btn" onclick="exportPhoneReport('pdf')">
+                        <i class="fas fa-file-pdf"></i>
+                        Export PDF
+                    </button>
+                    <button class="export-btn" onclick="exportPhoneReport('json')">
+                        <i class="fas fa-file-code"></i>
+                        Export JSON
+                    </button>
+                    <button class="export-btn" onclick="exportPhoneReport('csv')">
+                        <i class="fas fa-file-csv"></i>
+                        Export CSV
+                    </button>
+                    <button class="export-btn" onclick="saveToInvestigation()">
+                        <i class="fas fa-folder-plus"></i>
+                        Save to Investigation
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bulk Analysis Section -->
+        <div class="bulk-analysis-section">
+            <div class="bulk-card">
+                <h2><i class="fas fa-list"></i> Bulk Phone Analysis</h2>
+                <p>Analyze multiple phone numbers at once</p>
+                <div class="bulk-input">
+                    <textarea id="bulkNumbers" placeholder="Enter phone numbers (one per line)
++1-555-123-4567
++1-555-987-6543
++1-555-456-7890"></textarea>
+                    <button class="bulk-analyze-btn" onclick="analyzeBulkPhones()">
+                        <i class="fas fa-cogs"></i>
+                        Analyze All
+                    </button>
+                </div>
+                <div class="bulk-results" id="bulkResults" style="display: none;">
+                    <div class="bulk-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="bulkProgress"></div>
+                        </div>
+                        <span id="bulkProgressText">0 / 0 completed</span>
+                    </div>
+                    <div class="bulk-results-table" id="bulkResultsTable"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="phone-intel.js"></script>
+</body>
+</html>

@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Social Media Intelligence - OSINT Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="social-intel-container">
+        <div class="intel-header">
+            <h1><i class="fas fa-users"></i> Social Media Intelligence</h1>
+            <p>Comprehensive social media investigation and analysis tools</p>
+        </div>
+
+        <!-- Search Methods -->
+        <div class="search-methods">
+            <div class="method-tabs">
+                <button class="method-tab active" onclick="switchMethod('username')">
+                    <i class="fas fa-user"></i>
+                    Username Search
+                </button>
+                <button class="method-tab" onclick="switchMethod('email')">
+                    <i class="fas fa-envelope"></i>
+                    Email Search
+                </button>
+                <button class="method-tab" onclick="switchMethod('phone')">
+                    <i class="fas fa-phone"></i>
+                    Phone Search
+                </button>
+                <button class="method-tab" onclick="switchMethod('name')">
+                    <i class="fas fa-id-card"></i>
+                    Name Search
+                </button>
+            </div>
+
+            <!-- Username Search -->
+            <div class="search-method active" id="username-method">
+                <div class="search-input-group">
+                    <input type="text" id="usernameInput" placeholder="Enter username (e.g., john_doe123)">
+                    <button class="search-btn" onclick="searchByUsername()">
+                        <i class="fas fa-search"></i>
+                        Search Username
+                    </button>
+                </div>
+                <div class="search-options">
+                    <label class="option-checkbox">
+                        <input type="checkbox" checked> Exact match only
+                    </label>
+                    <label class="option-checkbox">
+                        <input type="checkbox" checked> Include variations
+                    </label>
+                    <label class="option-checkbox">
+                        <input type="checkbox"> Case sensitive
+                    </label>
+                </div>
+            </div>
+
+            <!-- Email Search -->
+            <div class="search-method" id="email-method">
+                <div class="search-input-group">
+                    <input type="email" id="emailInput" placeholder="Enter email address">
+                    <button class="search-btn" onclick="searchByEmail()">
+                        <i class="fas fa-search"></i>
+                        Search Email
+                    </button>
+                </div>
+                <div class="search-options">
+                    <label class="option-checkbox">
+                        <input type="checkbox" checked> Public profiles only
+                    </label>
+                    <label class="option-checkbox">
+                        <input type="checkbox"> Include leaked databases
+                    </label>
+                </div>
+            </div>
+
+            <!-- Phone Search -->
+            <div class="search-method" id="phone-method">
+                <div class="search-input-group">
+                    <input type="tel" id="phoneInput" placeholder="Enter phone number">
+                    <button class="search-btn" onclick="searchByPhone()">
+                        <i class="fas fa-search"></i>
+                        Search Phone
+                    </button>
+                </div>
+            </div>
+
+            <!-- Name Search -->
+            <div class="search-method" id="name-method">
+                <div class="search-input-group">
+                    <input type="text" id="firstNameInput" placeholder="First name">
+                    <input type="text" id="lastNameInput" placeholder="Last name">
+                    <input type="text" id="locationInput" placeholder="Location (optional)">
+                    <button class="search-btn" onclick="searchByName()">
+                        <i class="fas fa-search"></i>
+                        Search Name
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Platform Selection -->
+        <div class="platform-selection">
+            <h3>Select Platforms to Search</h3>
+            <div class="platform-grid">
+                <label class="platform-item">
+                    <input type="checkbox" checked data-platform="facebook">
+                    <div class="platform-card">
+                        <i class="fab fa-facebook"></i>
+                        <span>Facebook</span>
+                    </div>
+                </label>
+                <label class="platform-item">
+                    <input type="checkbox" checked data-platform="twitter">
+                    <div class="platform-card">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </div>
+                </label>
+                <label class="platform-item">
+                    <input type="checkbox" checked data-platform="instagram">
+                    <div class="platform-card">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </div>
+                </label>
+                <label class="platform-item">
+                    <input type="checkbox" checked data-platform="linkedin">
+                    <div class="platform-card">
+                        <i class="fab fa-linkedin"></i>
+                        <span>LinkedIn</span>
+                    </div>
+                </label>
+                <label class="platform-item">
+                    <input type="checkbox" checked data-platform="youtube">
+                    <div class="platform-card">
+                        <i class="fab fa-youtube"></i>
+                        <span>YouTube</span>
+                    </div>
+                </label>
+                <label class="platform-item">
+                    <input type="checkbox" checked data-platform="tiktok">
+                    <div class="platform-card">
+                        <i class="fab fa-tiktok"></i>
+                        <span>TikTok</span>
+                    </div>
+                </label>
+                <label class="platform-item">
+                    <input type="checkbox" data-platform="snapchat">
+                    <div class="platform-card">
+                        <i class="fab fa-snapchat"></i>
+                        <span>Snapchat</span>
+                    </div>
+                </label>
+                <label class="platform-item">
+                    <input type="checkbox" data-platform="reddit">
+                    <div class="platform-card">
+                        <i class="fab fa-reddit"></i>
+                        <span>Reddit</span>
+                    </div>
+                </label>
+                <label class="platform-item">
+                    <input type="checkbox" data-platform="github">
+                    <div class="platform-card">
+                        <i class="fab fa-github"></i>
+                        <span>GitHub</span>
+                    </div>
+                </label>
+                <label class="platform-item">
+                    <input type="checkbox" data-platform="discord">
+                    <div class="platform-card">
+                        <i class="fab fa-discord"></i>
+                        <span>Discord</span>
+                    </div>
+                </label>
+                <label class="platform-item">
+                    <input type="checkbox" data-platform="telegram">
+                    <div class="platform-card">
+                        <i class="fab fa-telegram"></i>
+                        <span>Telegram</span>
+                    </div>
+                </label>
+                <label class="platform-item">
+                    <input type="checkbox" data-platform="pinterest">
+                    <div class="platform-card">
+                        <i class="fab fa-pinterest"></i>
+                        <span>Pinterest</span>
+                    </div>
+                </label>
+            </div>
+            <div class="platform-actions">
+                <button class="select-all-btn" onclick="selectAllPlatforms()">
+                    <i class="fas fa-check-double"></i>
+                    Select All
+                </button>
+                <button class="deselect-all-btn" onclick="deselectAllPlatforms()">
+                    <i class="fas fa-times"></i>
+                    Deselect All
+                </button>
+            </div>
+        </div>
+
+        <!-- Search Results -->
+        <div class="search-results" id="searchResults" style="display: none;">
+            <div class="results-header">
+                <h2><i class="fas fa-search"></i> Search Results</h2>
+                <div class="results-stats" id="resultsStats">
+                    <span class="stat">
+                        <i class="fas fa-user-check"></i>
+                        <span id="profilesFound">0</span> profiles found
+                    </span>
+                    <span class="stat">
+                        <i class="fas fa-globe"></i>
+                        <span id="platformsSearched">0</span> platforms searched
+                    </span>
+                    <span class="stat">
+                        <i class="fas fa-clock"></i>
+                        <span id="searchTime">0</span>s search time
+                    </span>
+                </div>
+            </div>
+
+            <!-- Results Filter -->
+            <div class="results-filter">
+                <div class="filter-group">
+                    <label>Filter by Platform:</label>
+                    <select id="platformFilter">
+                        <option value="all">All Platforms</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="twitter">Twitter</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="linkedin">LinkedIn</option>
+                        <option value="youtube">YouTube</option>
+                        <option value="tiktok">TikTok</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Sort by:</label>
+                    <select id="sortFilter">
+                        <option value="relevance">Relevance</option>
+                        <option value="platform">Platform</option>
+                        <option value="followers">Followers</option>
+                        <option value="activity">Last Activity</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <button class="export-results-btn" onclick="exportResults()">
+                        <i class="fas fa-download"></i>
+                        Export Results
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Grid -->
+            <div class="results-grid" id="resultsGrid">
+                <!-- Results will be populated here -->
+            </div>
+
+            <!-- Detailed Analysis -->
+            <div class="detailed-analysis" id="detailedAnalysis" style="display: none;">
+                <div class="analysis-header">
+                    <h3><i class="fas fa-chart-line"></i> Detailed Profile Analysis</h3>
+                    <button class="close-analysis-btn" onclick="closeDetailedAnalysis()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div class="analysis-content" id="analysisContent">
+                    <!-- Analysis content will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Tools -->
+        <div class="advanced-tools">
+            <h2><i class="fas fa-cogs"></i> Advanced Tools</h2>
+            <div class="tools-grid">
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Social Network Mapping</h3>
+                        <p>Visualize connections between social media profiles</p>
+                        <button class="tool-btn" onclick="openNetworkMapper()">
+                            <i class="fas fa-external-link-alt"></i>
+                            Open Tool
+                        </button>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-images"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Profile Image Analysis</h3>
+                        <p>Reverse search and analyze profile images</p>
+                        <button class="tool-btn" onclick="openImageAnalyzer()">
+                            <i class="fas fa-external-link-alt"></i>
+                            Open Tool
+                        </button>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Activity Timeline</h3>
+                        <p>Track posting patterns and activity across platforms</p>
+                        <button class="tool-btn" onclick="openActivityTimeline()">
+                            <i class="fas fa-external-link-alt"></i>
+                            Open Tool
+                        </button>
+                    </div>
+                </div>
+                <div class="tool-card">
+                    <div class="tool-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <div class="tool-content">
+                        <h3>Content Analysis</h3>
+                        <p>Analyze posting patterns, sentiment, and language</p>
+                        <button class="tool-btn" onclick="openContentAnalyzer()">
+                            <i class="fas fa-external-link-alt"></i>
+                            Open Tool
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bulk Search -->
+        <div class="bulk-search-section">
+            <div class="bulk-card">
+                <h2><i class="fas fa-list"></i> Bulk Social Media Search</h2>
+                <p>Search multiple usernames, emails, or names at once</p>
+                <div class="bulk-input">
+                    <textarea id="bulkSearchInput" placeholder="Enter search terms (one per line)
+john_doe
+jane.smith@email.com
++1-555-123-4567
+John Smith"></textarea>
+                    <div class="bulk-options">
+                        <label class="option-checkbox">
+                            <input type="checkbox" checked> Auto-detect search type
+                        </label>
+                        <label class="option-checkbox">
+                            <input type="checkbox"> Include variations
+                        </label>
+                    </div>
+                    <button class="bulk-search-btn" onclick="startBulkSearch()">
+                        <i class="fas fa-cogs"></i>
+                        Start Bulk Search
+                    </button>
+                </div>
+                <div class="bulk-results" id="bulkSearchResults" style="display: none;">
+                    <div class="bulk-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="bulkProgress"></div>
+                        </div>
+                        <span id="bulkProgressText">0 / 0 completed</span>
+                    </div>
+                    <div class="bulk-results-summary" id="bulkResultsSummary"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="social-intel.js"></script>
+</body>
+</html>

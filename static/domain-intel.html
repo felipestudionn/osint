@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Domain Intelligence - OSINT Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="domain-intel-container">
+        <div class="intel-header">
+            <h1><i class="fas fa-globe"></i> Domain Intelligence</h1>
+            <p>Comprehensive domain analysis and investigation tools</p>
+        </div>
+
+        <!-- Domain Input Section -->
+        <div class="domain-input-section">
+            <div class="input-card">
+                <h2>Domain Analysis</h2>
+                <div class="domain-input-group">
+                    <input type="text" id="domainInput" placeholder="Enter domain (e.g., example.com)" maxlength="255">
+                    <button class="analyze-domain-btn" onclick="analyzeDomain()">
+                        <i class="fas fa-search"></i>
+                        Analyze Domain
+                    </button>
+                </div>
+                <div class="input-options">
+                    <label class="option-checkbox">
+                        <input type="checkbox" checked id="includeSubdomains"> Include subdomain enumeration
+                    </label>
+                    <label class="option-checkbox">
+                        <input type="checkbox" checked id="includeWhois"> Include WHOIS data
+                    </label>
+                    <label class="option-checkbox">
+                        <input type="checkbox" id="includeDNS"> Deep DNS analysis
+                    </label>
+                    <label class="option-checkbox">
+                        <input type="checkbox" id="includeSecurity"> Security assessment
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Results -->
+        <div class="domain-results" id="domainResults" style="display: none;">
+            <!-- Basic Domain Information -->
+            <div class="result-section">
+                <h3><i class="fas fa-info-circle"></i> Basic Information</h3>
+                <div class="info-grid">
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-globe"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Domain Name</h4>
+                            <p id="domainName">-</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-server"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>IP Address</h4>
+                            <p id="domainIP">-</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>SSL Status</h4>
+                            <p id="sslStatus">-</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-calendar"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Registration Date</h4>
+                            <p id="registrationDate">-</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Expiration Date</h4>
+                            <p id="expirationDate">-</p>
+                        </div>
+                    </div>
+                    <div class="info-card">
+                        <div class="info-icon">
+                            <i class="fas fa-building"></i>
+                        </div>
+                        <div class="info-content">
+                            <h4>Registrar</h4>
+                            <p id="registrar">-</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- WHOIS Information -->
+            <div class="result-section">
+                <h3><i class="fas fa-address-card"></i> WHOIS Information</h3>
+                <div class="whois-container" id="whoisContainer">
+                    <div class="whois-loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Loading WHOIS data...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- DNS Records -->
+            <div class="result-section">
+                <h3><i class="fas fa-network-wired"></i> DNS Records</h3>
+                <div class="dns-tabs">
+                    <button class="dns-tab active" onclick="showDNSTab('a')">A Records</button>
+                    <button class="dns-tab" onclick="showDNSTab('aaaa')">AAAA Records</button>
+                    <button class="dns-tab" onclick="showDNSTab('mx')">MX Records</button>
+                    <button class="dns-tab" onclick="showDNSTab('ns')">NS Records</button>
+                    <button class="dns-tab" onclick="showDNSTab('txt')">TXT Records</button>
+                    <button class="dns-tab" onclick="showDNSTab('cname')">CNAME Records</button>
+                </div>
+                <div class="dns-content">
+                    <div class="dns-tab-panel active" id="a-panel">
+                        <div class="dns-records" id="aRecords">Loading...</div>
+                    </div>
+                    <div class="dns-tab-panel" id="aaaa-panel">
+                        <div class="dns-records" id="aaaaRecords">Loading...</div>
+                    </div>
+                    <div class="dns-tab-panel" id="mx-panel">
+                        <div class="dns-records" id="mxRecords">Loading...</div>
+                    </div>
+                    <div class="dns-tab-panel" id="ns-panel">
+                        <div class="dns-records" id="nsRecords">Loading...</div>
+                    </div>
+                    <div class="dns-tab-panel" id="txt-panel">
+                        <div class="dns-records" id="txtRecords">Loading...</div>
+                    </div>
+                    <div class="dns-tab-panel" id="cname-panel">
+                        <div class="dns-records" id="cnameRecords">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subdomain Enumeration -->
+            <div class="result-section">
+                <h3><i class="fas fa-sitemap"></i> Subdomain Enumeration</h3>
+                <div class="subdomain-stats">
+                    <div class="stat-item">
+                        <span class="stat-number" id="subdomainCount">0</span>
+                        <span class="stat-label">Subdomains Found</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="activeSubdomains">0</span>
+                        <span class="stat-label">Active</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-number" id="inactiveSubdomains">0</span>
+                        <span class="stat-label">Inactive</span>
+                    </div>
+                </div>
+                <div class="subdomain-filters">
+                    <input type="text" id="subdomainSearch" placeholder="Search subdomains...">
+                    <select id="subdomainFilter">
+                        <option value="all">All Subdomains</option>
+                        <option value="active">Active Only</option>
+                        <option value="inactive">Inactive Only</option>
+                        <option value="interesting">Interesting</option>
+                    </select>
+                </div>
+                <div class="subdomain-list" id="subdomainList">
+                    <div class="subdomain-loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <span>Enumerating subdomains...</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Technology Stack -->
+            <div class="result-section">
+                <h3><i class="fas fa-cogs"></i> Technology Stack</h3>
+                <div class="tech-categories">
+                    <div class="tech-category">
+                        <h4><i class="fas fa-server"></i> Web Server</h4>
+                        <div class="tech-items" id="webServerTech">Loading...</div>
+                    </div>
+                    <div class="tech-category">
+                        <h4><i class="fas fa-code"></i> Programming Languages</h4>
+                        <div class="tech-items" id="programmingTech">Loading...</div>
+                    </div>
+                    <div class="tech-category">
+                        <h4><i class="fas fa-database"></i> Databases</h4>
+                        <div class="tech-items" id="databaseTech">Loading...</div>
+                    </div>
+                    <div class="tech-category">
+                        <h4><i class="fas fa-chart-line"></i> Analytics</h4>
+                        <div class="tech-items" id="analyticsTech">Loading...</div>
+                    </div>
+                    <div class="tech-category">
+                        <h4><i class="fas fa-shield-alt"></i> Security</h4>
+                        <div class="tech-items" id="securityTech">Loading...</div>
+                    </div>
+                    <div class="tech-category">
+                        <h4><i class="fas fa-cloud"></i> CDN & Hosting</h4>
+                        <div class="tech-items" id="hostingTech">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Security Assessment -->
+            <div class="result-section">
+                <h3><i class="fas fa-shield-alt"></i> Security Assessment</h3>
+                <div class="security-overview">
+                    <div class="security-score">
+                        <div class="score-circle" id="securityScoreCircle">
+                            <span id="securityScore">-</span>
+                            <small>Security Score</small>
+                        </div>
+                    </div>
+                    <div class="security-summary" id="securitySummary">
+                        <div class="security-loading">
+                            <i class="fas fa-spinner fa-spin"></i>
+                            <span>Analyzing security...</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="security-checks" id="securityChecks">
+                    <!-- Security checks will be populated here -->
+                </div>
+            </div>
+
+            <!-- Geolocation & Infrastructure -->
+            <div class="result-section">
+                <h3><i class="fas fa-map-marker-alt"></i> Geolocation & Infrastructure</h3>
+                <div class="geo-info-grid">
+                    <div class="geo-card">
+                        <h4><i class="fas fa-globe-americas"></i> Server Location</h4>
+                        <div class="geo-details" id="serverLocation">
+                            <p><strong>Country:</strong> <span id="serverCountry">-</span></p>
+                            <p><strong>Region:</strong> <span id="serverRegion">-</span></p>
+                            <p><strong>City:</strong> <span id="serverCity">-</span></p>
+                            <p><strong>ISP:</strong> <span id="serverISP">-</span></p>
+                        </div>
+                    </div>
+                    <div class="geo-card">
+                        <h4><i class="fas fa-network-wired"></i> Network Information</h4>
+                        <div class="network-details" id="networkInfo">
+                            <p><strong>ASN:</strong> <span id="asn">-</span></p>
+                            <p><strong>Organization:</strong> <span id="organization">-</span></p>
+                            <p><strong>IP Range:</strong> <span id="ipRange">-</span></p>
+                            <p><strong>Hosting Provider:</strong> <span id="hostingProvider">-</span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Related Domains -->
+            <div class="result-section">
+                <h3><i class="fas fa-link"></i> Related Domains</h3>
+                <div class="related-tabs">
+                    <button class="related-tab active" onclick="showRelatedTab('similar')">Similar Domains</button>
+                    <button class="related-tab" onclick="showRelatedTab('same-ip')">Same IP</button>
+                    <button class="related-tab" onclick="showRelatedTab('same-owner')">Same Owner</button>
+                    <button class="related-tab" onclick="showRelatedTab('historical')">Historical</button>
+                </div>
+                <div class="related-content">
+                    <div class="related-tab-panel active" id="similar-panel">
+                        <div class="related-domains" id="similarDomains">Loading...</div>
+                    </div>
+                    <div class="related-tab-panel" id="same-ip-panel">
+                        <div class="related-domains" id="sameIPDomains">Loading...</div>
+                    </div>
+                    <div class="related-tab-panel" id="same-owner-panel">
+                        <div class="related-domains" id="sameOwnerDomains">Loading...</div>
+                    </div>
+                    <div class="related-tab-panel" id="historical-panel">
+                        <div class="related-domains" id="historicalDomains">Loading...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Export Options -->
+            <div class="result-section">
+                <h3><i class="fas fa-download"></i> Export Results</h3>
+                <div class="export-options">
+                    <button class="export-btn" onclick="exportDomainReport('pdf')">
+                        <i class="fas fa-file-pdf"></i>
+                        Export PDF
+                    </button>
+                    <button class="export-btn" onclick="exportDomainReport('json')">
+                        <i class="fas fa-file-code"></i>
+                        Export JSON
+                    </button>
+                    <button class="export-btn" onclick="exportDomainReport('csv')">
+                        <i class="fas fa-file-csv"></i>
+                        Export CSV
+                    </button>
+                    <button class="export-btn" onclick="saveDomainToInvestigation()">
+                        <i class="fas fa-folder-plus"></i>
+                        Save to Investigation
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bulk Domain Analysis -->
+        <div class="bulk-domain-section">
+            <div class="bulk-card">
+                <h2><i class="fas fa-list"></i> Bulk Domain Analysis</h2>
+                <p>Analyze multiple domains simultaneously</p>
+                <div class="bulk-input">
+                    <textarea id="bulkDomains" placeholder="Enter domains (one per line)
+example.com
+google.com
+github.com"></textarea>
+                    <div class="bulk-options">
+                        <label class="option-checkbox">
+                            <input type="checkbox" checked> Basic analysis only
+                        </label>
+                        <label class="option-checkbox">
+                            <input type="checkbox"> Include subdomains
+                        </label>
+                        <label class="option-checkbox">
+                            <input type="checkbox"> Security assessment
+                        </label>
+                    </div>
+                    <button class="bulk-analyze-btn" onclick="analyzeBulkDomains()">
+                        <i class="fas fa-cogs"></i>
+                        Analyze All Domains
+                    </button>
+                </div>
+                <div class="bulk-results" id="bulkDomainResults" style="display: none;">
+                    <div class="bulk-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="bulkDomainProgress"></div>
+                        </div>
+                        <span id="bulkDomainProgressText">0 / 0 completed</span>
+                    </div>
+                    <div class="bulk-results-table" id="bulkDomainResultsTable"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Domain Monitoring -->
+        <div class="monitoring-section">
+            <div class="monitoring-card">
+                <h2><i class="fas fa-eye"></i> Domain Monitoring</h2>
+                <p>Set up alerts for domain changes and security issues</p>
+                <div class="monitoring-options">
+                    <div class="monitor-option">
+                        <label class="option-checkbox">
+                            <input type="checkbox"> WHOIS changes
+                        </label>
+                    </div>
+                    <div class="monitor-option">
+                        <label class="option-checkbox">
+                            <input type="checkbox"> DNS changes
+                        </label>
+                    </div>
+                    <div class="monitor-option">
+                        <label class="option-checkbox">
+                            <input type="checkbox"> SSL certificate changes
+                        </label>
+                    </div>
+                    <div class="monitor-option">
+                        <label class="option-checkbox">
+                            <input type="checkbox"> New subdomains
+                        </label>
+                    </div>
+                    <div class="monitor-option">
+                        <label class="option-checkbox">
+                            <input type="checkbox"> Security vulnerabilities
+                        </label>
+                    </div>
+                </div>
+                <button class="setup-monitoring-btn" onclick="setupDomainMonitoring()">
+                    <i class="fas fa-bell"></i>
+                    Setup Monitoring
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="domain-intel.js"></script>
+    <script src="domain-intel-additional.js"></script>
+</body>
+</html>

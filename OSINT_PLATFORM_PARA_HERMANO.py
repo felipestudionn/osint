@@ -373,7 +373,483 @@ async def add_finding(investigation_id: str, finding_data: dict, current_user: d
         "data": new_finding
     }
 
-# ===== REPORTS & ANALYTICS ENDPOINTS =====
+# === DOMAIN INTELLIGENCE ENDPOINTS ===
+
+@app.get("/api/v1/domain/basic-info/{domain}")
+async def get_domain_basic_info(domain: str, current_user: dict = Depends(get_current_user)):
+    """Get basic domain information"""
+    try:
+        # Simulate domain analysis
+        await asyncio.sleep(1)
+        
+        mock_data = {
+            "domain": domain,
+            "ip": "192.168.1.1",
+            "ssl_status": "Valid (TLS 1.3)",
+            "registration_date": "2020-01-15",
+            "expiration_date": "2025-01-15",
+            "registrar": "GoDaddy",
+            "status": "active",
+            "country": "US",
+            "organization": "Example Corp"
+        }
+        
+        return {"success": True, "data": mock_data}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/v1/domain/whois/{domain}")
+async def get_domain_whois(domain: str, current_user: dict = Depends(get_current_user)):
+    """Get WHOIS information for domain"""
+    try:
+        await asyncio.sleep(2)
+        
+        mock_whois = {
+            "registrant": {
+                "name": "John Doe",
+                "organization": "Example Corp",
+                "email": f"admin@{domain}",
+                "phone": "+1.5551234567",
+                "address": "123 Main St, Anytown, ST 12345, US"
+            },
+            "admin": {
+                "name": "Admin Contact",
+                "email": f"admin@{domain}",
+                "phone": "+1.5551234567"
+            },
+            "technical": {
+                "name": "Tech Contact",
+                "email": f"tech@{domain}",
+                "phone": "+1.5551234567"
+            },
+            "name_servers": [
+                f"ns1.{domain}",
+                f"ns2.{domain}",
+                f"ns3.{domain}"
+            ],
+            "creation_date": "2020-01-15T00:00:00Z",
+            "expiration_date": "2025-01-15T00:00:00Z",
+            "updated_date": "2023-01-15T00:00:00Z"
+        }
+        
+        return {"success": True, "data": mock_whois}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/v1/domain/dns/{domain}")
+async def get_domain_dns(domain: str, current_user: dict = Depends(get_current_user)):
+    """Get DNS records for domain"""
+    try:
+        await asyncio.sleep(1.5)
+        
+        mock_dns = {
+            "a": [{"value": "192.168.1.1", "ttl": 300}, {"value": "192.168.1.2", "ttl": 300}],
+            "aaaa": [{"value": "2001:db8::1", "ttl": 300}],
+            "mx": [{"value": f"mail.{domain}", "priority": 10, "ttl": 3600}],
+            "ns": [{"value": f"ns1.{domain}", "ttl": 86400}, {"value": f"ns2.{domain}", "ttl": 86400}],
+            "txt": [{"value": "v=spf1 include:_spf.google.com ~all", "ttl": 300}],
+            "cname": [{"value": f"www.{domain} -> {domain}", "ttl": 300}]
+        }
+        
+        return {"success": True, "data": mock_dns}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/v1/domain/subdomains/{domain}")
+async def get_domain_subdomains(domain: str, current_user: dict = Depends(get_current_user)):
+    """Get subdomains for domain"""
+    try:
+        await asyncio.sleep(3)
+        
+        common_subdomains = ['www', 'mail', 'ftp', 'admin', 'api', 'blog', 'shop', 'dev']
+        subdomains = []
+        
+        for i, sub in enumerate(common_subdomains[:6]):
+            subdomains.append({
+                "name": f"{sub}.{domain}",
+                "ip": f"192.168.1.{i+10}",
+                "active": random.choice([True, False]),
+                "interesting": random.choice([True, False]),
+                "ports": random.sample([80, 443, 22, 21, 25], k=random.randint(1, 3)),
+                "technology": random.choice(['Apache', 'Nginx', 'IIS', 'Node.js'])
+            })
+        
+        stats = {
+            "total": len(subdomains),
+            "active": len([s for s in subdomains if s['active']]),
+            "inactive": len([s for s in subdomains if not s['active']]),
+            "interesting": len([s for s in subdomains if s['interesting']])
+        }
+        
+        return {"success": True, "data": {"subdomains": subdomains, "stats": stats}}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/v1/domain/technology/{domain}")
+async def get_domain_technology(domain: str, current_user: dict = Depends(get_current_user)):
+    """Get technology stack for domain"""
+    try:
+        await asyncio.sleep(2)
+        
+        technologies = {
+            "webServer": random.sample(['Apache', 'Nginx', 'IIS', 'LiteSpeed'], k=random.randint(0, 2)),
+            "programming": random.sample(['PHP', 'Python', 'Node.js', 'Ruby', 'Java'], k=random.randint(0, 2)),
+            "database": random.sample(['MySQL', 'PostgreSQL', 'MongoDB', 'Redis'], k=random.randint(0, 2)),
+            "analytics": random.sample(['Google Analytics', 'Adobe Analytics', 'Hotjar'], k=random.randint(0, 2)),
+            "security": random.sample(['Cloudflare', 'Let\'s Encrypt', 'reCAPTCHA'], k=random.randint(0, 2)),
+            "hosting": random.sample(['AWS', 'Google Cloud', 'Azure', 'DigitalOcean'], k=random.randint(0, 2))
+        }
+        
+        return {"success": True, "data": technologies}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/v1/domain/security/{domain}")
+async def get_domain_security(domain: str, current_user: dict = Depends(get_current_user)):
+    """Get security assessment for domain"""
+    try:
+        await asyncio.sleep(3)
+        
+        score = random.randint(60, 95)
+        
+        checks = [
+            {
+                "name": "SSL/TLS Configuration",
+                "description": "SSL certificate is valid and properly configured",
+                "status": random.choice(['pass', 'fail', 'warn'])
+            },
+            {
+                "name": "HTTP Security Headers",
+                "description": "Security headers are properly implemented",
+                "status": random.choice(['pass', 'warn'])
+            },
+            {
+                "name": "DNS Security",
+                "description": "DNS configuration follows security best practices",
+                "status": random.choice(['pass', 'warn'])
+            },
+            {
+                "name": "Open Ports Scan",
+                "description": "No unnecessary ports are exposed",
+                "status": random.choice(['pass', 'warn'])
+            },
+            {
+                "name": "Vulnerability Scan",
+                "description": "No known vulnerabilities detected",
+                "status": random.choice(['pass', 'fail'])
+            }
+        ]
+        
+        security_data = {
+            "score": score,
+            "score_class": "good" if score >= 80 else "medium" if score >= 60 else "poor",
+            "risk_level": "low" if score >= 80 else "medium" if score >= 60 else "high",
+            "summary": "Domain has good security posture" if score >= 80 else "Domain has moderate security issues" if score >= 60 else "Domain has significant security concerns",
+            "checks": checks
+        }
+        
+        return {"success": True, "data": security_data}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/v1/domain/geolocation/{domain}")
+async def get_domain_geolocation(domain: str, current_user: dict = Depends(get_current_user)):
+    """Get geolocation data for domain"""
+    try:
+        await asyncio.sleep(1.5)
+        
+        locations = [
+            {"country": "United States", "region": "California", "city": "San Francisco"},
+            {"country": "Germany", "region": "Hesse", "city": "Frankfurt"},
+            {"country": "United Kingdom", "region": "England", "city": "London"},
+            {"country": "Singapore", "region": "Central Singapore", "city": "Singapore"}
+        ]
+        
+        location = random.choice(locations)
+        
+        geo_data = {
+            **location,
+            "isp": "Example ISP Inc.",
+            "asn": f"AS{random.randint(10000, 99999)}",
+            "organization": "Example Hosting Organization",
+            "ip_range": "192.168.0.0/24",
+            "hosting_provider": "Cloud Provider Inc."
+        }
+        
+        return {"success": True, "data": geo_data}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.get("/api/v1/domain/related/{domain}")
+async def get_related_domains(domain: str, current_user: dict = Depends(get_current_user)):
+    """Get related domains"""
+    try:
+        await asyncio.sleep(2)
+        
+        base_domain = domain.split('.')[0]
+        tld = '.'.join(domain.split('.')[1:])
+        
+        related_types = {
+            "similar": [f"{base_domain}{i}.{tld}" for i in range(1, 4)],
+            "same_ip": [f"example{i}.com" for i in range(1, 3)],
+            "same_owner": [f"{base_domain}-{suffix}.{tld}" for suffix in ['shop', 'blog', 'api']],
+            "historical": [f"old-{base_domain}.{tld}", f"archive-{base_domain}.{tld}"]
+        }
+        
+        related_domains = {}
+        for rel_type, domains in related_types.items():
+            related_domains[rel_type] = [
+                {
+                    "domain": d,
+                    "relationship": rel_type,
+                    "last_seen": (datetime.now() - timedelta(days=random.randint(1, 365))).strftime('%Y-%m-%d'),
+                    "status": random.choice(['active', 'inactive'])
+                } for d in domains
+            ]
+        
+        return {"success": True, "data": related_domains}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/domain/bulk-analyze")
+async def bulk_analyze_domains(request: dict, current_user: dict = Depends(get_current_user)):
+    """Bulk analyze multiple domains"""
+    try:
+        domains = request.get('domains', [])
+        if not domains:
+            raise HTTPException(status_code=400, detail="No domains provided")
+        
+        results = []
+        for domain in domains:
+            await asyncio.sleep(1)  # Simulate analysis time
+            
+            analysis = {
+                "domain": domain,
+                "ip": f"192.168.{random.randint(1, 255)}.{random.randint(1, 255)}",
+                "status": random.choice(['online', 'offline']),
+                "ssl": random.choice(['valid', 'invalid']),
+                "registrar": random.choice(['GoDaddy', 'Namecheap', 'CloudFlare']),
+                "country": random.choice(['US', 'DE', 'UK', 'SG']),
+                "security_score": random.randint(60, 95),
+                "subdomains": random.randint(5, 25)
+            }
+            results.append(analysis)
+        
+        return {"success": True, "data": results}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# === IMAGE ANALYSIS ENDPOINTS ===
+
+@app.post("/api/v1/image/analyze")
+async def analyze_image(request: dict, current_user: dict = Depends(get_current_user)):
+    """Analyze uploaded image with multiple techniques"""
+    try:
+        image_data = request.get('image_data')
+        options = request.get('options', {})
+        
+        if not image_data:
+            raise HTTPException(status_code=400, detail="No image data provided")
+        
+        results = {
+            "analysis_id": f"img_analysis_{random.randint(100000, 999999)}",
+            "timestamp": datetime.now().isoformat(),
+            "options": options,
+            "data": {}
+        }
+        
+        # Reverse image search
+        if options.get('reverseSearch', True):
+            await asyncio.sleep(2)
+            results["data"]["reverseSearch"] = {
+                "engines": [
+                    {"engine": "Google Images", "matches": random.randint(10, 50), "url": "https://images.google.com/search"},
+                    {"engine": "TinEye", "matches": random.randint(5, 25), "url": "https://tineye.com/search"},
+                    {"engine": "Yandex Images", "matches": random.randint(8, 30), "url": "https://yandex.com/images"},
+                    {"engine": "Bing Images", "matches": random.randint(12, 40), "url": "https://bing.com/images"}
+                ],
+                "similarImages": [
+                    {"url": f"https://example{i}.com/image.jpg", "similarity": f"{random.randint(70, 95)}%", "source": f"website{i}.com"}
+                    for i in range(1, 9)
+                ],
+                "totalMatches": random.randint(50, 200)
+            }
+        
+        # Metadata extraction
+        if options.get('metadataExtraction', True):
+            await asyncio.sleep(1)
+            results["data"]["metadata"] = {
+                "basic": {
+                    "filename": "uploaded_image.jpg",
+                    "filesize": "2.4 MB",
+                    "format": "JPEG",
+                    "dimensions": "1920x1080",
+                    "colorSpace": "sRGB",
+                    "compression": "JPEG (Quality: 85%)"
+                },
+                "camera": {
+                    "make": random.choice(["Canon", "Nikon", "Sony", "Apple"]),
+                    "model": random.choice(["EOS 5D Mark IV", "D850", "A7R III", "iPhone 13 Pro"]),
+                    "lens": "EF 24-70mm f/2.8L II USM",
+                    "focalLength": f"{random.randint(24, 200)}mm",
+                    "aperture": f"f/{random.choice(['2.8', '4.0', '5.6', '8.0'])}",
+                    "shutterSpeed": f"1/{random.randint(60, 500)}s",
+                    "iso": str(random.choice([100, 200, 400, 800, 1600])),
+                    "flash": random.choice(["No Flash", "Flash Fired", "Auto Flash"])
+                },
+                "location": {
+                    "gpsCoordinates": "40.7128° N, 74.0060° W" if random.random() > 0.5 else "Not available",
+                    "location": "New York, NY, USA" if random.random() > 0.5 else "Location data removed",
+                    "altitude": f"{random.randint(1, 100)}m above sea level" if random.random() > 0.5 else "Not available"
+                },
+                "timestamp": {
+                    "created": "2024-01-15 14:30:22",
+                    "modified": "2024-01-15 14:35:10"
+                }
+            }
+        
+        # Facial recognition
+        if options.get('facialRecognition', False):
+            await asyncio.sleep(3)
+            num_faces = random.randint(0, 3)
+            faces = []
+            for i in range(num_faces):
+                faces.append({
+                    "id": f"face_{i+1}",
+                    "confidence": random.randint(70, 95),
+                    "age": random.randint(20, 60),
+                    "gender": random.choice(["Male", "Female"]),
+                    "emotion": random.choice(["Happy", "Neutral", "Surprised", "Sad"]),
+                    "position": {
+                        "x": random.randint(100, 800),
+                        "y": random.randint(100, 600),
+                        "width": random.randint(100, 200),
+                        "height": random.randint(100, 200)
+                    },
+                    "features": {
+                        "eyeColor": random.choice(["Brown", "Blue", "Green", "Hazel"]),
+                        "hairColor": random.choice(["Black", "Brown", "Blonde", "Red"]),
+                        "glasses": random.random() > 0.7,
+                        "beard": random.random() > 0.6
+                    }
+                })
+            
+            results["data"]["faces"] = {
+                "totalFaces": num_faces,
+                "faces": faces,
+                "processingTime": f"{random.randint(1000, 4000)}ms"
+            }
+        
+        # Object detection
+        if options.get('objectDetection', False):
+            await asyncio.sleep(2)
+            objects = []
+            object_types = ["Person", "Car", "Building", "Tree", "Dog", "Cat", "Phone", "Laptop"]
+            num_objects = random.randint(3, 8)
+            
+            for i in range(num_objects):
+                objects.append({
+                    "id": f"object_{i+1}",
+                    "type": random.choice(object_types),
+                    "confidence": random.randint(60, 95),
+                    "position": {
+                        "x": random.randint(50, 800),
+                        "y": random.randint(50, 600),
+                        "width": random.randint(100, 300),
+                        "height": random.randint(100, 300)
+                    },
+                    "color": random.choice(["Red", "Blue", "Green", "Yellow", "Black", "White"])
+                })
+            
+            results["data"]["objects"] = {
+                "totalObjects": num_objects,
+                "objects": objects,
+                "categories": list(set([obj["type"] for obj in objects])),
+                "processingTime": f"{random.randint(500, 2500)}ms"
+            }
+        
+        return {"success": True, "data": results}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/image/reverse-search")
+async def reverse_image_search(request: dict, current_user: dict = Depends(get_current_user)):
+    """Perform reverse image search"""
+    try:
+        image_url = request.get('image_url')
+        if not image_url:
+            raise HTTPException(status_code=400, detail="No image URL provided")
+        
+        await asyncio.sleep(2)
+        
+        engines_results = [
+            {"engine": "Google Images", "matches": random.randint(20, 80), "url": f"https://images.google.com/search?tbs=sbi:url={image_url}"},
+            {"engine": "TinEye", "matches": random.randint(5, 30), "url": f"https://tineye.com/search?url={image_url}"},
+            {"engine": "Yandex Images", "matches": random.randint(10, 50), "url": f"https://yandex.com/images/search?rpt=imageview&url={image_url}"}
+        ]
+        
+        return {"success": True, "data": {"engines": engines_results, "totalMatches": sum(r["matches"] for r in engines_results)}}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/image/extract-metadata")
+async def extract_image_metadata(request: dict, current_user: dict = Depends(get_current_user)):
+    """Extract metadata from image"""
+    try:
+        await asyncio.sleep(1)
+        
+        metadata = {
+            "basic": {
+                "filename": request.get('filename', 'unknown.jpg'),
+                "filesize": "2.4 MB",
+                "format": "JPEG",
+                "dimensions": "1920x1080",
+                "created": "2024-01-15 14:30:22"
+            },
+            "camera": {
+                "make": "Canon",
+                "model": "EOS 5D Mark IV",
+                "software": "Adobe Photoshop 2024"
+            },
+            "location": {
+                "gps": "40.7128° N, 74.0060° W" if random.random() > 0.5 else None,
+                "location": "New York, NY" if random.random() > 0.5 else None
+            }
+        }
+        
+        return {"success": True, "data": metadata}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+@app.post("/api/v1/image/bulk-analyze")
+async def bulk_analyze_images(request: dict, current_user: dict = Depends(get_current_user)):
+    """Bulk analyze multiple images"""
+    try:
+        images = request.get('images', [])
+        if not images:
+            raise HTTPException(status_code=400, detail="No images provided")
+        
+        results = []
+        for i, image in enumerate(images):
+            await asyncio.sleep(1)  # Simulate processing time
+            
+            result = {
+                "filename": image.get('filename', f'image_{i+1}.jpg'),
+                "size": image.get('size', '1.2 MB'),
+                "reverseSearchMatches": random.randint(10, 50),
+                "facesDetected": random.randint(0, 3),
+                "objectsDetected": random.randint(2, 8),
+                "hasMetadata": random.random() > 0.3,
+                "processingTime": f"{random.randint(1000, 3000)}ms",
+                "timestamp": datetime.now().isoformat()
+            }
+            results.append(result)
+        
+        return {"success": True, "data": results}
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+# === REPORTS & ANALYTICS ENDPOINTS =====
 
 @app.get("/api/v1/reports/metrics")
 async def get_reports_metrics(current_user: dict = Depends(get_current_user)):
@@ -1171,7 +1647,9 @@ async def docs_info():
             "reports": ["/api/v1/reports/metrics", "/api/v1/reports/activity", "/api/v1/reports/export"],
             "email_intel": ["/api/v1/email/investigate"],
             "search": ["/api/v1/search/engines"],
-            "phone_intel": ["/api/v1/phone/investigate"]
+            "phone_intel": ["/api/v1/phone/investigate"],
+            "domain_intel": ["/api/v1/domain/basic-info", "/api/v1/domain/whois", "/api/v1/domain/dns", "/api/v1/domain/subdomains", "/api/v1/domain/technology", "/api/v1/domain/security", "/api/v1/domain/geolocation", "/api/v1/domain/related", "/api/v1/domain/bulk-analyze"],
+            "image_analysis": ["/api/v1/image/analyze", "/api/v1/image/reverse-search", "/api/v1/image/extract-metadata", "/api/v1/image/bulk-analyze"]
         }
     }
 

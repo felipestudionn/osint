@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Analysis - OSINT Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-left">
+                <button class="back-btn" onclick="window.location.href='index.html'">
+                    <i class="fas fa-arrow-left"></i>
+                </button>
+                <h1><i class="fas fa-image"></i> Image Analysis</h1>
+            </div>
+            <div class="header-right">
+                <button class="help-btn" onclick="showHelp()">
+                    <i class="fas fa-question-circle"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Image Upload Section -->
+        <div class="analysis-section">
+            <div class="section-header">
+                <h2><i class="fas fa-upload"></i> Upload Image for Analysis</h2>
+                <p>Upload an image to perform reverse image search, metadata extraction, and facial recognition</p>
+            </div>
+
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-content">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <h3>Drag & Drop Image Here</h3>
+                    <p>or click to browse files</p>
+                    <input type="file" id="imageInput" accept="image/*" hidden>
+                    <button class="upload-btn" onclick="document.getElementById('imageInput').click()">
+                        <i class="fas fa-folder-open"></i> Browse Files
+                    </button>
+                </div>
+            </div>
+
+            <!-- URL Input Alternative -->
+            <div class="url-input-section">
+                <h3>Or analyze image from URL</h3>
+                <div class="input-group">
+                    <input type="url" id="imageUrl" placeholder="Enter image URL..." class="url-input">
+                    <button onclick="analyzeImageFromUrl()" class="analyze-btn">
+                        <i class="fas fa-search"></i> Analyze URL
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Options -->
+        <div class="analysis-options" id="analysisOptions" style="display: none;">
+            <h3>Analysis Options</h3>
+            <div class="options-grid">
+                <label class="option-card">
+                    <input type="checkbox" id="reverseSearch" checked>
+                    <div class="option-content">
+                        <i class="fas fa-search"></i>
+                        <span>Reverse Image Search</span>
+                    </div>
+                </label>
+                <label class="option-card">
+                    <input type="checkbox" id="metadataExtraction" checked>
+                    <div class="option-content">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Metadata Extraction</span>
+                    </div>
+                </label>
+                <label class="option-card">
+                    <input type="checkbox" id="facialRecognition">
+                    <div class="option-content">
+                        <i class="fas fa-user-circle"></i>
+                        <span>Facial Recognition</span>
+                    </div>
+                </label>
+                <label class="option-card">
+                    <input type="checkbox" id="objectDetection">
+                    <div class="option-content">
+                        <i class="fas fa-eye"></i>
+                        <span>Object Detection</span>
+                    </div>
+                </label>
+            </div>
+            <button onclick="startAnalysis()" class="start-analysis-btn">
+                <i class="fas fa-play"></i> Start Analysis
+            </button>
+        </div>
+
+        <!-- Image Preview -->
+        <div class="image-preview" id="imagePreview" style="display: none;">
+            <h3>Image Preview</h3>
+            <div class="preview-container">
+                <img id="previewImage" alt="Preview">
+                <div class="image-info">
+                    <p><strong>Filename:</strong> <span id="imageFilename"></span></p>
+                    <p><strong>Size:</strong> <span id="imageSize"></span></p>
+                    <p><strong>Dimensions:</strong> <span id="imageDimensions"></span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis Results -->
+        <div class="analysis-results" id="analysisResults" style="display: none;">
+            <div class="results-header">
+                <h2><i class="fas fa-chart-line"></i> Analysis Results</h2>
+                <div class="results-actions">
+                    <button onclick="exportResults()" class="export-btn">
+                        <i class="fas fa-download"></i> Export
+                    </button>
+                    <button onclick="saveToInvestigation()" class="save-btn">
+                        <i class="fas fa-save"></i> Save
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results Tabs -->
+            <div class="results-tabs">
+                <button class="tab-btn active" onclick="showResultsTab('reverse-search')">
+                    <i class="fas fa-search"></i> Reverse Search
+                </button>
+                <button class="tab-btn" onclick="showResultsTab('metadata')">
+                    <i class="fas fa-info-circle"></i> Metadata
+                </button>
+                <button class="tab-btn" onclick="showResultsTab('faces')">
+                    <i class="fas fa-user-circle"></i> Faces
+                </button>
+                <button class="tab-btn" onclick="showResultsTab('objects')">
+                    <i class="fas fa-eye"></i> Objects
+                </button>
+            </div>
+
+            <!-- Reverse Search Results -->
+            <div class="tab-content active" id="reverse-search-content">
+                <div class="search-engines">
+                    <h3>Search Engine Results</h3>
+                    <div class="engine-results" id="engineResults">
+                        <!-- Results will be populated here -->
+                    </div>
+                </div>
+                
+                <div class="similar-images">
+                    <h3>Similar Images</h3>
+                    <div class="similar-grid" id="similarImagesGrid">
+                        <!-- Similar images will be populated here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Metadata Results -->
+            <div class="tab-content" id="metadata-content">
+                <div class="metadata-sections">
+                    <div class="metadata-section">
+                        <h3>Basic Information</h3>
+                        <div class="metadata-grid" id="basicMetadata">
+                            <!-- Basic metadata will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="metadata-section">
+                        <h3>Camera Information</h3>
+                        <div class="metadata-grid" id="cameraMetadata">
+                            <!-- Camera metadata will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div class="metadata-section">
+                        <h3>Location Data</h3>
+                        <div class="metadata-grid" id="locationMetadata">
+                            <!-- Location metadata will be populated here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Facial Recognition Results -->
+            <div class="tab-content" id="faces-content">
+                <div class="faces-detected" id="facesDetected">
+                    <!-- Detected faces will be populated here -->
+                </div>
+            </div>
+
+            <!-- Object Detection Results -->
+            <div class="tab-content" id="objects-content">
+                <div class="objects-detected" id="objectsDetected">
+                    <!-- Detected objects will be populated here -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Bulk Analysis Section -->
+        <div class="bulk-analysis-section">
+            <div class="section-header">
+                <h2><i class="fas fa-images"></i> Bulk Image Analysis</h2>
+                <p>Upload multiple images for batch processing</p>
+            </div>
+
+            <div class="bulk-upload-area" id="bulkUploadArea">
+                <div class="upload-content">
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <h3>Drop Multiple Images Here</h3>
+                    <p>or click to select multiple files</p>
+                    <input type="file" id="bulkImageInput" accept="image/*" multiple hidden>
+                    <button class="upload-btn" onclick="document.getElementById('bulkImageInput').click()">
+                        <i class="fas fa-folder-open"></i> Select Images
+                    </button>
+                </div>
+            </div>
+
+            <!-- Bulk Results -->
+            <div class="bulk-results" id="bulkResults" style="display: none;">
+                <div class="bulk-header">
+                    <h3>Bulk Analysis Progress</h3>
+                    <div class="progress-info">
+                        <span id="bulkProgressText">0 / 0 completed</span>
+                    </div>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="bulkProgress"></div>
+                </div>
+                <div class="bulk-results-table" id="bulkResultsTable">
+                    <!-- Bulk results table will be populated here -->
+                </div>
+                <div class="bulk-actions">
+                    <button onclick="exportBulkResults()" class="export-btn">
+                        <i class="fas fa-download"></i> Export All Results
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analysis History -->
+        <div class="history-section">
+            <div class="section-header">
+                <h2><i class="fas fa-history"></i> Analysis History</h2>
+                <p>View your recent image analysis results</p>
+            </div>
+            
+            <div class="history-filters">
+                <input type="text" id="historySearch" placeholder="Search history..." class="search-input">
+                <select id="historyFilter" class="filter-select">
+                    <option value="all">All Analyses</option>
+                    <option value="reverse-search">Reverse Search</option>
+                    <option value="metadata">Metadata Only</option>
+                    <option value="faces">Facial Recognition</option>
+                    <option value="objects">Object Detection</option>
+                </select>
+            </div>
+            
+            <div class="history-list" id="historyList">
+                <!-- History items will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="image-analysis.js"></script>
+</body>
+</html>
